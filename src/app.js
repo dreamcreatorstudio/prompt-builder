@@ -88,18 +88,20 @@ function recipe(sel = curSel(), v = ver()) {
 // (perchance / "Perchance AI"), a separator (one, nl, tag, break, or sep=one) or a "|" / "·" / "," divider.
 function parseRecipe(txt) {
   const r = { v: LIB_VERSION, sel: {}, plat: null, sep: null, errors: [] };
-  let t = " " + txt + " ";
-  const vs = [...t.matchAll(/(^|\s|\|)v(\d+(?:\.\d+)+)(?=\s|\||$)/ig)].map(m => m[2]);
-  if (new Set(vs).size > 1) r.errors.push(fmt(L().errTwice, { what: L().what.version, list: [...new Set(vs)].join(", ") }));
+  const DIV = /[\s|·,;]+/;          // the same dividers the token loop accepts
+  const vs = [...new Set(txt.split(DIV).filter(x => /^v\d+(\.\d+)+$/i.test(x)).map(x => x.slice(1)))];
+  if (vs.length > 1) r.errors.push(fmt(L().errTwice, { what: L().what.version, list: vs.join(", ") }));
   if (vs.length) r.v = vs[0];
   if (!ARCHIVE[r.v]) { r.errors.push(fmt(L().errVersion, { v: r.v, known: KNOWN.join(", ") })); return r; }
+  if (r.errors.length) return r;
+  let t = " " + txt + " ";
   const A = ARCHIVE[r.v];
   for (const k in A.platforms) t = t.replace(new RegExp(A.platforms[k].label.replace(/\s+/g, "\\s+"), "ig"), " " + k + " ");
   t = t.replace(/\s*=\s*/g, "=");
   const keyMap = {};
   for (const b of A.blocks) { keyMap[b.key[0].toUpperCase()] = b; keyMap[b.key[1].toUpperCase()] = b; }
   const seen = {}, plats = new Set(), seps = new Set();
-  for (const tok of t.split(/[\s|·,;]+/).filter(Boolean)) {
+  for (const tok of t.split(DIV).filter(Boolean)) {
     const low = tok.toLowerCase();
     if (/^v\d+(\.\d+)+$/i.test(tok)) continue;
     if (low in A.platforms) { plats.add(low); continue; }

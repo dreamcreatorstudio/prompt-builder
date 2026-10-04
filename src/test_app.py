@@ -144,6 +144,14 @@ with sync_playwright() as p:
     check("two platforms are rejected", unchanged and "platform" in err, err)
     unchanged, err = attempt("AGE2 | Perchance AI | one")
     check("platform label with spaces is accepted", not err and ev(pg, 'S.sel["B3"]') == 1)
+    for txt, needle in [("v9.9,AGE2", "9.9"), ("v9.9·AGE2", "9.9"), ("v9.9;AGE2", "9.9"), ("v9.9|AGE2", "9.9"),
+                        ("v1.3,v1.2,AGE2", "1.2"), ("v1.3·v1.2 AGE2", "1.2"), ("AGE2·v8.0", "8.0")]:
+        unchanged, err = attempt(txt)
+        check(f"version after any divider is checked: {txt!r}", unchanged and needle in err, err)
+    unchanged, err = attempt("v1.3,AGE2")
+    check("known version after a comma loads", not err and ev(pg, 'S.sel["B3"]') == 1, err)
+    unchanged, err = attempt("v1.3·AGE3·BG2")
+    check("middle dot divider loads", not err and ev(pg, 'S.sel["B3"]') == 2 and ev(pg, 'S.sel["B11"]') == 1, err)
     unchanged, err = attempt("STYLE3")
     check("partial valid recipe still works and clears errors", not err and ev(pg, 'S.sel["B3.4"]') == 2)
 

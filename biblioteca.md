@@ -175,10 +175,17 @@ New options are always added at the end of a block and existing numbers never ch
 cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features
 ```
 
-## Known conflicts / Conflictos conocidos
-The tool shows these as warnings and never changes your choices. / La herramienta los muestra como avisos y nunca cambia tu elección.
+## Combination notes / Notas de combinación
+Shown as notes, grouped by kind; the tool never changes your choices. / Se muestran como notas por tipo; la herramienta nunca cambia tu elección.
 
-- ANGLE 8 (profile) conflicts with this framing, which asks for a three-quarter turn or looking at the camera. Try CAM 3–5, or another angle.
-- ANGLE 4 (top-down) with a head-and-shoulders portrait usually shows only the top of the head.
-- BODY 2 includes 'upright posture'; with CAM 5 (seated) the model may sit stiffly.
-- This outfit already describes what she holds (helmet or mask); combined with walking, hands may come out wrong.
+**Incompatible**
+- ANGLE 8 (profile) vs. this framing, which asks for a three-quarter turn or looking at the camera.
+
+**Out of frame / Fuera de encuadre**
+- Half-body and portrait framings crop the lower body: shorts, footwear and leg details from OUTFIT or BODY won't show.
+
+**Needs testing / Requiere pruebas**
+- Top-down or worm's-eye with a head-and-shoulders portrait can give unusual crops. Test with a fixed seed.
+- An aerial drone shot over a studio backdrop is unusual; models may add a landscape. Test it.
+- POV plus 'looking at camera' may read as a selfie. Test it.
+

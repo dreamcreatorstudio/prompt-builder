@@ -3,7 +3,9 @@
     python3 src/build.py            -> index.html, biblioteca.md, README.md (repo root)
     python3 src/build.py --fragment PATH   also writes a page fragment without <html>/<head> (for Claude artifacts)
 
-Sources: src/data.py (blocks, platforms, conflicts, version), src/i18n.py (UI text), src/style.css, src/app.js.
+Sources: src/data.py (blocks, platforms, notes, version), src/i18n.py (UI text), src/theme.py (colour tokens),
+src/style.css, src/app.js. Published prompt texts are frozen in src/archive/v<version>.json so old recipes
+and sessions can be reproduced exactly; the build stops if texts change without a new LIB_VERSION.
 """
 import json, sys, html as H
 from pathlib import Path
@@ -12,6 +14,29 @@ ROOT = SRC.parent
 sys.path.insert(0, str(SRC))
 from data import BLOCKS, NEG, DEFAULT, LIB_VERSION, PLATFORMS, DEFAULT_PLATFORM, SEPARATORS, CONFLICTS
 from i18n import T, REPO, URL
+import theme
+
+ARCHIVE_DIR = SRC / "archive"
+
+def snapshot():
+    return [{"id": b["id"], "key": list(b["key"]), "zero": bool(b.get("zero")), "texts": [o[2] for o in b["opts"]]} for b in BLOCKS]
+
+def load_archive():
+    """Freeze the current version's texts the first time it is built; refuse silent text changes later."""
+    ARCHIVE_DIR.mkdir(exist_ok=True)
+    cur = ARCHIVE_DIR / f"v{LIB_VERSION}.json"
+    snap = snapshot()
+    if cur.exists():
+        old = json.loads(cur.read_text())
+        for ob, nb in zip(old, snap):
+            same_prefix = ob["id"] == nb["id"] and nb["texts"][:len(ob["texts"])] == ob["texts"]
+            if not same_prefix:
+                sys.exit(f"Prompt texts of {ob['id']} changed but LIB_VERSION is still {LIB_VERSION}. Bump LIB_VERSION in src/data.py.")
+        if len(snap) != len(old) or any(len(a["texts"]) != len(b["texts"]) for a, b in zip(old, snap)):
+            sys.exit(f"Blocks or options were added but LIB_VERSION is still {LIB_VERSION}. Bump LIB_VERSION in src/data.py.")
+    else:
+        cur.write_text(json.dumps(snap, ensure_ascii=False, indent=1))
+    return {p.stem[1:]: json.loads(p.read_text()) for p in sorted(ARCHIVE_DIR.glob("v*.json"))}
 
 def n(b, i): return i if b.get("zero") else i + 1
 def default_recipe(li=0):
@@ -37,13 +62,14 @@ def static_library():
     rows.append('</section>')
     return "\n".join(rows)
 
-def page(head_close):
+def page(head_close, archive):
     en = T["en"]
     data_js = "\n".join([
         f"const BLOCKS = {json.dumps(BLOCKS, ensure_ascii=False)};",
         f"const NEG = {json.dumps(NEG)};",
         f"const DEFAULT = {json.dumps(DEFAULT)};",
         f"const LIB_VERSION = {json.dumps(LIB_VERSION)};",
+        f"const ARCHIVE = {json.dumps(archive, ensure_ascii=False)};",
         f"const PLATFORMS = {json.dumps(PLATFORMS)};",
         f"const DEFAULT_PLATFORM = {json.dumps(DEFAULT_PLATFORM)};",
         f"const SEPARATORS = {json.dumps(SEPARATORS)};",
@@ -58,7 +84,7 @@ def page(head_close):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-{(SRC/'style.css').read_text()}</style>
+{theme.css()}{(SRC/'style.css').read_text()}</style>
 {head_close}
 <div class="wrap">
   <header class="top">
@@ -71,6 +97,8 @@ def page(head_close):
       <button id="lang-en" aria-pressed="true">EN</button><button id="lang-es" aria-pressed="false">ES</button>
     </div>
   </header>
+
+  <div class="panel notice" id="notice" role="status" hidden></div>
 
   <div class="grid">
     <section class="blocks" id="blocks" aria-label="Blocks"></section>
@@ -113,12 +141,13 @@ def page(head_close):
           <button class="btn" id="loadBtn" data-i="load">{en["load"]}</button>
           <button class="btn" id="resetBtn" data-i="reset">{en["reset"]}</button>
         </div>
+        <div id="loadErr" hidden></div>
         <div class="toast" id="toast" role="status"></div>
       </div>
 
       <div class="panel warn" id="warnPanel" hidden>
         <h2 data-i="warnTitle">{en["warnTitle"]}</h2>
-        <ul class="tips" id="warnList"></ul>
+        <div id="warnList"></div>
       </div>
 
       <div class="panel" id="varPanel" hidden>
@@ -159,9 +188,13 @@ def library_md():
         L += [f"| {n(b,i)} | {en} | {es} | {t or '(none)'} |" for i, (en, es, t) in enumerate(b['opts'])]
         L.append("")
     L += ["## B0 · NEG — Negative prompt", "```", NEG, "```", "",
-          "## Known conflicts / Conflictos conocidos",
-          "The tool shows these as warnings and never changes your choices. / La herramienta los muestra como avisos y nunca cambia tu elección.", ""]
-    L += [f"- {c['en']}" for c in CONFLICTS]
+          "## Combination notes / Notas de combinación",
+          "Shown as notes, grouped by kind; the tool never changes your choices. / Se muestran como notas por tipo; la herramienta nunca cambia tu elección.", ""]
+    kinds = {"incompatible": "Incompatible", "out_of_frame": "Out of frame / Fuera de encuadre", "test": "Needs testing / Requiere pruebas"}
+    for k, label in kinds.items():
+        L.append(f"**{label}**")
+        L += [f"- {c['en']}" for c in CONFLICTS if c["kind"] == k]
+        L.append("")
     return "\n".join(L) + "\n"
 
 def readme_md():
@@ -178,17 +211,18 @@ Build image prompts from **blocks** and copy a ready-to-use prompt. Pick one num
 - Numbered options per block; hair **color** (`HAIR`) and **hairstyle** (`STYLE`) are separate, and so are **framing** (`CAM`) and **camera angle** (`ANGLE`).
 - Formatting and suggested settings for **Perchance AI** (default), **Venice AI** and **SeaArt**.
 - **Lock** blocks; **Variants** compares the other options of one block (page through all of them).
-- **Recipes** reproduce a prompt exactly — library version, options, platform and separator:
+- **Recipes** record library version, options, platform and separator:
   `{default_recipe()}`
-- Paste a recipe to load it; your last session is remembered in your browser.
-- Warnings for known contradictions between blocks (never changed silently).
+- Paste a recipe to load it. Invalid recipes are rejected as a whole with a list of errors; partial recipes are fine.
+- Recipes and saved sessions from an older library version are shown with that version's exact texts (read-only) until you choose to migrate. Migrating keeps the option numbers but uses current texts, so the prompt may change.
+- Notes on combinations, grouped as incompatible, out of frame or needs testing (never changed silently).
 - English / Spanish interface. Prompts are always in English. Works without installing anything; a read-only list appears where scripts can't run.
 
 ## Content rules
 Adults only, fictional people, no nudity or sexual content, no trademarked characters.
 
 ## Editing
-All published files come from `src/`. Edit `src/data.py` (blocks), `src/i18n.py` (interface text), `src/style.css` or `src/app.js`, then run `python3 src/build.py`. It regenerates `index.html`, `biblioteca.md` and this README so they stay in sync. Bump `LIB_VERSION` whenever a prompt text changes.
+All published files come from `src/`. Edit `src/data.py` (blocks), `src/i18n.py` (interface text), `src/theme.py` (colours), `src/style.css` or `src/app.js`, then run `python3 src/build.py`. It regenerates `index.html`, `biblioteca.md` and this README so they stay in sync. Published texts are frozen in `src/archive/`; the build stops if a text or option changes without bumping `LIB_VERSION`. Tests: `python3 src/test_app.py`.
 
 ## Contributing
 Have a block that works well? Open an *issue* with the text, the platform and the seed.
@@ -201,9 +235,10 @@ Arma prompts de imagen por **bloques** y copia el resultado listo. Interfaz en e
 """
 
 if __name__ == "__main__":
-    (ROOT/"index.html").write_text('<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">\n' + page("</head><body>") + "\n</body></html>\n")
+    archive = load_archive()
+    (ROOT/"index.html").write_text('<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">\n' + page("</head><body>", archive) + "\n</body></html>\n")
     (ROOT/"biblioteca.md").write_text(library_md())
     (ROOT/"README.md").write_text(readme_md())
     if "--fragment" in sys.argv:
-        Path(sys.argv[sys.argv.index("--fragment") + 1]).write_text(page(""))
+        Path(sys.argv[sys.argv.index("--fragment") + 1]).write_text(page("", archive))
     print("built v" + LIB_VERSION)

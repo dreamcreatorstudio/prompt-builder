@@ -4,15 +4,21 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 HTML = (Path(__file__).resolve().parent.parent / "index.html").read_text()
+import json, re
+_arch = json.loads(re.search(r"const ARCHIVE = (\{.*?\});\n", HTML).group(1))
+_old = json.loads(json.dumps(_arch["1.2"])); _old[[x["id"] for x in _old].index("B3.1")]["texts"][0] = "OLD honey hair"
+_arch["1.1"] = _old
+OLD_HTML = re.sub(r"const ARCHIVE = \{.*?\};\n", lambda m: "const ARCHIVE = " + json.dumps(_arch) + ";\n", HTML, count=1)
+DEFAULT_HAIR = json.loads(re.search(r"const DEFAULT = (\{.*?\});", HTML).group(1))["B3.1"]
 results = []
 def check(name, cond, detail=""):
     results.append((name, bool(cond), detail)); print(("PASS " if cond else "FAIL ") + name + (f" — {detail}" if detail and not cond else ""))
 
-def fresh(b, js=True, locale="en-US"):
+def fresh(b, js=True, locale="en-US", html=None):
     c = b.new_context(java_script_enabled=js, locale=locale)
     pg = c.new_page(); errs = []
     pg.on("pageerror", lambda e: errs.append(str(e)))
-    pg.goto("about:blank"); pg.set_content(HTML)
+    pg.goto("about:blank"); pg.set_content(html or HTML)
     return pg, errs
 
 ev = lambda pg, js: pg.evaluate(js)
@@ -88,7 +94,7 @@ with sync_playwright() as p:
     pg.click(radio("B7", 0)); pg.click(radio("B7.1", 7))
     check("profile + three-quarter framing shows a warning", pg.is_visible("#warnPanel"))
     check("…without changing the user's choices", ev(pg, 'S.sel["B7"]') == 0 and ev(pg, 'S.sel["B7.1"]') == 7)
-    pg.click(radio("B7", 2))
+    pg.click(radio("B7", 3))
     check("warning clears when the conflict is gone", not pg.is_visible("#warnPanel"))
 
     # recipe round-trip
@@ -104,10 +110,72 @@ with sync_playwright() as p:
     pg.click('[data-lock="B3"]'); cur = ev(pg, 'S.sel["B3"]')
     pg.fill("#recipeIn", "AGE6"); pg.click("#loadBtn")
     check("recipe does not change locked blocks", ev(pg, 'S.sel["B3"]') == cur and "Locked" in pg.inner_text("#toast"))
-    pg.fill("#recipeIn", "v1.0 | HAIR1"); pg.click("#loadBtn")
-    check("older library version is flagged", "v1.0" in pg.inner_text("#toast"))
-    pg.fill("#recipeIn", "nonsense"); pg.click("#loadBtn")
-    check("bad recipe shows an example", "Example" in pg.inner_text("#toast"))
+    pg.click('[data-lock="B3"]')  # unlock
+
+    # 1. full validation before applying (nothing is applied if anything is wrong)
+    def attempt(txt):
+        before = ev(pg, "JSON.stringify(S.sel)")
+        pg.fill("#recipeIn", txt); pg.click("#loadBtn")
+        return before == ev(pg, "JSON.stringify(S.sel)"), pg.inner_text("#loadErr") if pg.is_visible("#loadErr") else ""
+    unchanged, err = attempt("AGE2 HAIR99")
+    check("out-of-range option rejects the whole recipe (AGE not applied)", unchanged and "HAIR99" in err and "1–8" in err, err)
+    unchanged, err = attempt("HAIR6 CAB7")
+    check("same block twice (EN/ES) with different values is rejected", unchanged and "B3.1" in err, err)
+    unchanged, err = attempt("HAIR6 CAB6 BG2")
+    check("same block twice with the same value is accepted", not err and ev(pg, 'S.sel["B11"]') == 1, err)
+    unchanged, err = attempt("AGE2 FOO3")
+    check("unknown key rejects the recipe", unchanged and "FOO" in err, err)
+    unchanged, err = attempt("v9.9 | HAIR1")
+    check("unknown library version is refused", unchanged and "9.9" in err, err)
+    unchanged, err = attempt("nonsense")
+    check("recipe with no options shows an error", unchanged and err, err)
+    unchanged, err = attempt("ACC0")
+    check("zero-based block accepts 0", not err)
+    unchanged, err = attempt("ACC5")
+    check("zero-based block rejects past its range", unchanged and "0–4" in err, err)
+    unchanged, err = attempt("STYLE3")
+    check("partial valid recipe still works and clears errors", not err and ev(pg, 'S.sel["B3.4"]') == 2)
+
+    # 2. reproduce an older version exactly vs migrate (fake archived v1.1 with a different hair text)
+    pgA, errsA = fresh(b, html=OLD_HTML)
+    pgA.fill("#recipeIn", "v1.1 | HAIR1 BG1"); pgA.click("#loadBtn")
+    exact = pgA.evaluate("promptText()")
+    check("older recipe is reproduced with its own texts", "OLD honey hair" in exact and pgA.evaluate("S.pin") == "1.1", exact[:80])
+    check("…editing is paused while reproducing", pgA.is_disabled("#g-B3_1-0") and pgA.is_disabled('[data-var="B6"]'))
+    check("…recipe keeps the old version", pgA.inner_text("#recipe").startswith("v1.1 |"))
+    pgA.click("#migrateBtn")
+    mig = pgA.evaluate("promptText()")
+    check("migrating keeps option numbers but uses current texts", pgA.evaluate("S.pin") is None and "honey-blonde hair" in mig and "OLD" not in mig)
+    check("…and says the prompt may differ", "may differ" in pgA.inner_text("#toast"))
+
+    # 3. sessions: same version restored, older version pinned with notice, unknown version ignored
+    def session_page(sess):
+        c = b.new_context(); p2 = c.new_page()
+        p2.route("https://pb.test/", lambda r: r.fulfill(body=OLD_HTML, content_type="text/html"))
+        p2.goto("https://pb.test/")
+        p2.evaluate(f"localStorage.setItem('pb-session', JSON.stringify({sess}))"); p2.reload()
+        return p2
+    p2 = session_page('{v:"1.1", sel:{"B3.1":0,"B11":0}, plat:"venice", sep:"nl"}')
+    check("old-version session is shown exactly, with a notice", p2.evaluate("S.pin") == "1.1" and "OLD honey hair" in p2.evaluate("promptText()") and p2.is_visible("#notice"))
+    p2 = session_page('{v:"0.3", sel:{"B3.1":7}, plat:"venice", sep:"tag"}')
+    check("unknown-version session is not reinterpreted", p2.evaluate('S.sel["B3.1"]') == DEFAULT_HAIR and p2.evaluate("S.pin") is None and "0.3" in p2.inner_text("#notice"))
+    check("…but platform and separator are kept", p2.input_value("#plat") == "venice" and p2.input_value("#sep") == "tag")
+    p2 = session_page('{sel:{"B3.1":7}}')
+    check("session without a version is not reinterpreted", p2.evaluate('S.sel["B3.1"]') == DEFAULT_HAIR and p2.is_visible("#notice"))
+
+    # 4. notes by kind; seated + upright and walking + helmet are no longer flagged
+    pg.click("#resetBtn")
+    pg.click(radio("B5", 1)); pg.click(radio("B7", 4))
+    check("seated + lean pilates gives no note", not pg.is_visible("#warnPanel"))
+    pg.click(radio("B6", 9)); pg.click(radio("B7", 3))
+    check("walking + astronaut gives no note", not pg.is_visible("#warnPanel"))
+    pg.click(radio("B7", 2))
+    check("portrait shows an out-of-frame note", "out of frame" in pg.inner_text("#warnPanel").lower())
+    pg.click(radio("B7", 0)); pg.click(radio("B7.1", 7))
+    check("profile + 3/4 framing is marked incompatible", "incompatible" in pg.inner_text("#warnPanel").lower())
+    pg.click(radio("B7.1", 11))
+    check("POV + looking at camera is marked needs testing", "needs testing" in pg.inner_text("#warnPanel").lower())
+    pg.click(radio("B7.1", 0))
 
     # session persists (same origin storage: use a real origin)
     c = b.new_context(); pg2 = c.new_page()

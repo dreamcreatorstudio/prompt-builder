@@ -123,19 +123,25 @@ PLATFORMS = {  # separator default + transforms applied to the prompt text
 DEFAULT_PLATFORM = "perchance"
 SEPARATORS = ["nl", "one", "tag", "break"]
 
-# Known contradictions between blocks. They are shown as warnings; the tool never changes the user's choice.
-# Each rule: when block a is one of a_opts AND block b is one of b_opts (0-based indexes).
+# Notes about block combinations. Shown as notes, grouped by kind; the tool never changes the user's choices.
+#   incompatible : the two blocks ask for opposite things
+#   out_of_frame : details that the chosen framing will not show
+#   test         : may work, but depends on the model — try it with a fixed seed
+# A rule matches when block a is one of a_opts and (if given) block b is one of b_opts. Indexes are 0-based.
 CONFLICTS = [
-    dict(a="B7.1", a_opts=[7], b="B7", b_opts=[0, 1],
-         en="ANGLE 8 (profile) conflicts with this framing, which asks for a three-quarter turn or looking at the camera. Try CAM 3–5, or another angle.",
-         es="ÁNGULO 8 (perfil) choca con este encuadre, que pide giro de tres cuartos o mirar a cámara. Prueba CAM 3–5 u otro ángulo."),
-    dict(a="B7.1", a_opts=[3], b="B7", b_opts=[2],
-         en="ANGLE 4 (top-down) with a head-and-shoulders portrait usually shows only the top of the head.",
-         es="ÁNGULO 4 (cenital) con un retrato de cabeza y hombros suele mostrar solo la coronilla."),
-    dict(a="B5", a_opts=[1], b="B7", b_opts=[4],
-         en="BODY 2 includes 'upright posture'; with CAM 5 (seated) the model may sit stiffly.",
-         es="CUERPO 2 incluye 'postura erguida'; con CAM 5 (sentada) la modelo puede salir rígida."),
-    dict(a="B6", a_opts=[9, 15, 16], b="B7", b_opts=[3],
-         en="This outfit already describes what she holds (helmet or mask); combined with walking, hands may come out wrong.",
-         es="Este vestuario ya describe lo que sostiene (casco o máscara); al combinarlo con caminar, las manos pueden salir mal."),
+    dict(kind="incompatible", a="B7.1", a_opts=[7], b="B7", b_opts=[0, 1],
+         en="ANGLE 8 (profile) vs. this framing, which asks for a three-quarter turn or looking at the camera.",
+         es="ÁNGULO 8 (perfil) frente a este encuadre, que pide giro de tres cuartos o mirar a cámara."),
+    dict(kind="out_of_frame", a="B7", a_opts=[1, 2],
+         en="Half-body and portrait framings crop the lower body: shorts, footwear and leg details from OUTFIT or BODY won't show.",
+         es="El medio cuerpo y el retrato recortan la parte baja: el short, el calzado y los detalles de piernas de VESTUARIO o CUERPO no se verán."),
+    dict(kind="test", a="B7.1", a_opts=[3, 4], b="B7", b_opts=[2],
+         en="Top-down or worm's-eye with a head-and-shoulders portrait can give unusual crops. Test with a fixed seed.",
+         es="Cenital o nadir con un retrato de cabeza y hombros puede dar recortes raros. Pruébalo con un seed fijo."),
+    dict(kind="test", a="B7.1", a_opts=[10], b="B11", b_opts=[0, 1],
+         en="An aerial drone shot over a studio backdrop is unusual; models may add a landscape. Test it.",
+         es="Un plano de dron sobre un fondo de estudio es poco común; el modelo puede inventar un paisaje. Pruébalo."),
+    dict(kind="test", a="B7.1", a_opts=[11], b="B7", b_opts=[0, 1],
+         en="POV plus 'looking at camera' may read as a selfie. Test it.",
+         es="POV más 'mirando a cámara' puede salir como selfie. Pruébalo."),
 ]

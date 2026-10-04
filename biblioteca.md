@@ -1,9 +1,14 @@
 # Block Library / Biblioteca de bloques
 
-Live tool: https://dreamcreatorstudio.github.io/prompt-builder
+Library version **v1.2** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
-Each block has a short key and numbered options. A **recipe** is one line such as `PHOTO1 GLOW2 AGE1 EXPR1 HAIR6 STYLE10 EYES2 SKIN1 BODY1 OUTFIT1 ACC0 CAM1 ANGLE1 LIGHT1 BG1`.
-New options are always added at the end of a block, so old recipes keep working.
+Each block has a short key and numbered options. A **recipe** records the library version, one option per block, the platform and the separator:
+
+`v1.2 | PHOTO2 GLOW2 AGE1 EXPR3 HAIR6 STYLE9 EYES2 SKIN1 BODY2 OUTFIT4 ACC2 CAM1 ANGLE9 LIGHT1 BG1 | perchance | one`
+
+Spanish keys work too: `v1.2 | FOTO2 BRI2 EDAD1 EXP3 CAB6 PEI9 OJO2 PIEL1 CUE2 VES4 ACC2 CAM1 ANG9 LUZ1 FON1 | perchance | one`
+
+New options are always added at the end of a block and existing numbers never change, so old recipes keep working.
 
 ## B1 · PHOTO / FOTO — Photo engine / Motor fotográfico
 | # | EN | ES | Prompt text |
@@ -169,3 +174,11 @@ New options are always added at the end of a block, so old recipes keep working.
 ```
 cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features
 ```
+
+## Known conflicts / Conflictos conocidos
+The tool shows these as warnings and never changes your choices. / La herramienta los muestra como avisos y nunca cambia tu elección.
+
+- ANGLE 8 (profile) conflicts with this framing, which asks for a three-quarter turn or looking at the camera. Try CAM 3–5, or another angle.
+- ANGLE 4 (top-down) with a head-and-shoulders portrait usually shows only the top of the head.
+- BODY 2 includes 'upright posture'; with CAM 5 (seated) the model may sit stiffly.
+- This outfit already describes what she holds (helmet or mask); combined with walking, hands may come out wrong.

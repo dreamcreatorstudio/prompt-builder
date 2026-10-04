@@ -138,13 +138,18 @@ footer a{color:var(--accent)}
 .tag{color:var(--muted);user-select:none;-webkit-user-select:none;opacity:.8}
 footer{color:var(--muted);font-size:13px}
 footer a{color:var(--accent)}
+.input{font-family:var(--mono);font-size:13px;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);flex:1;min-width:0}
+.input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.warn{border-color:var(--h2)}
+.warn h2{color:var(--h2)}
 </style>
 </head><body>
 <div class="wrap">
   <header class="top">
     <div style="display:grid;gap:6px;min-width:0;flex:1">
       <h1 data-i="title">Prompt Builder</h1>
-      <p class="lede" data-i="lede" data-html>Pick a platform and one numbered option per block, then copy the assembled prompt. Each block sits on its own line, so you can see where it starts and ends without changing the prompt. Lock the blocks you want to keep and use <b>×3</b> to get three variants of a single block.</p>
+      <p class="lede" data-i="lede" data-html>Pick a platform and one numbered option per block, then copy the assembled prompt. Lock the blocks you want to keep and use <b>Variants</b> to compare options of a single block.</p>
       <p class="small disclaimer" data-i="disclaimer">Experimental project to test and share. Image generators don't always follow a prompt exactly — results vary by platform, model and seed. Use it as a guide, not a guarantee.</p>
     </div>
     <div class="lang" role="group" aria-label="Language">
@@ -312,44 +317,42 @@ footer a{color:var(--accent)}
         <div class="row">
           <label class="small" for="sep" data-i="sepLabel">Separator between blocks</label>
           <select id="sep">
-            <option value="nl" selected data-i="sepNl">Line break (recommended)</option>
-            <option value="one" data-i="sepOne">Single line</option>
+            <option value="nl" data-i="sepNl">Line break (recommended)</option>
+            <option value="one" data-i="sepOne" selected>Single line</option>
             <option value="tag" data-i="sepTag">[B#] tags (for saving only)</option>
             <option value="break" data-i="sepBreak">BREAK (SeaArt / advanced SD)</option>
           </select>
         </div>
-        <pre id="prompt" aria-live="polite">high-end fashion editorial photograph, medium format camera, 80mm lens, f/4, crisp detail, magazine quality, photorealistic,
-healthy dewy skin glow, subtle natural sheen on cheekbones and shoulders,
-a 25-year-old woman, adult facial features,
-calm self-assured gaze,
-ash-brown hair,
-neat hair bun,
-green eyes,
-fair porcelain skin with warm pink undertones, natural skin texture, visible pores,
-lean slender adult physique with long toned muscles, graceful upright posture,
-sage green knit crop cardigan, high-waisted white tailored shorts, minimalist sandals,
-small gold hoop earrings,
-full body shot, head to toe framing, standing relaxed, three-quarter turn, looking at camera,
-hip-level shot, camera at waist height,
-soft even studio lighting, large softbox, gentle shadows,
-seamless pure white background, infinite white studio void, soft contact shadow on the floor</pre>
+        <pre id="prompt" aria-live="polite">high-end fashion editorial photograph, medium format camera, 80mm lens, f/4, crisp detail, photorealistic, healthy dewy skin glow, subtle natural sheen on cheekbones and shoulders, a 25-year-old woman, adult facial features, calm self-assured gaze, ash-brown hair, neat hair bun, green eyes, fair porcelain skin with warm pink undertones, natural skin texture, visible pores, lean slender adult physique with long toned muscles, graceful upright posture, sage green knit crop cardigan, high-waisted white tailored shorts, minimalist sandals, small gold hoop earrings, full body shot, head to toe framing, standing relaxed, three-quarter turn, looking at camera, hip-level shot, camera at waist height, soft even studio lighting, large softbox, gentle shadows, seamless pure white background, infinite white studio void, soft contact shadow on the floor</pre>
         <p class="small" style="margin:0" data-i="labelNote">Grey [B#] labels are a visual guide only — they are not copied.</p>
         <div class="row">
           <span class="small" data-i="recipe">Recipe:</span>
-          <span class="code" id="recipe"></span>
+          <span class="code" id="recipe">v1.2 | PHOTO2 GLOW2 AGE1 EXPR3 HAIR6 STYLE9 EYES2 SKIN1 BODY2 OUTFIT4 ACC2 CAM1 ANGLE9 LIGHT1 BG1 | perchance | one</span>
           <button class="btn" id="copyRecipe" data-i="copyRecipe">Copy recipe</button>
         </div>
-        <div class="toast" id="toast"></div>
+        <div class="row">
+          <label class="small" for="recipeIn" data-i="loadLabel">Paste a recipe</label>
+          <input id="recipeIn" class="input" type="text" spellcheck="false" autocomplete="off" placeholder="HAIR2 STYLE5 BG3">
+          <button class="btn" id="loadBtn" data-i="load">Load</button>
+          <button class="btn" id="resetBtn" data-i="reset">Reset to default</button>
+        </div>
+        <div class="toast" id="toast" role="status"></div>
       </div>
 
-      <div class="panel">
-        <div class="row"><h2 data-i="neg">Negative prompt</h2><span style="margin-left:auto"></span><button class="btn" id="copyNeg" data-i="copy">Copy</button></div>
-        <pre id="neg">cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features</pre>
+      <div class="panel warn" id="warnPanel" hidden>
+        <h2 data-i="warnTitle">Possible conflicts</h2>
+        <ul class="tips" id="warnList"></ul>
       </div>
 
       <div class="panel" id="varPanel" hidden>
         <div class="row"><h2 id="varTitle">Variants</h2><span style="margin-left:auto"></span><button class="btn" id="closeVar" data-i="close">Close</button></div>
         <div class="variants" id="variants"></div>
+        <div class="row" id="varNav"><button class="btn" id="varPrev" data-i="prev">‹ Previous</button><button class="btn" id="varNext" data-i="next">Next ›</button></div>
+      </div>
+
+      <div class="panel">
+        <div class="row"><h2 data-i="neg">Negative prompt</h2><span style="margin-left:auto"></span><button class="btn" id="copyNeg" data-i="copy">Copy</button></div>
+        <pre id="neg">cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features</pre>
       </div>
 
       <div class="panel">
@@ -358,204 +361,228 @@ seamless pure white background, infinite white studio void, soft contact shadow 
       </div>
     </aside>
   </div>
-  <footer data-i="footer" data-html>Prompts are always in English, which is what image generators understand best. Adults only, fictional people, no nudity, no trademarked characters. <a href="https://github.com/dreamcreatorstudio/prompt-builder">Source on GitHub</a>.</footer>
+  <footer data-i="footer" data-html>Prompts are always in English. Adults only, fictional people, no nudity, no trademarked characters. <a href="https://github.com/dreamcreatorstudio/prompt-builder">Source on GitHub</a>. · Library v1.2</footer>
 </div>
 
 <script>
-document.documentElement.classList.add("js");
-const BLOCKS = [{"id": "B1", "key": ["PHOTO", "FOTO"], "name": ["Photo engine", "Motor fotográfico"], "hue": "--h1", "zero": false, "opts": [["Realistic DSLR", "Realista DSLR", "RAW photo, photorealistic, real photograph, Canon EOS R5, 85mm lens, f/2.0, shallow depth of field, natural film grain, sharp focus, 8k uhd"], ["Fashion editorial", "Editorial de moda", "high-end fashion editorial photograph, medium format camera, 80mm lens, f/4, crisp detail, magazine quality, photorealistic"], ["Studio catalog", "Catálogo de estudio", "clean commercial catalog photograph, 50mm lens, f/8, everything in sharp focus, even exposure, photorealistic"]]}, {"id": "B2", "key": ["GLOW", "BRI"], "name": ["Skin glow", "Brillo de piel"], "hue": "--h2", "zero": false, "opts": [["Natural matte", "Natural mate", "natural matte skin finish, soft diffuse highlights"], ["Healthy glow", "Glow saludable", "healthy dewy skin glow, subtle natural sheen on cheekbones and shoulders"], ["Post-workout", "Post-entreno", "light post-workout glow, faint natural sheen of perspiration"]]}, {"id": "B3", "key": ["AGE", "EDAD"], "name": ["Model age", "Edad de la modelo"], "hue": "--h3", "zero": false, "opts": [["25", "25 años", "a 25-year-old woman, adult facial features"], ["30", "30 años", "a 30-year-old woman, adult facial features"], ["35", "35 años", "a 35-year-old woman, mature adult features"], ["40", "40 años", "a 40-year-old woman, mature adult features"], ["45", "45 años", "a 45-year-old woman, graceful mature features"], ["50", "50 años", "a 50-year-old woman, graceful mature features, subtle laugh lines"]]}, {"id": "B3.3", "key": ["EXPR", "EXP"], "name": ["Expression", "Expresión"], "hue": "--h3", "zero": false, "opts": [["Confident", "Segura", "confident relaxed expression, soft natural smile"], ["Cheerful", "Alegre", "bright friendly smile"], ["Elegant", "Elegante", "calm self-assured gaze"], ["Serene", "Serena", "serene warm expression"], ["Playful", "Divertida", "playful laughing expression"]]}, {"id": "B3.1", "key": ["HAIR", "CAB"], "name": ["Hair color", "Color de cabello"], "hue": "--h3", "zero": false, "opts": [["Honey blonde", "Rubia miel", "honey-blonde hair"], ["Platinum blonde", "Rubia platino", "platinum blonde hair"], ["Redhead", "Pelirroja", "copper-red hair"], ["Auburn", "Caoba", "auburn hair"], ["Chestnut", "Castaño", "chestnut-brown hair"], ["Ash brown", "Castaño ceniza", "ash-brown hair"], ["Black", "Negro", "jet-black hair"], ["Silver grey", "Gris plata", "silver-grey hair"]]}, {"id": "B3.4", "key": ["STYLE", "PEI"], "name": ["Hairstyle", "Peinado"], "hue": "--h3", "zero": false, "opts": [["Sleek straight", "Liso perfecto", "sleek straight hair"], ["Straight", "Liso natural", "straight hair"], ["Subtle waves", "Ondas sutiles", "subtle natural waves"], ["Wavy", "Ondulado", "wavy hair"], ["Beach waves", "Ondas de playa", "loose beach waves"], ["Curly", "Rizado", "curly hair"], ["Coily / afro", "Muy rizado / afro", "coily hair, afro hair"], ["High ponytail", "Coleta alta", "high ponytail"], ["Neat bun", "Moño pulido", "neat hair bun"], ["Messy bun", "Moño suelto", "loose messy bun with face-framing strands"], ["Pixie cut", "Corte pixie", "pixie cut"], ["Short bob", "Bob corto", "short bob cut"]]}, {"id": "B3.2", "key": ["EYES", "OJO"], "name": ["Eyes", "Ojos"], "hue": "--h3", "zero": false, "opts": [["Blue", "Azules", "clear blue eyes"], ["Green", "Verdes", "green eyes"], ["Brown", "Marrones", "warm brown eyes"], ["Hazel", "Avellana", "hazel eyes"], ["Grey", "Grises", "grey eyes"]]}, {"id": "B4", "key": ["SKIN", "PIEL"], "name": ["Skin tone", "Piel y tono"], "hue": "--h4", "zero": false, "opts": [["Porcelain", "Porcelana", "fair porcelain skin with warm pink undertones, natural skin texture, visible pores"], ["Fair, freckles", "Clara con pecas", "fair skin with light freckles across the nose and cheeks, natural skin texture"], ["Olive", "Oliva", "olive skin tone with golden undertones, natural skin texture"], ["Tan", "Morena", "warm tan brown skin, natural skin texture, subtle color variation"], ["Deep", "Oscura", "deep brown skin with rich undertones, natural skin texture"]]}, {"id": "B5", "key": ["BODY", "CUE"], "name": ["Body", "Cuerpo"], "hue": "--h5", "zero": false, "opts": [["Athletic fit", "Fitness atlética", "fit athletic adult build, toned shoulders and arms, defined core, strong toned legs"], ["Lean pilates", "Pilates esbelta", "lean slender adult physique with long toned muscles, graceful upright posture"], ["Runner", "Corredora", "lean runner's build, defined legs, athletic adult proportions"], ["Natural", "Natural", "healthy natural adult body, soft curves, relaxed posture"]]}, {"id": "B6", "key": ["OUTFIT", "VES"], "name": ["Outfit", "Vestuario"], "hue": "--h6", "zero": false, "opts": [["Denim + white crop", "Denim + crop blanco", "white ribbed cotton crop top, high-waisted light-wash denim shorts, white canvas sneakers"], ["Black athletic", "Deportivo negro", "black sports crop top, matching high-waisted biker shorts, running shoes"], ["Summer linen", "Lino verano", "cream linen button-up crop top, high-waisted linen shorts, leather sandals"], ["Pastel knit", "Punto pastel", "sage green knit crop cardigan, high-waisted white tailored shorts, minimalist sandals"], ["Yoga set", "Yoga set", "dusty rose yoga set, fitted long-sleeve crop top and full-length leggings, barefoot"], ["Galactic heroine", "Heroína galáctica", "original superhero costume, full-coverage silver and teal bodysuit with geometric armor plates, short flowing cape, star emblem on the chest, knee-high boots"], ["Storm captain", "Capitana tormenta", "original superhero costume, full-coverage navy bodysuit with gold lightning-bolt piping, high collar, fingerless gloves, utility belt, armored boots"], ["Legend warrior", "Guerrera de leyenda", "original fantasy warrior costume, bronze breastplate over a long crimson tunic, leather bracers, ornate belt, sandal boots, round shield on her back"], ["Pirate", "Pirata", "pirate captain costume, white billowy blouse, burgundy brocade vest, tricorn hat, wide leather belt, tall boots, fitted dark trousers"], ["Astronaut", "Astronauta", "modern white astronaut suit with orange accents, mission patches, helmet held under one arm"], ["Samurai", "Samurái", "samurai-inspired costume, dark lacquered armor pieces over an indigo hakama and kimono, red cord details"], ["Flamenco", "Flamenca", "traditional red flamenco dress with white polka dots, ruffled sleeves and tiers, flower in the hair, shawl with fringe"], ["Cowgirl", "Vaquera", "western cowgirl outfit, suede fringe jacket, plaid shirt, high-waisted jeans, cowboy hat and boots"], ["Steampunk", "Steampunk", "steampunk explorer outfit, brown leather corset vest over a cream blouse, brass goggles on the hat, long skirt with buckles, gloves"], ["Forest elf", "Elfa del bosque", "original forest elf costume, long moss-green layered dress with leaf embroidery, hooded cape, elegant pointed ears, wooden bow"], ["Race driver", "Piloto de carreras", "racing driver suit, red and white fireproof jumpsuit with sponsor-free patches, helmet held at the hip"], ["Dominican carnival", "Carnaval dominicano", "Dominican carnival Diablo Cojuelo costume, vibrant full-coverage satin suit covered in mirrors, bells and ribbons, ornate horned mask held in her hand"]]}, {"id": "B6.1", "key": ["ACC", "ACC"], "name": ["Accessories", "Accesorios"], "hue": "--h6", "zero": true, "opts": [["None", "Ninguno", ""], ["Emerald necklace", "Collar esmeralda", "emerald pendant necklace on a fine gold chain"], ["Gold hoops", "Aros dorados", "small gold hoop earrings"], ["Sports watch", "Reloj deportivo", "minimalist sports watch"], ["Cap", "Gorra", "beige baseball cap"]]}, {"id": "B7", "key": ["CAM", "CAM"], "name": ["Framing & pose", "Encuadre y pose"], "hue": "--h7", "zero": false, "opts": [["Full body 3/4", "Cuerpo entero 3/4", "full body shot, head to toe framing, standing relaxed, three-quarter turn, looking at camera"], ["Half body", "Medio cuerpo", "medium shot from the waist up, looking at camera"], ["Portrait", "Retrato", "close-up portrait, head and shoulders"], ["Walking", "Caminando", "full body shot, walking toward camera, natural mid-stride motion"], ["Seated", "Sentada", "full body shot, sitting casually on a low wooden stool, relaxed posture"]]}, {"id": "B7.1", "key": ["ANGLE", "ANG"], "name": ["Camera angle", "Ángulo de cámara"], "hue": "--h7", "zero": false, "opts": [["Eye-level", "A la altura de los ojos", "eye-level shot, neutral natural perspective"], ["Low angle", "Contrapicado", "low angle shot looking up at the subject, powerful heroic perspective"], ["High angle", "Picado", "high angle shot looking down at the subject"], ["Bird's-eye / top-down", "Cenital", "bird's-eye view, top-down overhead shot"], ["Worm's-eye", "Nadir", "worm's-eye view from the ground looking straight up, dramatic height"], ["Dutch angle", "Ángulo holandés", "dutch angle, tilted horizon, dynamic tension"], ["Over-the-shoulder", "Sobre el hombro", "over-the-shoulder shot, blurred shoulder in the foreground"], ["Profile / side view", "Perfil", "side view profile shot"], ["Hip level", "Altura de cadera", "hip-level shot, camera at waist height"], ["Knee level", "Altura de rodilla", "knee-level shot, camera low near the knees"], ["Aerial drone", "Dron aéreo", "aerial drone shot from high above"], ["POV", "Punto de vista (POV)", "first-person point of view shot"]]}, {"id": "B8", "key": ["LIGHT", "LUZ"], "name": ["Lighting", "Luz"], "hue": "--h8", "zero": false, "opts": [["Soft studio", "Estudio suave", "soft even studio lighting, large softbox, gentle shadows"], ["Golden hour", "Hora dorada", "warm golden hour sunlight, soft rim light"], ["Window", "Ventana", "soft natural window light from the side"], ["Overcast", "Nublado", "bright overcast daylight, soft shadowless light"]]}, {"id": "B11", "key": ["BG", "FON"], "name": ["Background", "Fondo"], "hue": "--h4", "zero": false, "opts": [["White void", "Void blanco", "seamless pure white background, infinite white studio void, soft contact shadow on the floor"], ["Neutral grey", "Gris neutro", "seamless light grey studio backdrop"], ["Paris", "París", "Paris cityscape with the Eiffel Tower in the background, creamy bokeh"], ["Beach", "Playa", "tropical beach at sunset, palm trees, soft ocean bokeh"], ["Yoga studio", "Sala de yoga", "bright yoga studio, light wooden floor, large windows, green plants"], ["City street", "Calle urbana", "sunny city street, modern storefronts, soft background blur"]]}];
+const BLOCKS = [{"id": "B1", "key": ["PHOTO", "FOTO"], "name": ["Photo engine", "Motor fotográfico"], "hue": "--h1", "opts": [["Realistic DSLR", "Realista DSLR", "RAW photo, photorealistic, real photograph, Canon EOS R5, 85mm lens, f/2.0, shallow depth of field, natural film grain, sharp focus, 8k uhd"], ["Fashion editorial", "Editorial de moda", "high-end fashion editorial photograph, medium format camera, 80mm lens, f/4, crisp detail, magazine quality, photorealistic"], ["Studio catalog", "Catálogo de estudio", "clean commercial catalog photograph, 50mm lens, f/8, everything in sharp focus, even exposure, photorealistic"]]}, {"id": "B2", "key": ["GLOW", "BRI"], "name": ["Skin glow", "Brillo de piel"], "hue": "--h2", "opts": [["Natural matte", "Natural mate", "natural matte skin finish, soft diffuse highlights"], ["Healthy glow", "Glow saludable", "healthy dewy skin glow, subtle natural sheen on cheekbones and shoulders"], ["Post-workout", "Post-entreno", "light post-workout glow, faint natural sheen of perspiration"]]}, {"id": "B3", "key": ["AGE", "EDAD"], "name": ["Model age", "Edad de la modelo"], "hue": "--h3", "opts": [["25", "25 años", "a 25-year-old woman, adult facial features"], ["30", "30 años", "a 30-year-old woman, adult facial features"], ["35", "35 años", "a 35-year-old woman, mature adult features"], ["40", "40 años", "a 40-year-old woman, mature adult features"], ["45", "45 años", "a 45-year-old woman, graceful mature features"], ["50", "50 años", "a 50-year-old woman, graceful mature features, subtle laugh lines"]]}, {"id": "B3.3", "key": ["EXPR", "EXP"], "name": ["Expression", "Expresión"], "hue": "--h3", "opts": [["Confident", "Segura", "confident relaxed expression, soft natural smile"], ["Cheerful", "Alegre", "bright friendly smile"], ["Elegant", "Elegante", "calm self-assured gaze"], ["Serene", "Serena", "serene warm expression"], ["Playful", "Divertida", "playful laughing expression"]]}, {"id": "B3.1", "key": ["HAIR", "CAB"], "name": ["Hair color", "Color de cabello"], "hue": "--h3", "opts": [["Honey blonde", "Rubia miel", "honey-blonde hair"], ["Platinum blonde", "Rubia platino", "platinum blonde hair"], ["Redhead", "Pelirroja", "copper-red hair"], ["Auburn", "Caoba", "auburn hair"], ["Chestnut", "Castaño", "chestnut-brown hair"], ["Ash brown", "Castaño ceniza", "ash-brown hair"], ["Black", "Negro", "jet-black hair"], ["Silver grey", "Gris plata", "silver-grey hair"]]}, {"id": "B3.4", "key": ["STYLE", "PEI"], "name": ["Hairstyle", "Peinado"], "hue": "--h3", "opts": [["Sleek straight", "Liso perfecto", "sleek straight hair"], ["Straight", "Liso natural", "straight hair"], ["Subtle waves", "Ondas sutiles", "subtle natural waves"], ["Wavy", "Ondulado", "wavy hair"], ["Beach waves", "Ondas de playa", "loose beach waves"], ["Curly", "Rizado", "curly hair"], ["Coily / afro", "Muy rizado / afro", "coily hair, afro hair"], ["High ponytail", "Coleta alta", "high ponytail"], ["Neat bun", "Moño pulido", "neat hair bun"], ["Messy bun", "Moño suelto", "loose messy bun with face-framing strands"], ["Pixie cut", "Corte pixie", "pixie cut"], ["Short bob", "Bob corto", "short bob cut"]]}, {"id": "B3.2", "key": ["EYES", "OJO"], "name": ["Eyes", "Ojos"], "hue": "--h3", "opts": [["Blue", "Azules", "clear blue eyes"], ["Green", "Verdes", "green eyes"], ["Brown", "Marrones", "warm brown eyes"], ["Hazel", "Avellana", "hazel eyes"], ["Grey", "Grises", "grey eyes"]]}, {"id": "B4", "key": ["SKIN", "PIEL"], "name": ["Skin tone", "Piel y tono"], "hue": "--h4", "opts": [["Porcelain", "Porcelana", "fair porcelain skin with warm pink undertones, natural skin texture, visible pores"], ["Fair, freckles", "Clara con pecas", "fair skin with light freckles across the nose and cheeks, natural skin texture"], ["Olive", "Oliva", "olive skin tone with golden undertones, natural skin texture"], ["Tan", "Morena", "warm tan brown skin, natural skin texture, subtle color variation"], ["Deep", "Oscura", "deep brown skin with rich undertones, natural skin texture"]]}, {"id": "B5", "key": ["BODY", "CUE"], "name": ["Body", "Cuerpo"], "hue": "--h5", "opts": [["Athletic fit", "Fitness atlética", "fit athletic adult build, toned shoulders and arms, defined core, strong toned legs"], ["Lean pilates", "Pilates esbelta", "lean slender adult physique with long toned muscles, graceful upright posture"], ["Runner", "Corredora", "lean runner's build, defined legs, athletic adult proportions"], ["Natural", "Natural", "healthy natural adult body, soft curves, relaxed posture"]]}, {"id": "B6", "key": ["OUTFIT", "VES"], "name": ["Outfit", "Vestuario"], "hue": "--h6", "opts": [["Denim + white crop", "Denim + crop blanco", "white ribbed cotton crop top, high-waisted light-wash denim shorts, white canvas sneakers"], ["Black athletic", "Deportivo negro", "black sports crop top, matching high-waisted biker shorts, running shoes"], ["Summer linen", "Lino verano", "cream linen button-up crop top, high-waisted linen shorts, leather sandals"], ["Pastel knit", "Punto pastel", "sage green knit crop cardigan, high-waisted white tailored shorts, minimalist sandals"], ["Yoga set", "Yoga set", "dusty rose yoga set, fitted long-sleeve crop top and full-length leggings, barefoot"], ["Galactic heroine", "Heroína galáctica", "original superhero costume, full-coverage silver and teal bodysuit with geometric armor plates, short flowing cape, star emblem on the chest, knee-high boots"], ["Storm captain", "Capitana tormenta", "original superhero costume, full-coverage navy bodysuit with gold lightning-bolt piping, high collar, fingerless gloves, utility belt, armored boots"], ["Legend warrior", "Guerrera de leyenda", "original fantasy warrior costume, bronze breastplate over a long crimson tunic, leather bracers, ornate belt, sandal boots, round shield on her back"], ["Pirate", "Pirata", "pirate captain costume, white billowy blouse, burgundy brocade vest, tricorn hat, wide leather belt, tall boots, fitted dark trousers"], ["Astronaut", "Astronauta", "modern white astronaut suit with orange accents, mission patches, helmet held under one arm"], ["Samurai", "Samurái", "samurai-inspired costume, dark lacquered armor pieces over an indigo hakama and kimono, red cord details"], ["Flamenco", "Flamenca", "traditional red flamenco dress with white polka dots, ruffled sleeves and tiers, flower in the hair, shawl with fringe"], ["Cowgirl", "Vaquera", "western cowgirl outfit, suede fringe jacket, plaid shirt, high-waisted jeans, cowboy hat and boots"], ["Steampunk", "Steampunk", "steampunk explorer outfit, brown leather corset vest over a cream blouse, brass goggles on the hat, long skirt with buckles, gloves"], ["Forest elf", "Elfa del bosque", "original forest elf costume, long moss-green layered dress with leaf embroidery, hooded cape, elegant pointed ears, wooden bow"], ["Race driver", "Piloto de carreras", "racing driver suit, red and white fireproof jumpsuit with sponsor-free patches, helmet held at the hip"], ["Dominican carnival", "Carnaval dominicano", "Dominican carnival Diablo Cojuelo costume, vibrant full-coverage satin suit covered in mirrors, bells and ribbons, ornate horned mask held in her hand"]]}, {"id": "B6.1", "key": ["ACC", "ACC"], "name": ["Accessories", "Accesorios"], "hue": "--h6", "zero": true, "opts": [["None", "Ninguno", ""], ["Emerald necklace", "Collar esmeralda", "emerald pendant necklace on a fine gold chain"], ["Gold hoops", "Aros dorados", "small gold hoop earrings"], ["Sports watch", "Reloj deportivo", "minimalist sports watch"], ["Cap", "Gorra", "beige baseball cap"]]}, {"id": "B7", "key": ["CAM", "CAM"], "name": ["Framing & pose", "Encuadre y pose"], "hue": "--h7", "opts": [["Full body 3/4", "Cuerpo entero 3/4", "full body shot, head to toe framing, standing relaxed, three-quarter turn, looking at camera"], ["Half body", "Medio cuerpo", "medium shot from the waist up, looking at camera"], ["Portrait", "Retrato", "close-up portrait, head and shoulders"], ["Walking", "Caminando", "full body shot, walking toward camera, natural mid-stride motion"], ["Seated", "Sentada", "full body shot, sitting casually on a low wooden stool, relaxed posture"]]}, {"id": "B7.1", "key": ["ANGLE", "ANG"], "name": ["Camera angle", "Ángulo de cámara"], "hue": "--h7", "opts": [["Eye-level", "A la altura de los ojos", "eye-level shot, neutral natural perspective"], ["Low angle", "Contrapicado", "low angle shot looking up at the subject, powerful heroic perspective"], ["High angle", "Picado", "high angle shot looking down at the subject"], ["Bird's-eye / top-down", "Cenital", "bird's-eye view, top-down overhead shot"], ["Worm's-eye", "Nadir", "worm's-eye view from the ground looking straight up, dramatic height"], ["Dutch angle", "Ángulo holandés", "dutch angle, tilted horizon, dynamic tension"], ["Over-the-shoulder", "Sobre el hombro", "over-the-shoulder shot, blurred shoulder in the foreground"], ["Profile / side view", "Perfil", "side view profile shot"], ["Hip level", "Altura de cadera", "hip-level shot, camera at waist height"], ["Knee level", "Altura de rodilla", "knee-level shot, camera low near the knees"], ["Aerial drone", "Dron aéreo", "aerial drone shot from high above"], ["POV", "Punto de vista (POV)", "first-person point of view shot"]]}, {"id": "B8", "key": ["LIGHT", "LUZ"], "name": ["Lighting", "Luz"], "hue": "--h8", "opts": [["Soft studio", "Estudio suave", "soft even studio lighting, large softbox, gentle shadows"], ["Golden hour", "Hora dorada", "warm golden hour sunlight, soft rim light"], ["Window", "Ventana", "soft natural window light from the side"], ["Overcast", "Nublado", "bright overcast daylight, soft shadowless light"]]}, {"id": "B11", "key": ["BG", "FON"], "name": ["Background", "Fondo"], "hue": "--h4", "opts": [["White void", "Void blanco", "seamless pure white background, infinite white studio void, soft contact shadow on the floor"], ["Neutral grey", "Gris neutro", "seamless light grey studio backdrop"], ["Paris", "París", "Paris cityscape with the Eiffel Tower in the background, creamy bokeh"], ["Beach", "Playa", "tropical beach at sunset, palm trees, soft ocean bokeh"], ["Yoga studio", "Sala de yoga", "bright yoga studio, light wooden floor, large windows, green plants"], ["City street", "Calle urbana", "sunny city street, modern storefronts, soft background blur"]]}];
 const NEG = "cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features";
-const REPO = "https://github.com/dreamcreatorstudio/prompt-builder";
-const T = {
- en:{title:"Prompt Builder",
-  lede:"Pick a platform and one numbered option per block, then copy the assembled prompt. Each block sits on its own line, so you can see where it starts and ends without changing the prompt. Lock the blocks you want to keep and use <b>×3</b> to get three variants of a single block.",
-  disclaimer:"Experimental project to test and share. Image generators don't always follow a prompt exactly — results vary by platform, model and seed. Use it as a guide, not a guarantee.",labelNote:"Grey [B#] labels are a visual guide only — they are not copied.",platform:"Platform",generic:"Generic",copyPrompt:"Copy prompt",sepLabel:"Separator between blocks",
-  sepNl:"Line break (recommended)",sepOne:"Single line",sepTag:"[B#] tags (for saving only)",sepBreak:"BREAK (SeaArt / advanced SD)",
-  recipe:"Recipe:",copyRecipe:"Copy recipe",neg:"Negative prompt",copy:"Copy",close:"Close",use:"Use",
-  lock:"Lock",locked:"Locked",lockTitle:"Lock this block",varTitle:"Show 3 variants changing only this block",
-  sepTitle:"Separators: what to use",
-  footer:"Prompts are always in English, which is what image generators understand best. Adults only, fictional people, no nudity, no trademarked characters. <a href=\""+REPO+"\">Source on GitHub</a>.",
-  copied:"Prompt copied",recipeCopied:"Recipe copied",negCopied:"Negative copied",variantCopied:k=>"Variant "+k+" copied",
-  variantsOf:(id,n)=>"3 variants of "+id+" · "+n,variant:(k,n,l)=>"Variant "+k+" of "+n+": "+l,manual:"Select the text and copy it with Ctrl+C",
-  sepTips:["<b>Line break:</b> generators read it as a space, so the result doesn't change. The grey [B#] labels you see on screen are not copied.",
-   "<b>Dots (.... or .....):</b> avoid them. They become tokens, waste space and sometimes show up as noise or text in the image.",
-   "<b>[B6] tags:</b> useful for saving and comparing. Remove them before generating — brackets are syntax in SeaArt and lower the weight of what they wrap.",
-   "<b>BREAK:</b> in SD-type models it splits the blocks into separate chunks and reduces bleeding (e.g. hair color leaking into the outfit). It does change the result, so use it on purpose.",
-   "Avoid <code>| [ ] { } ( )</code> as separators: they are commands in SeaArt and Stable Diffusion."],
-  plats:{
-   venice:{note:"Venice understands descriptive phrases well. Settings depend on the image model you pick.",tips:[
-    "<b>Aspect:</b> portrait 2:3 or 3:4 for full body; 1:1 for portraits.",
-    "<b>Steps:</b> 25–30 if the model allows it. More steps rarely help.",
-    "<b>CFG / guidance:</b> 5–7 on SD-type models; 3–4 on Flux-type models.",
-    "<b>Seed:</b> fix it to compare blocks, and note it next to the recipe.",
-    "<b>Style preset:</b> none, so it doesn't override your B1.",
-    "<b>Negative:</b> paste it in its own field."]},
-   seaart:{note:"SeaArt runs Stable Diffusion–type models: it accepts weights and a negative prompt. Outfit and background get a 1.2 weight so they don't get lost.",tips:[
-    "<b>Model:</b> a photorealistic checkpoint (filter by \"realistic\").",
-    "<b>Resolution:</b> 832×1216 portrait (SDXL) or 512×768 (SD 1.5).",
-    "<b>Sampler:</b> DPM++ 2M Karras · <b>Steps:</b> 25–30 · <b>CFG:</b> 5–7.",
-    "<b>Hires fix / upscale:</b> 1.5× if available, for more skin detail.",
-    "<b>Seed:</b> fixed when comparing; −1 (random) when exploring.",
-    "<b>Weights:</b> 1.1 to 1.3. If something doesn't show up, raise it by 0.1."]},
-   perchance:{note:"Perchance works best with shorter, single-line prompts. Technical tags that don't help here are removed.",tips:[
-    "<b>Style:</b> pick a photo style (professional / casual photo) in the style menu.",
-    "<b>Shape:</b> portrait for full body.",
-    "<b>Negative:</b> paste it in the \"things you don't want\" field.",
-    "<b>Several images:</b> generate 4 or more per recipe to compare, since seed control is limited.",
-    "If a detail gets lost, move that block higher up."]},
-   gen:{note:"Neutral format for Claude, Gemini, ChatGPT or other platforms.",tips:["Adjust the separator to the platform."]}}},
- es:{title:"Mezclador de Prompts",
-  lede:"Elige la plataforma y una opción numerada por bloque, y copia el prompt ensamblado. Cada bloque va en su propia línea, así ves dónde empieza y termina sin alterar el prompt. Bloquea los bloques que no quieras tocar y usa <b>×3</b> para sacar tres variantes de un solo bloque.",
-  disclaimer:"Proyecto experimental para probar y compartir. Los generadores de imagen no siempre siguen el prompt al pie de la letra: el resultado cambia según la plataforma, el modelo y el seed. Úsalo como guía, no como garantía.",labelNote:"Las etiquetas [B#] grises son solo una guía visual: no se copian.",platform:"Plataforma",generic:"Genérico",copyPrompt:"Copiar prompt",sepLabel:"Separador entre bloques",
-  sepNl:"Salto de línea (recomendado)",sepOne:"Una sola línea",sepTag:"Etiquetas [B#] (solo para guardar)",sepBreak:"BREAK (SeaArt / SD avanzado)",
-  recipe:"Receta:",copyRecipe:"Copiar receta",neg:"Prompt negativo",copy:"Copiar",close:"Cerrar",use:"Usar",
-  lock:"Bloquear",locked:"Bloqueado",lockTitle:"Bloquear este bloque",varTitle:"Ver 3 variantes cambiando solo este bloque",
-  sepTitle:"Separadores: qué usar",
-  footer:"Los prompts siempre van en inglés, que es lo que mejor entienden los generadores. Solo personas adultas y ficticias, sin desnudos ni personajes con marca registrada. <a href=\""+REPO+"\">Código en GitHub</a>.",
-  copied:"Prompt copiado",recipeCopied:"Receta copiada",negCopied:"Negativo copiado",variantCopied:k=>"Variante "+k+" copiada",
-  variantsOf:(id,n)=>"3 variantes de "+id+" · "+n,variant:(k,n,l)=>"Variante "+k+" de "+n+": "+l,manual:"Selecciona el texto y cópialo con Ctrl+C",
-  sepTips:["<b>Salto de línea:</b> los generadores lo leen como un espacio, así que no cambia el resultado. Las etiquetas [B#] grises que ves en pantalla no se copian.",
-   "<b>Puntos (.... o .....):</b> mejor no. Se convierten en tokens, gastan espacio y a veces aparecen como ruido o texto en la imagen.",
-   "<b>Etiquetas [B6]:</b> sirven para guardar y comparar. Bórralas antes de generar: en SeaArt los corchetes son sintaxis y bajan el peso de lo que encierran.",
-   "<b>BREAK:</b> en modelos tipo SD separa los bloques en paquetes y reduce que se mezclen (por ejemplo, el color del pelo en la ropa). Sí cambia el resultado, úsalo a propósito.",
-   "Evita <code>| [ ] { } ( )</code> como separadores: son comandos en SeaArt y Stable Diffusion."],
-  plats:{
-   venice:{note:"Venice entiende bien frases descriptivas. Los ajustes dependen del modelo de imagen que elijas.",tips:[
-    "<b>Formato:</b> vertical 2:3 o 3:4 para cuerpo entero; 1:1 para retrato.",
-    "<b>Steps:</b> 25–30 si el modelo lo permite. Más pasos rara vez mejoran.",
-    "<b>CFG / guía:</b> 5–7 en modelos tipo SD; 3–4 en modelos tipo Flux.",
-    "<b>Seed:</b> fíjalo para comparar bloques y anótalo junto a la receta.",
-    "<b>Estilo predefinido:</b> ninguno, para que no pise tu B1.",
-    "<b>Negativo:</b> pégalo en su campo propio."]},
-   seaart:{note:"SeaArt usa modelos tipo Stable Diffusion: acepta pesos y prompt negativo. El vestuario y el fondo salen con peso 1.2 para que no se pierdan.",tips:[
-    "<b>Modelo:</b> un checkpoint fotorrealista (filtra por \"realistic\").",
-    "<b>Resolución:</b> 832×1216 vertical (SDXL) o 512×768 (SD 1.5).",
-    "<b>Sampler:</b> DPM++ 2M Karras · <b>Steps:</b> 25–30 · <b>CFG:</b> 5–7.",
-    "<b>Hires fix / upscale:</b> 1.5× si está disponible, para más detalle en piel.",
-    "<b>Seed:</b> fijo al comparar; −1 (aleatorio) al explorar.",
-    "<b>Pesos:</b> entre 1.1 y 1.3. Si algo no aparece, súbelo de a 0.1."]},
-   perchance:{note:"Perchance funciona mejor con prompts más cortos y en una sola línea. Se quitan etiquetas técnicas que aquí no ayudan.",tips:[
-    "<b>Estilo:</b> elige el de foto (professional / casual photo) en el menú de estilos.",
-    "<b>Forma:</b> portrait (vertical) para cuerpo entero.",
-    "<b>Negativo:</b> pégalo en el campo de lo que no quieres en la imagen.",
-    "<b>Varias imágenes:</b> genera 4 o más por receta para comparar, porque el control de seed es limitado.",
-    "Si un detalle se pierde, sube ese bloque más arriba."]},
-   gen:{note:"Formato neutro para Claude, Gemini, ChatGPT u otras plataformas.",tips:["Ajusta el separador según la plataforma."]}}}
-};
-const PLATS = {venice:{sep:"nl"},seaart:{sep:"nl",weights:true},perchance:{sep:"one",short:true},gen:{sep:"nl"}};
-const SHORT_DROP = ["8k uhd","RAW photo","real photograph","natural film grain","magazine quality"];
+const DEFAULT = {"B1": 1, "B2": 1, "B3": 0, "B3.3": 2, "B3.1": 5, "B3.4": 8, "B3.2": 1, "B4": 0, "B5": 1, "B6": 3, "B6.1": 2, "B7": 0, "B7.1": 8, "B8": 0, "B11": 0};
+const LIB_VERSION = "1.2";
+const PLATFORMS = {"venice": {"label": "Venice AI", "sep": "nl"}, "seaart": {"label": "SeaArt", "sep": "nl", "weights": ["B6", "B11"]}, "perchance": {"label": "Perchance AI", "sep": "one", "drop": ["8k uhd", "RAW photo", "real photograph", "natural film grain", "magazine quality"]}, "gen": {"label": "Generic", "sep": "nl"}};
+const DEFAULT_PLATFORM = "perchance";
+const SEPARATORS = ["nl", "one", "tag", "break"];
+const CONFLICTS = [{"a": "B7.1", "a_opts": [7], "b": "B7", "b_opts": [0, 1], "en": "ANGLE 8 (profile) conflicts with this framing, which asks for a three-quarter turn or looking at the camera. Try CAM 3–5, or another angle.", "es": "ÁNGULO 8 (perfil) choca con este encuadre, que pide giro de tres cuartos o mirar a cámara. Prueba CAM 3–5 u otro ángulo."}, {"a": "B7.1", "a_opts": [3], "b": "B7", "b_opts": [2], "en": "ANGLE 4 (top-down) with a head-and-shoulders portrait usually shows only the top of the head.", "es": "ÁNGULO 4 (cenital) con un retrato de cabeza y hombros suele mostrar solo la coronilla."}, {"a": "B5", "a_opts": [1], "b": "B7", "b_opts": [4], "en": "BODY 2 includes 'upright posture'; with CAM 5 (seated) the model may sit stiffly.", "es": "CUERPO 2 incluye 'postura erguida'; con CAM 5 (sentada) la modelo puede salir rígida."}, {"a": "B6", "a_opts": [9, 15, 16], "b": "B7", "b_opts": [3], "en": "This outfit already describes what she holds (helmet or mask); combined with walking, hands may come out wrong.", "es": "Este vestuario ya describe lo que sostiene (casco o máscara); al combinarlo con caminar, las manos pueden salir mal."}];
+const T = {"en": {"title": "Prompt Builder", "lede": "Pick a platform and one numbered option per block, then copy the assembled prompt. Lock the blocks you want to keep and use <b>Variants</b> to compare options of a single block.", "disclaimer": "Experimental project to test and share. Image generators don't always follow a prompt exactly — results vary by platform, model and seed. Use it as a guide, not a guarantee.", "platform": "Platform", "generic": "Generic", "copyPrompt": "Copy prompt", "sepLabel": "Separator between blocks", "sepNl": "Line break (recommended)", "sepOne": "Single line", "sepTag": "[B#] tags (for saving only)", "sepBreak": "BREAK (SeaArt / advanced SD)", "labelNote": "Grey [B#] labels are a visual guide only — they are not copied.", "recipe": "Recipe:", "copyRecipe": "Copy recipe", "loadLabel": "Paste a recipe", "load": "Load", "reset": "Reset to default", "neg": "Negative prompt", "copy": "Copy", "close": "Close", "use": "Use", "prev": "‹ Previous", "next": "Next ›", "lock": "Lock", "locked": "Locked", "lockTitle": "Lock this block", "variants": "Variants", "varTitle": "Compare options of this block", "lockedNoVar": "This block is locked.", "sepTitle": "Separators: what to use", "warnTitle": "Possible conflicts", "footer": "Prompts are always in English. Adults only, fictional people, no nudity, no trademarked characters. <a href=\"https://github.com/dreamcreatorstudio/prompt-builder\">Source on GitHub</a>.", "copied": "Prompt copied", "recipeCopied": "Recipe copied", "negCopied": "Negative copied", "variantCopied": "Variant {k} copied", "manual": "Select the text and copy it with Ctrl+C", "variantsOf": "{id} · {name} — options {a}–{b} of {n}", "variant": "{num} · {label}", "stale": "Settings changed, so the variants were closed. Open them again to see updated prompts.", "lockedUse": "That block is locked. Unlock it to use this variant.", "loaded": "Recipe loaded", "loadedVer": "Recipe loaded. It was made with library v{v}; texts may differ from v{cur}.", "loadSkipped": "Locked blocks kept: {list}", "loadBad": "Couldn't read that recipe. Example: {ex}", "sepTips": ["<b>Line break:</b> most generators read it as a space, so it usually doesn't change the result. Test it on your model.", "<b>Dots (.... or .....):</b> best avoided. They become tokens and can add noise or text to the image.", "<b>[B6] tags:</b> for saving and comparing. Remove them before generating: in SeaArt brackets are syntax and lower the weight of what they wrap.", "<b>BREAK:</b> in SD-type models it splits blocks into separate chunks and can reduce bleeding (e.g. hair color in the outfit). It changes the result, so use it on purpose.", "Avoid <code>| [ ] { } ( )</code> as separators: they are commands in SeaArt and Stable Diffusion.", "All of this is a recommendation, not a rule — compare with the same seed on your model."], "plats": {"venice": {"note": "Venice understands descriptive phrases well. Settings depend on the image model you pick.", "tips": ["<b>Aspect:</b> portrait 2:3 or 3:4 for full body; 1:1 for portraits.", "<b>Steps:</b> 25–30 if the model allows it.", "<b>CFG / guidance:</b> around 5–7 on SD-type models; 3–4 on Flux-type models.", "<b>Seed:</b> fix it to compare blocks, and note it next to the recipe.", "<b>Style preset:</b> none, so it doesn't override your B1.", "<b>Negative:</b> paste it in its own field."]}, "seaart": {"note": "SeaArt runs Stable Diffusion–type models: it accepts weights and a negative prompt. Outfit and background get a 1.2 weight so they don't get lost.", "tips": ["<b>Model:</b> a photorealistic checkpoint (filter by \"realistic\").", "<b>Resolution:</b> 832×1216 portrait (SDXL) or 512×768 (SD 1.5).", "<b>Sampler:</b> DPM++ 2M Karras · <b>Steps:</b> 25–30 · <b>CFG:</b> 5–7.", "<b>Hires fix / upscale:</b> 1.5× if available.", "<b>Seed:</b> fixed when comparing; −1 (random) when exploring.", "<b>Weights:</b> 1.1 to 1.3. If something doesn't show up, raise it by 0.1."]}, "perchance": {"note": "Perchance tends to work better with shorter, single-line prompts. Technical tags that rarely help here are removed.", "tips": ["<b>Style:</b> pick a photo style (professional / casual photo) in the style menu.", "<b>Shape:</b> portrait for full body.", "<b>Negative:</b> paste it in the \"things you don't want\" field.", "<b>Several images:</b> generate 4 or more per recipe to compare, since seed control is limited.", "If a detail gets lost, try moving that block higher up."]}, "gen": {"note": "Neutral format for Claude, Gemini, ChatGPT or other platforms.", "tips": ["Adjust the separator to the platform."]}}, "static": "This viewer cannot run the menus (WhatsApp and some file previews block them). The full library is below to copy by hand. To use the builder, open <b>dreamcreatorstudio.github.io/prompt-builder</b> in Chrome or Safari.", "staticTitle": "Read-only mode"}, "es": {"title": "Mezclador de Prompts", "lede": "Elige la plataforma y una opción numerada por bloque, y copia el prompt ensamblado. Bloquea los bloques que quieras conservar y usa <b>Variantes</b> para comparar opciones de un solo bloque.", "disclaimer": "Proyecto experimental para probar y compartir. Los generadores de imagen no siempre siguen el prompt al pie de la letra: el resultado cambia según la plataforma, el modelo y el seed. Úsalo como guía, no como garantía.", "platform": "Plataforma", "generic": "Genérico", "copyPrompt": "Copiar prompt", "sepLabel": "Separador entre bloques", "sepNl": "Salto de línea (recomendado)", "sepOne": "Una sola línea", "sepTag": "Etiquetas [B#] (solo para guardar)", "sepBreak": "BREAK (SeaArt / SD avanzado)", "labelNote": "Las etiquetas [B#] grises son solo una guía visual: no se copian.", "recipe": "Receta:", "copyRecipe": "Copiar receta", "loadLabel": "Pega una receta", "load": "Cargar", "reset": "Volver al inicio", "neg": "Prompt negativo", "copy": "Copiar", "close": "Cerrar", "use": "Usar", "prev": "‹ Anteriores", "next": "Siguientes ›", "lock": "Bloquear", "locked": "Bloqueado", "lockTitle": "Bloquear este bloque", "variants": "Variantes", "varTitle": "Comparar opciones de este bloque", "lockedNoVar": "Este bloque está bloqueado.", "sepTitle": "Separadores: qué usar", "warnTitle": "Posibles conflictos", "footer": "Los prompts siempre van en inglés. Solo personas adultas y ficticias, sin desnudos ni personajes con marca registrada. <a href=\"https://github.com/dreamcreatorstudio/prompt-builder\">Código en GitHub</a>.", "copied": "Prompt copiado", "recipeCopied": "Receta copiada", "negCopied": "Negativo copiado", "variantCopied": "Variante {k} copiada", "manual": "Selecciona el texto y cópialo con Ctrl+C", "variantsOf": "{id} · {name} — opciones {a}–{b} de {n}", "variant": "{num} · {label}", "stale": "Cambiaste un ajuste y las variantes se cerraron. Ábrelas de nuevo para ver los prompts actualizados.", "lockedUse": "Ese bloque está bloqueado. Desbloquéalo para usar esta variante.", "loaded": "Receta cargada", "loadedVer": "Receta cargada. Se hizo con la biblioteca v{v}; los textos pueden diferir de la v{cur}.", "loadSkipped": "Bloques bloqueados sin cambios: {list}", "loadBad": "No pude leer esa receta. Ejemplo: {ex}", "sepTips": ["<b>Salto de línea:</b> la mayoría de los generadores lo leen como un espacio, así que normalmente no cambia el resultado. Pruébalo en tu modelo.", "<b>Puntos (.... o .....):</b> mejor evitarlos. Se convierten en tokens y pueden añadir ruido o texto a la imagen.", "<b>Etiquetas [B6]:</b> para guardar y comparar. Bórralas antes de generar: en SeaArt los corchetes son sintaxis y bajan el peso de lo que encierran.", "<b>BREAK:</b> en modelos tipo SD separa los bloques en paquetes y puede reducir que se mezclen (por ejemplo, el color del pelo en la ropa). Cambia el resultado, úsalo a propósito.", "Evita <code>| [ ] { } ( )</code> como separadores: son comandos en SeaArt y Stable Diffusion.", "Todo esto es una recomendación, no una regla: compara con el mismo seed en tu modelo."], "plats": {"venice": {"note": "Venice entiende bien frases descriptivas. Los ajustes dependen del modelo de imagen que elijas.", "tips": ["<b>Formato:</b> vertical 2:3 o 3:4 para cuerpo entero; 1:1 para retrato.", "<b>Steps:</b> 25–30 si el modelo lo permite.", "<b>CFG / guía:</b> alrededor de 5–7 en modelos tipo SD; 3–4 en modelos tipo Flux.", "<b>Seed:</b> fíjalo para comparar bloques y anótalo junto a la receta.", "<b>Estilo predefinido:</b> ninguno, para que no pise tu B1.", "<b>Negativo:</b> pégalo en su campo propio."]}, "seaart": {"note": "SeaArt usa modelos tipo Stable Diffusion: acepta pesos y prompt negativo. El vestuario y el fondo salen con peso 1.2 para que no se pierdan.", "tips": ["<b>Modelo:</b> un checkpoint fotorrealista (filtra por \"realistic\").", "<b>Resolución:</b> 832×1216 vertical (SDXL) o 512×768 (SD 1.5).", "<b>Sampler:</b> DPM++ 2M Karras · <b>Steps:</b> 25–30 · <b>CFG:</b> 5–7.", "<b>Hires fix / upscale:</b> 1.5× si está disponible.", "<b>Seed:</b> fijo al comparar; −1 (aleatorio) al explorar.", "<b>Pesos:</b> entre 1.1 y 1.3. Si algo no aparece, súbelo de a 0.1."]}, "perchance": {"note": "Perchance suele funcionar mejor con prompts más cortos y en una sola línea. Se quitan etiquetas técnicas que aquí rara vez ayudan.", "tips": ["<b>Estilo:</b> elige el de foto (professional / casual photo) en el menú de estilos.", "<b>Forma:</b> portrait (vertical) para cuerpo entero.", "<b>Negativo:</b> pégalo en el campo de lo que no quieres en la imagen.", "<b>Varias imágenes:</b> genera 4 o más por receta para comparar, porque el control de seed es limitado.", "Si un detalle se pierde, prueba a subir ese bloque más arriba."]}, "gen": {"note": "Formato neutro para Claude, Gemini, ChatGPT u otras plataformas.", "tips": ["Ajusta el separador según la plataforma."]}}, "static": "Este visor no puede usar los menús (WhatsApp y algunos visores de archivos los bloquean). Abajo está la biblioteca completa para copiar a mano. Para usar el mezclador, abre <b>dreamcreatorstudio.github.io/prompt-builder</b> en Chrome o Safari.", "staticTitle": "Modo lectura"}};
+// Prompt Builder app. Data (BLOCKS, NEG, PLATFORMS, CONFLICTS, T, LIB_VERSION, DEFAULT, DEFAULT_PLATFORM)
+// is injected by src/build.py from src/data.py and src/i18n.py.
+document.documentElement.classList.add("js");
 
-let lang = "en";
-try { const s = localStorage.getItem("pb-lang"); if (s==="en"||s==="es") lang=s; } catch(e) {}
-const L = () => T[lang];
-const LI = lang => lang==="en"?0:1;
-
-const state = {"B1": 1, "B2": 1, "B3": 0, "B3.3": 2, "B3.1": 5, "B3.4": 8, "B3.2": 1, "B4": 0, "B5": 1, "B6": 3, "B6.1": 2, "B7": 0, "B7.1": 8, "B8": 0, "B11": 0};
-const locked = {};
 const $ = s => document.querySelector(s);
-const blocksEl = $("#blocks");
-const num = (b,i) => b.zero ? i : i+1;
-const esc = t => t.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const BY_ID = Object.fromEntries(BLOCKS.map(b => [b.id, b]));
+const esc = t => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;");
+const fmt = (s, o) => s.replace(/\{(\w+)\}/g, (_, k) => o[k]);
+const num = (b, i) => b.zero ? i : i + 1;
+const VAR_PAGE = 3;
 
-function applyLang(){
-  document.documentElement.lang = lang;
+// ---------- state ----------
+const S = { lang: "en", plat: DEFAULT_PLATFORM, sep: PLATFORMS[DEFAULT_PLATFORM].sep, sel: { ...DEFAULT }, locked: {} };
+let VAR = null; // open variants panel: { id, offset, ctx }
+
+function store(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+function load(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
+function save() { store("pb-session", { v: LIB_VERSION, lang: S.lang, plat: S.plat, sep: S.sep, sel: S.sel, locked: S.locked }); }
+function restore() {
+  const s = load("pb-session");
+  const lang = load("pb-lang");
+  if (lang === "en" || lang === "es") S.lang = lang;
+  if (!s) return;
+  if (s.lang === "en" || s.lang === "es") S.lang = s.lang;
+  if (PLATFORMS[s.plat]) S.plat = s.plat;
+  if (SEPARATORS.includes(s.sep)) S.sep = s.sep;
+  for (const b of BLOCKS) {
+    const i = s.sel && s.sel[b.id];
+    if (Number.isInteger(i) && i >= 0 && i < b.opts.length) S.sel[b.id] = i;
+  }
+  for (const id in (s.locked || {})) if (BY_ID[id] && s.locked[id]) S.locked[id] = true;
+}
+
+const L = () => T[S.lang];
+const LI = () => S.lang === "en" ? 0 : 1;
+
+// ---------- prompt ----------
+function parts(sel, plat) {
+  const P = PLATFORMS[plat];
+  return BLOCKS.map(b => {
+    let t = b.opts[sel[b.id]][2];
+    if (t && P.drop) t = t.split(", ").filter(x => !P.drop.includes(x)).join(", ");
+    if (t && P.weights && P.weights.includes(b.id)) t = `(${t}:1.2)`;
+    return { b, text: t };
+  }).filter(p => p.text);
+}
+function join(ps, sep, html) {
+  const piece = p => html
+    ? (sep !== "tag" ? `<span class="tag" aria-hidden="true">[${p.b.id}] </span>` : "") + `<span style="--c:var(${p.b.hue})">${esc(p.text)}</span>`
+    : p.text;
+  const tagged = p => (sep === "tag" ? `[${p.b.id}] ` : "") + piece(p);
+  if (sep === "one") return ps.map(piece).join(", ");
+  if (sep === "tag") return ps.map(tagged).join(",\n");
+  if (sep === "break") return ps.map(piece).join(",\nBREAK\n");
+  return ps.map(piece).join(",\n");
+}
+const promptText = (sel = S.sel) => join(parts(sel, S.plat), S.sep, false);
+
+// ---------- recipe ----------
+// Format: v1.2 | PHOTO2 GLOW2 ... BG1 | perchance | one
+function recipe(sel = S.sel) {
+  const li = LI();
+  return `v${LIB_VERSION} | ` + BLOCKS.map(b => b.key[li] + num(b, sel[b.id])).join(" ") + ` | ${S.plat} | ${S.sep}`;
+}
+function parseRecipe(txt) {
+  const keyMap = {};
+  for (const b of BLOCKS) { keyMap[b.key[0].toUpperCase()] = b; keyMap[b.key[1].toUpperCase()] = b; }
+  const out = { sel: {}, plat: null, sep: null, v: null };
+  const vm = txt.match(/\bv(\d+(?:\.\d+)*)\b/i); if (vm) out.v = vm[1];
+  for (const m of txt.matchAll(/\b([A-Za-z]+)\s*=?\s*(\d+)\b/g)) {
+    const b = keyMap[m[1].toUpperCase()]; if (!b) continue;
+    const n = +m[2], i = b.zero ? n : n - 1;
+    if (i >= 0 && i < b.opts.length) out.sel[b.id] = i;
+  }
+  const low = txt.toLowerCase();
+  for (const k in PLATFORMS) if (new RegExp(`\\b${k}\\b`).test(low) || low.includes(PLATFORMS[k].label.toLowerCase())) out.plat = k;
+  for (const s of SEPARATORS) if (new RegExp(`\\|\\s*${s}\\s*$`).test(low.trim()) || new RegExp(`\\bsep=${s}\\b`).test(low)) out.sep = s;
+  return Object.keys(out.sel).length ? out : null;
+}
+function loadRecipe() {
+  const r = parseRecipe($("#recipeIn").value);
+  if (!r) return toast(fmt(L().loadBad, { ex: recipe() }), 5000);
+  const skipped = [];
+  for (const id in r.sel) { if (S.locked[id]) { if (r.sel[id] !== S.sel[id]) skipped.push(id); } else S.sel[id] = r.sel[id]; }
+  if (r.plat) S.plat = r.plat;
+  if (r.sep) S.sep = r.sep; else if (r.plat) S.sep = PLATFORMS[r.plat].sep;
+  let msg = r.v && r.v !== LIB_VERSION ? fmt(L().loadedVer, { v: r.v, cur: LIB_VERSION }) : L().loaded;
+  if (skipped.length) msg += " · " + fmt(L().loadSkipped, { list: skipped.join(", ") });
+  changed(); toast(msg, 5000);
+}
+
+// ---------- rendering ----------
+function applyLang() {
+  document.documentElement.lang = S.lang;
   document.title = L().title;
-  document.querySelectorAll("[data-i]").forEach(el=>{
+  document.querySelectorAll("[data-i]").forEach(el => {
     const v = L()[el.dataset.i]; if (typeof v !== "string") return;
     if (el.hasAttribute("data-html")) el.innerHTML = v; else el.textContent = v;
   });
-  $("#lang-en").setAttribute("aria-pressed", lang==="en");
-  $("#lang-es").setAttribute("aria-pressed", lang==="es");
-  $("#sepTips").innerHTML = L().sepTips.map(t=>`<li>${t}</li>`).join("");
-  $("#varPanel").hidden = true;
-  render(); showPlat(false);
+  $("#lang-en").setAttribute("aria-pressed", S.lang === "en");
+  $("#lang-es").setAttribute("aria-pressed", S.lang === "es");
+  $("#sepTips").innerHTML = L().sepTips.map(t => `<li>${t}</li>`).join("");
 }
-function setLang(l){ lang=l; try{localStorage.setItem("pb-lang",l);}catch(e){} applyLang(); }
-
-function render(){
-  const li = LI(lang);
-  blocksEl.innerHTML = "";
-  BLOCKS.forEach(b=>{
+function renderBlocks() {
+  const li = LI(), el = $("#blocks");
+  el.innerHTML = "";
+  for (const b of BLOCKS) {
+    const lk = !!S.locked[b.id], gid = "g-" + b.id.replace(".", "_");
     const sec = document.createElement("div");
-    sec.className="block"; sec.style.setProperty("--hue",`var(${b.hue})`);
-    const gid = "g-"+b.id.replace(".","_");
-    sec.innerHTML = `<div class="bhead"><span class="bid">${b.id} · ${b.key[li]}</span><span class="bname">${b.name[li]}</span>
-      <span class="tools"><button class="btn" data-lock="${b.id}" aria-pressed="${!!locked[b.id]}" title="${L().lockTitle}">${locked[b.id]?L().locked:L().lock}</button>
-      <button class="btn" data-var="${b.id}" title="${L().varTitle}">×3</button></span></div>
-      <div class="opts" role="radiogroup" aria-label="${b.name[li]}">${b.opts.map((o,i)=>`<span class="opt"><input type="radio" name="${gid}" id="${gid}-${i}" value="${i}" ${state[b.id]===i?"checked":""} ${locked[b.id]?"disabled":""}><label for="${gid}-${i}"><b>${num(b,i)}</b>${o[li]}</label></span>`).join("")}</div>`;
-    blocksEl.appendChild(sec);
-  });
-  blocksEl.querySelectorAll("input[type=radio]").forEach(r=>r.addEventListener("change",e=>{
-    const id = e.target.name.slice(2).replace("_","."); state[id]=+e.target.value; out();
+    sec.className = "block"; sec.style.setProperty("--hue", `var(${b.hue})`);
+    sec.innerHTML = `<div class="bhead"><span class="bid">${b.id} · ${b.key[li]}</span><span class="bname">${esc(b.name[li])}</span>
+      <span class="tools"><button class="btn" data-lock="${b.id}" aria-pressed="${lk}" title="${L().lockTitle}">${lk ? L().locked : L().lock}</button>
+      <button class="btn" data-var="${b.id}" ${lk ? "disabled" : ""} title="${lk ? L().lockedNoVar : L().varTitle}">${L().variants} (${b.opts.length - 1})</button></span></div>
+      <div class="opts" role="radiogroup" aria-label="${esc(b.name[li])}">${b.opts.map((o, i) => `<span class="opt"><input type="radio" name="${gid}" id="${gid}-${i}" value="${i}" ${S.sel[b.id] === i ? "checked" : ""} ${lk ? "disabled" : ""}><label for="${gid}-${i}"><b>${num(b, i)}</b>${esc(o[li])}</label></span>`).join("")}</div>`;
+    el.appendChild(sec);
+  }
+  el.querySelectorAll("input[type=radio]").forEach(r => r.addEventListener("change", e => {
+    const id = e.target.name.slice(2).replace("_", ".");
+    if (S.locked[id]) return; S.sel[id] = +e.target.value; changed();
   }));
-  blocksEl.querySelectorAll("[data-lock]").forEach(btn=>btn.addEventListener("click",()=>{ locked[btn.dataset.lock]=!locked[btn.dataset.lock]; render(); }));
-  blocksEl.querySelectorAll("[data-var]").forEach(btn=>btn.addEventListener("click",()=>variants(btn.dataset.var)));
-  out();
+  el.querySelectorAll("[data-lock]").forEach(btn => btn.addEventListener("click", () => {
+    const id = btn.dataset.lock; S.locked[id] = !S.locked[id]; if (!S.locked[id]) delete S.locked[id]; changed();
+  }));
+  el.querySelectorAll("[data-var]").forEach(btn => btn.addEventListener("click", () => openVariants(btn.dataset.var, 0)));
+}
+function renderPlat() {
+  const P = L().plats[S.plat];
+  $("#plat").value = S.plat; $("#sep").value = S.sep;
+  $("#platNote").textContent = P.note;
+  $("#platTips").innerHTML = P.tips.map(t => `<li>${t}</li>`).join("");
+}
+function renderOut() {
+  $("#prompt").innerHTML = join(parts(S.sel, S.plat), S.sep, true);
+  $("#recipe").textContent = recipe();
+  const w = CONFLICTS.filter(c => c.a_opts.includes(S.sel[c.a]) && c.b_opts.includes(S.sel[c.b]));
+  $("#warnPanel").hidden = !w.length;
+  $("#warnList").innerHTML = w.map(c => `<li>${esc(c[S.lang])}</li>`).join("");
 }
 
-function plat(){ return PLATS[$("#plat").value]; }
-function parts(s){
-  const P = plat();
-  return BLOCKS.map(b=>{
-    let t=b.opts[s[b.id]][2];
-    if(t && P.short) t=t.split(", ").filter(x=>!SHORT_DROP.includes(x)).join(", ");
-    if(t && P.weights && (b.id==="B6"||b.id==="B11")) t=`(${t}:1.2)`;
-    return {b,text:t};
-  }).filter(p=>p.text);
+// ---------- variants ----------
+// The context is everything except the block being varied; if it changes, the panel is no longer valid.
+function ctxKey(id) { const sel = { ...S.sel }; delete sel[id]; return JSON.stringify([sel, S.plat, S.sep, !!S.locked[id]]); }
+function openVariants(id, offset) {
+  if (S.locked[id]) return toast(L().lockedUse);
+  VAR = { id, offset, ctx: ctxKey(id) }; renderVariants();
 }
-function showPlat(resetSep=true){
-  const v=$("#plat").value, P=L().plats[v];
-  if(resetSep) $("#sep").value=PLATS[v].sep;
-  $("#platNote").textContent=P.note;
-  $("#platTips").innerHTML=P.tips.map(t=>`<li>${t}</li>`).join("");
-  out();
-}
-function join(ps, mode, color){
-  const piece = p => color ? (mode!=="tag"?`<span class="tag" aria-hidden="true">[${p.b.id}] </span>`:"")+`<span style="--c:var(${p.b.hue})">${esc(p.text)}</span>` : p.text;
-  if(mode==="one") return ps.map(piece).join(", ");
-  if(mode==="tag") return ps.map(p=>`[${p.b.id}] `+piece(p)).join(",\n");
-  if(mode==="break") return ps.map(piece).join(",\nBREAK\n");
-  return ps.map(piece).join(",\n");
-}
-function recipe(s){ const li=LI(lang); return BLOCKS.map(b=>b.key[li]+num(b,s[b.id])).join(" ")+" · "+$("#plat").selectedOptions[0].text; }
-function out(){
-  $("#prompt").innerHTML = join(parts(state),$("#sep").value,true);
-  $("#recipe").textContent = recipe(state);
-}
-function variants(id){
-  const li=LI(lang), b=BLOCKS.find(x=>x.id===id), cur=state[id];
-  const pick = b.opts.map((_,i)=>i).filter(i=>i!==cur).slice(0,3);
-  const box=$("#variants"); box.innerHTML="";
-  $("#varTitle").textContent = L().variantsOf(b.id,b.name[li]);
-  pick.forEach((i,k)=>{
-    const s={...state,[id]:i}, text=join(parts(s),$("#sep").value,false);
-    const d=document.createElement("div"); d.className="variant";
-    d.innerHTML=`<div class="row"><h3>${L().variant(k+1,pick.length,b.opts[i][li])}</h3><span style="margin-left:auto"></span><button class="btn">${L().copy}</button><button class="btn">${L().use}</button></div><span class="code">${recipe(s)}</span>`;
-    const [cp,use]=d.querySelectorAll("button");
-    cp.addEventListener("click",()=>copy(text,L().variantCopied(k+1)));
-    use.addEventListener("click",()=>{state[id]=i;render();});
+function closeVariants() { VAR = null; $("#varPanel").hidden = true; }
+function renderVariants() {
+  if (!VAR) return closeVariants();
+  const b = BY_ID[VAR.id], li = LI(), cur = S.sel[b.id];
+  const alts = b.opts.map((_, i) => i).filter(i => i !== cur);
+  const page = alts.slice(VAR.offset, VAR.offset + VAR_PAGE);
+  $("#varTitle").textContent = fmt(L().variantsOf, { id: b.id, name: b.name[li], a: VAR.offset + 1, b: VAR.offset + page.length, n: alts.length });
+  const box = $("#variants"); box.innerHTML = "";
+  page.forEach((i, k) => {
+    const d = document.createElement("div"); d.className = "variant";
+    d.innerHTML = `<div class="row"><h3>${esc(fmt(L().variant, { num: num(b, i), label: b.opts[i][li] }))}</h3><span style="margin-left:auto"></span><button class="btn" data-a="copy">${L().copy}</button><button class="btn" data-a="use">${L().use}</button></div><span class="code">${esc(recipe({ ...S.sel, [b.id]: i }))}</span>`;
+    d.querySelector('[data-a="copy"]').addEventListener("click", () => variantAction("copy", b.id, i, VAR.offset + k + 1));
+    d.querySelector('[data-a="use"]').addEventListener("click", () => variantAction("use", b.id, i));
     box.appendChild(d);
   });
-  $("#varPanel").hidden=false;
+  $("#varPrev").disabled = VAR.offset === 0;
+  $("#varNext").disabled = VAR.offset + VAR_PAGE >= alts.length;
+  $("#varNav").hidden = alts.length <= VAR_PAGE;
+  $("#varPanel").hidden = false;
 }
-function copy(text,msg){
-  const done=()=>{$("#toast").textContent=msg; setTimeout(()=>$("#toast").textContent="",2200);};
-  try{ navigator.clipboard.writeText(text).then(done,()=>fallback(text,msg)); }catch(e){ fallback(text,msg); }
+function variantAction(kind, id, i, k) {
+  // Guard: the block may have been locked, or the context changed, after the panel was drawn.
+  if (S.locked[id]) { closeVariants(); return toast(L().lockedUse); }
+  if (!VAR || VAR.id !== id || VAR.ctx !== ctxKey(id)) { closeVariants(); return toast(L().stale, 4000); }
+  if (kind === "copy") return copy(promptText({ ...S.sel, [id]: i }), fmt(L().variantCopied, { k }));
+  S.sel[id] = i; changed();
 }
-function fallback(text,msg){
-  const ta=document.createElement("textarea"); ta.value=text; document.body.appendChild(ta); ta.select();
-  try{document.execCommand("copy"); $("#toast").textContent=msg;}catch(e){$("#toast").textContent=L().manual;}
+
+// ---------- central update ----------
+function changed() {
+  if (VAR && VAR.ctx !== ctxKey(VAR.id)) { closeVariants(); toast(L().stale, 4000); }
+  renderBlocks(); renderPlat(); renderOut(); if (VAR) renderVariants(); save();
+}
+function setLang(l) { S.lang = l; store("pb-lang", l); applyLang(); renderBlocks(); renderPlat(); renderOut(); if (VAR) renderVariants(); save(); }
+
+// ---------- clipboard / toast ----------
+let toastTimer;
+function toast(msg, ms = 2200) { const t = $("#toast"); t.textContent = msg; clearTimeout(toastTimer); toastTimer = setTimeout(() => t.textContent = "", ms); }
+function copy(text, msg) {
+  try { navigator.clipboard.writeText(text).then(() => toast(msg), () => fallback(text, msg)); } catch (e) { fallback(text, msg); }
+}
+function fallback(text, msg) {
+  const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select();
+  try { document.execCommand("copy"); toast(msg); } catch (e) { toast(L().manual); }
   ta.remove();
 }
-$("#lang-en").addEventListener("click",()=>setLang("en"));
-$("#lang-es").addEventListener("click",()=>setLang("es"));
-$("#sep").addEventListener("change",out);
-$("#plat").addEventListener("change",()=>showPlat(true));
-$("#copyPrompt").addEventListener("click",()=>copy(join(parts(state),$("#sep").value,false),L().copied));
-$("#copyRecipe").addEventListener("click",()=>copy(recipe(state),L().recipeCopied));
-$("#copyNeg").addEventListener("click",()=>copy(NEG,L().negCopied));
-$("#closeVar").addEventListener("click",()=>$("#varPanel").hidden=true);
-applyLang(); showPlat(true);
+
+// ---------- wiring ----------
+$("#lang-en").addEventListener("click", () => setLang("en"));
+$("#lang-es").addEventListener("click", () => setLang("es"));
+$("#plat").addEventListener("change", e => { S.plat = e.target.value; S.sep = PLATFORMS[S.plat].sep; changed(); });
+$("#sep").addEventListener("change", e => { S.sep = e.target.value; changed(); });
+$("#copyPrompt").addEventListener("click", () => copy(promptText(), L().copied));
+$("#copyRecipe").addEventListener("click", () => copy(recipe(), L().recipeCopied));
+$("#copyNeg").addEventListener("click", () => copy(NEG, L().negCopied));
+$("#loadBtn").addEventListener("click", loadRecipe);
+$("#recipeIn").addEventListener("keydown", e => { if (e.key === "Enter") loadRecipe(); });
+$("#resetBtn").addEventListener("click", () => { S.sel = { ...DEFAULT }; S.locked = {}; S.plat = DEFAULT_PLATFORM; S.sep = PLATFORMS[DEFAULT_PLATFORM].sep; closeVariants(); changed(); });
+$("#closeVar").addEventListener("click", closeVariants);
+$("#varPrev").addEventListener("click", () => { VAR.offset = Math.max(0, VAR.offset - VAR_PAGE); renderVariants(); });
+$("#varNext").addEventListener("click", () => { VAR.offset += VAR_PAGE; renderVariants(); });
+
+restore(); applyLang(); renderBlocks(); renderPlat(); renderOut();
 </script>
 
 </body></html>

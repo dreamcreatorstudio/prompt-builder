@@ -1,0 +1,141 @@
+# Single source of truth for Prompt Builder: blocks, options (EN/ES labels), prompt text.
+BLOCKS = [
+ dict(id="B1", key=("PHOTO","FOTO"), name=("Photo engine","Motor fotográfico"), hue="--h1", opts=[
+  ("Realistic DSLR","Realista DSLR","RAW photo, photorealistic, real photograph, Canon EOS R5, 85mm lens, f/2.0, shallow depth of field, natural film grain, sharp focus, 8k uhd"),
+  ("Fashion editorial","Editorial de moda","high-end fashion editorial photograph, medium format camera, 80mm lens, f/4, crisp detail, magazine quality, photorealistic"),
+  ("Studio catalog","Catálogo de estudio","clean commercial catalog photograph, 50mm lens, f/8, everything in sharp focus, even exposure, photorealistic")]),
+ dict(id="B2", key=("GLOW","BRI"), name=("Skin glow","Brillo de piel"), hue="--h2", opts=[
+  ("Natural matte","Natural mate","natural matte skin finish, soft diffuse highlights"),
+  ("Healthy glow","Glow saludable","healthy dewy skin glow, subtle natural sheen on cheekbones and shoulders"),
+  ("Post-workout","Post-entreno","light post-workout glow, faint natural sheen of perspiration")]),
+ dict(id="B3", key=("AGE","EDAD"), name=("Model age","Edad de la modelo"), hue="--h3", opts=[
+  ("25","25 años","a 25-year-old woman, adult facial features"),
+  ("30","30 años","a 30-year-old woman, adult facial features"),
+  ("35","35 años","a 35-year-old woman, mature adult features"),
+  ("40","40 años","a 40-year-old woman, mature adult features"),
+  ("45","45 años","a 45-year-old woman, graceful mature features"),
+  ("50","50 años","a 50-year-old woman, graceful mature features, subtle laugh lines")]),
+ dict(id="B3.3", key=("EXPR","EXP"), name=("Expression","Expresión"), hue="--h3", opts=[
+  ("Confident","Segura","confident relaxed expression, soft natural smile"),
+  ("Cheerful","Alegre","bright friendly smile"),
+  ("Elegant","Elegante","calm self-assured gaze"),
+  ("Serene","Serena","serene warm expression"),
+  ("Playful","Divertida","playful laughing expression")]),
+ dict(id="B3.1", key=("HAIR","CAB"), name=("Hair color","Color de cabello"), hue="--h3", opts=[
+  ("Honey blonde","Rubia miel","honey-blonde hair"),
+  ("Platinum blonde","Rubia platino","platinum blonde hair"),
+  ("Redhead","Pelirroja","copper-red hair"),
+  ("Auburn","Caoba","auburn hair"),
+  ("Chestnut","Castaño","chestnut-brown hair"),
+  ("Ash brown","Castaño ceniza","ash-brown hair"),
+  ("Black","Negro","jet-black hair"),
+  ("Silver grey","Gris plata","silver-grey hair")]),
+ dict(id="B3.4", key=("STYLE","PEI"), name=("Hairstyle","Peinado"), hue="--h3", opts=[
+  ("Sleek straight","Liso perfecto","sleek straight hair"),
+  ("Straight","Liso natural","straight hair"),
+  ("Subtle waves","Ondas sutiles","subtle natural waves"),
+  ("Wavy","Ondulado","wavy hair"),
+  ("Beach waves","Ondas de playa","loose beach waves"),
+  ("Curly","Rizado","curly hair"),
+  ("Coily / afro","Muy rizado / afro","coily hair, afro hair"),
+  ("High ponytail","Coleta alta","high ponytail"),
+  ("Neat bun","Moño pulido","neat hair bun"),
+  ("Messy bun","Moño suelto","loose messy bun with face-framing strands"),
+  ("Pixie cut","Corte pixie","pixie cut"),
+  ("Short bob","Bob corto","short bob cut")]),
+ dict(id="B3.2", key=("EYES","OJO"), name=("Eyes","Ojos"), hue="--h3", opts=[
+  ("Blue","Azules","clear blue eyes"),("Green","Verdes","green eyes"),("Brown","Marrones","warm brown eyes"),("Hazel","Avellana","hazel eyes"),("Grey","Grises","grey eyes")]),
+ dict(id="B4", key=("SKIN","PIEL"), name=("Skin tone","Piel y tono"), hue="--h4", opts=[
+  ("Porcelain","Porcelana","fair porcelain skin with warm pink undertones, natural skin texture, visible pores"),
+  ("Fair, freckles","Clara con pecas","fair skin with light freckles across the nose and cheeks, natural skin texture"),
+  ("Olive","Oliva","olive skin tone with golden undertones, natural skin texture"),
+  ("Tan","Morena","warm tan brown skin, natural skin texture, subtle color variation"),
+  ("Deep","Oscura","deep brown skin with rich undertones, natural skin texture")]),
+ dict(id="B5", key=("BODY","CUE"), name=("Body","Cuerpo"), hue="--h5", opts=[
+  ("Athletic fit","Fitness atlética","fit athletic adult build, toned shoulders and arms, defined core, strong toned legs"),
+  ("Lean pilates","Pilates esbelta","lean slender adult physique with long toned muscles, graceful upright posture"),
+  ("Runner","Corredora","lean runner's build, defined legs, athletic adult proportions"),
+  ("Natural","Natural","healthy natural adult body, soft curves, relaxed posture")]),
+ dict(id="B6", key=("OUTFIT","VES"), name=("Outfit","Vestuario"), hue="--h6", opts=[
+  ("Denim + white crop","Denim + crop blanco","white ribbed cotton crop top, high-waisted light-wash denim shorts, white canvas sneakers"),
+  ("Black athletic","Deportivo negro","black sports crop top, matching high-waisted biker shorts, running shoes"),
+  ("Summer linen","Lino verano","cream linen button-up crop top, high-waisted linen shorts, leather sandals"),
+  ("Pastel knit","Punto pastel","sage green knit crop cardigan, high-waisted white tailored shorts, minimalist sandals"),
+  ("Yoga set","Yoga set","dusty rose yoga set, fitted long-sleeve crop top and full-length leggings, barefoot"),
+  ("Galactic heroine","Heroína galáctica","original superhero costume, full-coverage silver and teal bodysuit with geometric armor plates, short flowing cape, star emblem on the chest, knee-high boots"),
+  ("Storm captain","Capitana tormenta","original superhero costume, full-coverage navy bodysuit with gold lightning-bolt piping, high collar, fingerless gloves, utility belt, armored boots"),
+  ("Legend warrior","Guerrera de leyenda","original fantasy warrior costume, bronze breastplate over a long crimson tunic, leather bracers, ornate belt, sandal boots, round shield on her back"),
+  ("Pirate","Pirata","pirate captain costume, white billowy blouse, burgundy brocade vest, tricorn hat, wide leather belt, tall boots, fitted dark trousers"),
+  ("Astronaut","Astronauta","modern white astronaut suit with orange accents, mission patches, helmet held under one arm"),
+  ("Samurai","Samurái","samurai-inspired costume, dark lacquered armor pieces over an indigo hakama and kimono, red cord details"),
+  ("Flamenco","Flamenca","traditional red flamenco dress with white polka dots, ruffled sleeves and tiers, flower in the hair, shawl with fringe"),
+  ("Cowgirl","Vaquera","western cowgirl outfit, suede fringe jacket, plaid shirt, high-waisted jeans, cowboy hat and boots"),
+  ("Steampunk","Steampunk","steampunk explorer outfit, brown leather corset vest over a cream blouse, brass goggles on the hat, long skirt with buckles, gloves"),
+  ("Forest elf","Elfa del bosque","original forest elf costume, long moss-green layered dress with leaf embroidery, hooded cape, elegant pointed ears, wooden bow"),
+  ("Race driver","Piloto de carreras","racing driver suit, red and white fireproof jumpsuit with sponsor-free patches, helmet held at the hip"),
+  ("Dominican carnival","Carnaval dominicano","Dominican carnival Diablo Cojuelo costume, vibrant full-coverage satin suit covered in mirrors, bells and ribbons, ornate horned mask held in her hand")]),
+ dict(id="B6.1", key=("ACC","ACC"), name=("Accessories","Accesorios"), hue="--h6", zero=True, opts=[
+  ("None","Ninguno",""),("Emerald necklace","Collar esmeralda","emerald pendant necklace on a fine gold chain"),("Gold hoops","Aros dorados","small gold hoop earrings"),("Sports watch","Reloj deportivo","minimalist sports watch"),("Cap","Gorra","beige baseball cap")]),
+ dict(id="B7", key=("CAM","CAM"), name=("Framing & pose","Encuadre y pose"), hue="--h7", opts=[
+  ("Full body 3/4","Cuerpo entero 3/4","full body shot, head to toe framing, standing relaxed, three-quarter turn, looking at camera"),
+  ("Half body","Medio cuerpo","medium shot from the waist up, looking at camera"),
+  ("Portrait","Retrato","close-up portrait, head and shoulders"),
+  ("Walking","Caminando","full body shot, walking toward camera, natural mid-stride motion"),
+  ("Seated","Sentada","full body shot, sitting casually on a low wooden stool, relaxed posture")]),
+ dict(id="B7.1", key=("ANGLE","ANG"), name=("Camera angle","Ángulo de cámara"), hue="--h7", opts=[
+  ("Eye-level","A la altura de los ojos","eye-level shot, neutral natural perspective"),
+  ("Low angle","Contrapicado","low angle shot looking up at the subject, powerful heroic perspective"),
+  ("High angle","Picado","high angle shot looking down at the subject"),
+  ("Bird's-eye / top-down","Cenital","bird's-eye view, top-down overhead shot"),
+  ("Worm's-eye","Nadir","worm's-eye view from the ground looking straight up, dramatic height"),
+  ("Dutch angle","Ángulo holandés","dutch angle, tilted horizon, dynamic tension"),
+  ("Over-the-shoulder","Sobre el hombro","over-the-shoulder shot, blurred shoulder in the foreground"),
+  ("Profile / side view","Perfil","side view profile shot"),
+  ("Hip level","Altura de cadera","hip-level shot, camera at waist height"),
+  ("Knee level","Altura de rodilla","knee-level shot, camera low near the knees"),
+  ("Aerial drone","Dron aéreo","aerial drone shot from high above"),
+  ("POV","Punto de vista (POV)","first-person point of view shot")]),
+ dict(id="B8", key=("LIGHT","LUZ"), name=("Lighting","Luz"), hue="--h8", opts=[
+  ("Soft studio","Estudio suave","soft even studio lighting, large softbox, gentle shadows"),
+  ("Golden hour","Hora dorada","warm golden hour sunlight, soft rim light"),
+  ("Window","Ventana","soft natural window light from the side"),
+  ("Overcast","Nublado","bright overcast daylight, soft shadowless light")]),
+ dict(id="B11", key=("BG","FON"), name=("Background","Fondo"), hue="--h4", opts=[
+  ("White void","Void blanco","seamless pure white background, infinite white studio void, soft contact shadow on the floor"),
+  ("Neutral grey","Gris neutro","seamless light grey studio backdrop"),
+  ("Paris","París","Paris cityscape with the Eiffel Tower in the background, creamy bokeh"),
+  ("Beach","Playa","tropical beach at sunset, palm trees, soft ocean bokeh"),
+  ("Yoga studio","Sala de yoga","bright yoga studio, light wooden floor, large windows, green plants"),
+  ("City street","Calle urbana","sunny city street, modern storefronts, soft background blur")]),
+]
+NEG = "cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features"
+DEFAULT = {"B1":1,"B2":1,"B3":0,"B3.3":2,"B3.1":5,"B3.4":8,"B3.2":1,"B4":0,"B5":1,"B6":3,"B6.1":2,"B7":0,"B7.1":8,"B8":0,"B11":0}
+
+# Library version: bump when any prompt text changes, so recipes record which texts they used.
+LIB_VERSION = "1.2"
+
+PLATFORMS = {  # separator default + transforms applied to the prompt text
+    "venice":    {"label": "Venice AI",    "sep": "nl"},
+    "seaart":    {"label": "SeaArt",       "sep": "nl", "weights": ["B6", "B11"]},
+    "perchance": {"label": "Perchance AI", "sep": "one", "drop": ["8k uhd", "RAW photo", "real photograph", "natural film grain", "magazine quality"]},
+    "gen":       {"label": "Generic",      "sep": "nl"},
+}
+DEFAULT_PLATFORM = "perchance"
+SEPARATORS = ["nl", "one", "tag", "break"]
+
+# Known contradictions between blocks. They are shown as warnings; the tool never changes the user's choice.
+# Each rule: when block a is one of a_opts AND block b is one of b_opts (0-based indexes).
+CONFLICTS = [
+    dict(a="B7.1", a_opts=[7], b="B7", b_opts=[0, 1],
+         en="ANGLE 8 (profile) conflicts with this framing, which asks for a three-quarter turn or looking at the camera. Try CAM 3–5, or another angle.",
+         es="ÁNGULO 8 (perfil) choca con este encuadre, que pide giro de tres cuartos o mirar a cámara. Prueba CAM 3–5 u otro ángulo."),
+    dict(a="B7.1", a_opts=[3], b="B7", b_opts=[2],
+         en="ANGLE 4 (top-down) with a head-and-shoulders portrait usually shows only the top of the head.",
+         es="ÁNGULO 4 (cenital) con un retrato de cabeza y hombros suele mostrar solo la coronilla."),
+    dict(a="B5", a_opts=[1], b="B7", b_opts=[4],
+         en="BODY 2 includes 'upright posture'; with CAM 5 (seated) the model may sit stiffly.",
+         es="CUERPO 2 incluye 'postura erguida'; con CAM 5 (sentada) la modelo puede salir rígida."),
+    dict(a="B6", a_opts=[9, 15, 16], b="B7", b_opts=[3],
+         en="This outfit already describes what she holds (helmet or mask); combined with walking, hands may come out wrong.",
+         es="Este vestuario ya describe lo que sostiene (casco o máscara); al combinarlo con caminar, las manos pueden salir mal."),
+]

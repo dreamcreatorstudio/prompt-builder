@@ -6,7 +6,8 @@ from playwright.sync_api import sync_playwright
 HTML = (Path(__file__).resolve().parent.parent / "index.html").read_text()
 import json, re
 _arch = json.loads(re.search(r"const ARCHIVE = (\{.*?\});\n", HTML).group(1))
-_old = json.loads(json.dumps(_arch["1.2"])); _old[[x["id"] for x in _old].index("B3.1")]["texts"][0] = "OLD honey hair"
+_old = json.loads(json.dumps(_arch["1.3"])); _old["blocks"][[x["id"] for x in _old["blocks"]].index("B3.1")]["texts"][0] = "OLD honey hair"
+_old["separators"]["one"]["joiner"] = " ; "   # frozen formatting rule that differs from today
 _arch["1.1"] = _old
 OLD_HTML = re.sub(r"const ARCHIVE = \{.*?\};\n", lambda m: "const ARCHIVE = " + json.dumps(_arch) + ";\n", HTML, count=1)
 DEFAULT_HAIR = json.loads(re.search(r"const DEFAULT = (\{.*?\});", HTML).group(1))["B3.1"]
@@ -99,7 +100,7 @@ with sync_playwright() as p:
 
     # recipe round-trip
     rec = pg.inner_text("#recipe"); prompt = ev(pg, "promptText()")
-    check("recipe records version, platform and separator", rec.startswith("v1.2 |") and "| seaart | break" in rec, rec)
+    check("recipe records version, platform and separator", rec.startswith("v1.3 |") and "| seaart | break" in rec, rec)
     pg.click("#resetBtn")
     pg.fill("#recipeIn", rec); pg.click("#loadBtn")
     check("pasting the recipe restores the exact prompt", ev(pg, "promptText()") == prompt)
@@ -133,6 +134,16 @@ with sync_playwright() as p:
     check("zero-based block accepts 0", not err)
     unchanged, err = attempt("ACC5")
     check("zero-based block rejects past its range", unchanged and "0–4" in err, err)
+    unchanged, err = attempt("AGE2 HAIR=-1")
+    check("negative option number is rejected (AGE not applied)", unchanged and "-1" in err, err)
+    unchanged, err = attempt("AGE2 | typo | wrong")
+    check("unrecognised words are rejected", unchanged and "typo" in err and "wrong" in err, err)
+    unchanged, err = attempt("AGE2 HAIR=")
+    check("key without a number is rejected", unchanged and "HAIR=" in err, err)
+    unchanged, err = attempt("AGE2 | venice | seaart")
+    check("two platforms are rejected", unchanged and "platform" in err, err)
+    unchanged, err = attempt("AGE2 | Perchance AI | one")
+    check("platform label with spaces is accepted", not err and ev(pg, 'S.sel["B3"]') == 1)
     unchanged, err = attempt("STYLE3")
     check("partial valid recipe still works and clears errors", not err and ev(pg, 'S.sel["B3.4"]') == 2)
 
@@ -141,6 +152,7 @@ with sync_playwright() as p:
     pgA.fill("#recipeIn", "v1.1 | HAIR1 BG1"); pgA.click("#loadBtn")
     exact = pgA.evaluate("promptText()")
     check("older recipe is reproduced with its own texts", "OLD honey hair" in exact and pgA.evaluate("S.pin") == "1.1", exact[:80])
+    check("…and its own frozen separator rule", " ; " in exact)
     check("…editing is paused while reproducing", pgA.is_disabled("#g-B3_1-0") and pgA.is_disabled('[data-var="B6"]'))
     check("…recipe keeps the old version", pgA.inner_text("#recipe").startswith("v1.1 |"))
     pgA.click("#migrateBtn")
@@ -162,6 +174,21 @@ with sync_playwright() as p:
     check("…but platform and separator are kept", p2.input_value("#plat") == "venice" and p2.input_value("#sep") == "tag")
     p2 = session_page('{sel:{"B3.1":7}}')
     check("session without a version is not reinterpreted", p2.evaluate('S.sel["B3.1"]') == DEFAULT_HAIR and p2.is_visible("#notice"))
+
+    # versions whose prompt is identical today are used directly; partial ones complete with THEIR defaults
+    pgB, _ = fresh(b)
+    pgB.fill("#recipeIn", "v1.2 | HAIR1"); pgB.click("#loadBtn")
+    check("v1.2 partial recipe completes with v1.2 defaults (PHOTO2, OUTFIT4)", pgB.evaluate('S.sel["B1"]') == 1 and pgB.evaluate('S.sel["B6"]') == 3 and pgB.evaluate('S.sel["B3.1"]') == 0)
+    check("…and works normally because its text is identical today", pgB.evaluate("S.pin") is None)
+    p2 = session_page('{v:"1.2", sel:{"B1":1,"B2":1,"B3":0,"B3.3":2,"B3.1":5,"B3.4":8,"B3.2":1,"B4":0,"B5":1,"B6":3,"B6.1":2,"B7":0,"B7.1":8,"B8":0,"B11":0}, plat:"perchance", sep:"one"}')
+    check("saved v1.2 session is kept as the user left it", p2.evaluate('S.sel["B6"]') == 3 and p2.evaluate('S.sel["B7.1"]') == 8 and p2.evaluate("S.pin") is None and not p2.is_visible("#notice"))
+
+    # new base: fresh session and Reset use the yoga catalog defaults, with no notes
+    pgC, _ = fresh(b)
+    base = "PHOTO3 GLOW1 AGE1 EXPR4 HAIR6 STYLE9 EYES2 SKIN3 BODY2 OUTFIT5 ACC0 CAM1 ANGLE1 LIGHT1 BG1"
+    check("new session starts with the yoga catalog base", base in pgC.inner_text("#recipe") and not pgC.is_visible("#warnPanel"))
+    pgC.click('label[for="g-B6-0"]'); pgC.click("#resetBtn")
+    check("Reset returns to the yoga catalog base", base in pgC.inner_text("#recipe"))
 
     # 4. notes by kind; seated + upright and walking + helmet are no longer flagged
     pg.click("#resetBtn")

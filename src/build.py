@@ -19,21 +19,21 @@ import theme
 ARCHIVE_DIR = SRC / "archive"
 
 def snapshot():
-    return [{"id": b["id"], "key": list(b["key"]), "zero": bool(b.get("zero")), "texts": [o[2] for o in b["opts"]]} for b in BLOCKS]
+    """Everything that decides the prompt text for a recipe: block texts, defaults used to complete
+    partial recipes, platform formatting rules and separators."""
+    return {"blocks": [{"id": b["id"], "key": list(b["key"]), "zero": bool(b.get("zero")), "texts": [o[2] for o in b["opts"]]} for b in BLOCKS],
+            "defaults": DEFAULT, "default_platform": DEFAULT_PLATFORM, "platforms": PLATFORMS, "separators": SEPARATORS}
 
 def load_archive():
-    """Freeze the current version's texts the first time it is built; refuse silent text changes later."""
+    """Freeze the current version the first time it is built; refuse silent changes later."""
     ARCHIVE_DIR.mkdir(exist_ok=True)
     cur = ARCHIVE_DIR / f"v{LIB_VERSION}.json"
-    snap = snapshot()
+    snap = json.loads(json.dumps(snapshot()))
     if cur.exists():
         old = json.loads(cur.read_text())
-        for ob, nb in zip(old, snap):
-            same_prefix = ob["id"] == nb["id"] and nb["texts"][:len(ob["texts"])] == ob["texts"]
-            if not same_prefix:
-                sys.exit(f"Prompt texts of {ob['id']} changed but LIB_VERSION is still {LIB_VERSION}. Bump LIB_VERSION in src/data.py.")
-        if len(snap) != len(old) or any(len(a["texts"]) != len(b["texts"]) for a, b in zip(old, snap)):
-            sys.exit(f"Blocks or options were added but LIB_VERSION is still {LIB_VERSION}. Bump LIB_VERSION in src/data.py.")
+        if old != snap:
+            what = [k for k in snap if old.get(k) != snap[k]]
+            sys.exit(f"{', '.join(what)} changed but LIB_VERSION is still {LIB_VERSION}. Bump LIB_VERSION in src/data.py.")
     else:
         cur.write_text(json.dumps(snap, ensure_ascii=False, indent=1))
     return {p.stem[1:]: json.loads(p.read_text()) for p in sorted(ARCHIVE_DIR.glob("v*.json"))}
@@ -49,7 +49,7 @@ def default_prompt():
         if not t: continue
         if P.get("drop"): t = ", ".join(x for x in t.split(", ") if x not in P["drop"])
         out.append(t)
-    return (", " if P["sep"] == "one" else ",\n").join(out)
+    return SEPARATORS[P["sep"]]["joiner"].join(out)
 
 def static_library():
     en = T["en"]

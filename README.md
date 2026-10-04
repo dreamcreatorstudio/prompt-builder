@@ -11,7 +11,7 @@ Build image prompts from **blocks** and copy a ready-to-use prompt. Pick one num
 - Formatting and suggested settings for **Perchance AI** (default), **Venice AI** and **SeaArt**.
 - **Lock** blocks; **Variants** compares the other options of one block (page through all of them).
 - **Recipes** record library version, options, platform and separator:
-  `v1.2 | PHOTO2 GLOW2 AGE1 EXPR3 HAIR6 STYLE9 EYES2 SKIN1 BODY2 OUTFIT4 ACC2 CAM1 ANGLE9 LIGHT1 BG1 | perchance | one`
+  `v1.3 | PHOTO3 GLOW1 AGE1 EXPR4 HAIR6 STYLE9 EYES2 SKIN3 BODY2 OUTFIT5 ACC0 CAM1 ANGLE1 LIGHT1 BG1 | perchance | one`
 - Paste a recipe to load it. Invalid recipes are rejected as a whole with a list of errors; partial recipes are fine.
 - Recipes and saved sessions from an older library version are shown with that version's exact texts (read-only) until you choose to migrate. Migrating keeps the option numbers but uses current texts, so the prompt may change.
 - Notes on combinations, grouped as incompatible, out of frame or needs testing (never changed silently).

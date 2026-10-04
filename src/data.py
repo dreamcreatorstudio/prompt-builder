@@ -109,10 +109,10 @@ BLOCKS = [
   ("City street","Calle urbana","sunny city street, modern storefronts, soft background blur")]),
 ]
 NEG = "cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features"
-DEFAULT = {"B1":1,"B2":1,"B3":0,"B3.3":2,"B3.1":5,"B3.4":8,"B3.2":1,"B4":0,"B5":1,"B6":3,"B6.1":2,"B7":0,"B7.1":8,"B8":0,"B11":0}
+DEFAULT = {"B1":2,"B2":0,"B3":0,"B3.3":3,"B3.1":5,"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":4,"B6.1":0,"B7":0,"B7.1":0,"B8":0,"B11":0}  # yoga catalog base
 
 # Library version: bump when any prompt text changes, so recipes record which texts they used.
-LIB_VERSION = "1.2"
+LIB_VERSION = "1.3"   # 1.3: new default base (yoga catalog); texts unchanged from 1.2
 
 PLATFORMS = {  # separator default + transforms applied to the prompt text
     "venice":    {"label": "Venice AI",    "sep": "nl"},
@@ -121,7 +121,13 @@ PLATFORMS = {  # separator default + transforms applied to the prompt text
     "gen":       {"label": "Generic",      "sep": "nl"},
 }
 DEFAULT_PLATFORM = "perchance"
-SEPARATORS = ["nl", "one", "tag", "break"]
+# How blocks are joined. Frozen per version together with the platform rules and defaults.
+SEPARATORS = {
+    "nl":    {"joiner": ",\n"},
+    "one":   {"joiner": ", "},
+    "tag":   {"joiner": ",\n", "prefix": True},
+    "break": {"joiner": ",\nBREAK\n"},
+}
 
 # Notes about block combinations. Shown as notes, grouped by kind; the tool never changes the user's choices.
 #   incompatible : the two blocks ask for opposite things

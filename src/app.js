@@ -22,7 +22,7 @@ function save() {
 }
 function validSel(ver, sel) {           // keep only indexes that exist in that version
   const out = {};
-  for (const b of ARCHIVE[ver]) { const i = sel && sel[b.id]; if (Number.isInteger(i) && i >= 0 && i < b.texts.length) out[b.id] = i; }
+  for (const b of ARCHIVE[ver].blocks) { const i = sel && sel[b.id]; if (Number.isInteger(i) && i >= 0 && i < b.texts.length) out[b.id] = i; }
   return out;
 }
 function restore() {
@@ -30,17 +30,28 @@ function restore() {
   const s = load("pb-session"); if (!s) return;
   if (s.lang === "en" || s.lang === "es") S.lang = s.lang;
   if (PLATFORMS[s.plat]) S.plat = s.plat;          // platform and separator don't depend on the library
-  if (SEPARATORS.includes(s.sep)) S.sep = s.sep;
+  if (s.sep in SEPARATORS) S.sep = s.sep;
   if (s.v === LIB_VERSION) {
     Object.assign(S.sel, validSel(LIB_VERSION, s.sel));
     for (const id in (s.locked || {})) if (BY_ID[id] && s.locked[id]) S.locked[id] = true;
-  } else if (ARCHIVE[s.v]) {                        // older known version: reproduce exactly, ask before migrating
-    S.pin = s.v; S.pinSel = { ...defaultsFor(s.v), ...validSel(s.v, s.sel) }; S.notice = { key: "sessionOld", v: s.v };
+  } else if (ARCHIVE[s.v]) {                        // older known version
+    const full = { ...ARCHIVE[s.v].defaults, ...validSel(s.v, s.sel) };
+    if (sameAsCurrent(s.v, full)) {                 // identical prompt today: keep working normally
+      S.sel = { ...S.sel, ...full };
+      for (const id in (s.locked || {})) if (BY_ID[id] && s.locked[id]) S.locked[id] = true;
+    } else { S.pin = s.v; S.pinSel = full; S.notice = { key: "sessionOld", v: s.v }; }   // reproduce exactly, ask before migrating
   } else {                                          // unknown version: don't reinterpret its numbers
     S.notice = { key: "sessionUnknown", v: s.v || "?" };
   }
 }
-function defaultsFor(ver) { const d = {}; for (const b of ARCHIVE[ver]) d[b.id] = BY_ID[b.id] && DEFAULT[b.id] < b.texts.length ? DEFAULT[b.id] : 0; return d; }
+// An older-version selection can be used as-is when every option still exists and the prompt text is identical.
+function sameAsCurrent(v, sel) {
+  for (const id in sel) if (!BY_ID[id] || sel[id] >= BY_ID[id].opts.length) return false;
+  const now = { ...S.sel, ...sel };
+  return Object.keys(sel).length === ARCHIVE[v].blocks.length &&
+    Object.keys(ARCHIVE[v].platforms).every(pl => Object.keys(ARCHIVE[v].separators).every(sp =>
+      pl in PLATFORMS && sp in SEPARATORS && textFor(v, sel, pl, sp) === textFor(LIB_VERSION, now, pl, sp)));
+}
 
 const L = () => T[S.lang];
 const LI = () => S.lang === "en" ? 0 : 1;
@@ -49,52 +60,63 @@ const curSel = () => S.pin ? S.pinSel : S.sel;
 
 // ---------- prompt ----------
 function parts(sel, plat, v = ver()) {
-  const P = PLATFORMS[plat];
-  return ARCHIVE[v].map(b => {
+  const P = ARCHIVE[v].platforms[plat] || PLATFORMS[plat];
+  return ARCHIVE[v].blocks.map(b => {
     let t = b.texts[sel[b.id]];
     if (t && P.drop) t = t.split(", ").filter(x => !P.drop.includes(x)).join(", ");
     if (t && P.weights && P.weights.includes(b.id)) t = `(${t}:1.2)`;
     return { id: b.id, hue: (BY_ID[b.id] || {}).hue || "--muted", text: t };
   }).filter(p => p.text);
 }
-function join(ps, sep, html) {
+function join(ps, sep, html, v = ver()) {
+  const SP = ARCHIVE[v].separators[sep] || SEPARATORS[sep];
   const piece = p => html
-    ? (sep !== "tag" ? `<span class="tag" aria-hidden="true">[${p.id}] </span>` : "") + `<span style="--c:var(${p.hue})">${esc(p.text)}</span>`
+    ? (!SP.prefix ? `<span class="tag" aria-hidden="true">[${p.id}] </span>` : "") + `<span style="--c:var(${p.hue})">${esc(p.text)}</span>`
     : p.text;
-  const tagged = p => (sep === "tag" ? `[${p.id}] ` : "") + piece(p);
-  if (sep === "one") return ps.map(piece).join(", ");
-  if (sep === "tag") return ps.map(tagged).join(",\n");
-  if (sep === "break") return ps.map(piece).join(",\nBREAK\n");
-  return ps.map(piece).join(",\n");
+  return ps.map(p => (SP.prefix ? `[${p.id}] ` : "") + piece(p)).join(SP.joiner);
 }
-const promptText = (sel = curSel()) => join(parts(sel, S.plat), S.sep, false);
+const textFor = (v, sel, plat, sep) => join(parts(sel, plat, v), sep, false, v);
+const promptText = (sel = curSel()) => textFor(ver(), sel, S.plat, S.sep);
 
 // ---------- recipe ----------
 // Format: v1.2 | PHOTO2 GLOW2 ... BG1 | perchance | one   (Spanish keys accepted; partial recipes allowed)
 function recipe(sel = curSel(), v = ver()) {
   const li = LI();
-  return `v${v} | ` + ARCHIVE[v].map(b => b.key[li] + (b.zero ? sel[b.id] : sel[b.id] + 1)).join(" ") + ` | ${S.plat} | ${S.sep}`;
+  return `v${v} | ` + ARCHIVE[v].blocks.map(b => b.key[li] + (b.zero ? sel[b.id] : sel[b.id] + 1)).join(" ") + ` | ${S.plat} | ${S.sep}`;
 }
+// Strict grammar: every token must be a version (v1.3), a block option (HAIR6 or HAIR=6), a platform
+// (perchance / "Perchance AI"), a separator (one, nl, tag, break, or sep=one) or a "|" / "·" / "," divider.
 function parseRecipe(txt) {
   const r = { v: LIB_VERSION, sel: {}, plat: null, sep: null, errors: [] };
-  const vm = txt.match(/\bv(\d+(?:\.\d+)+)\b/i);
-  if (vm) r.v = vm[1];
+  let t = " " + txt + " ";
+  const vs = [...t.matchAll(/(^|\s|\|)v(\d+(?:\.\d+)+)(?=\s|\||$)/ig)].map(m => m[2]);
+  if (new Set(vs).size > 1) r.errors.push(fmt(L().errTwice, { what: L().what.version, list: [...new Set(vs)].join(", ") }));
+  if (vs.length) r.v = vs[0];
   if (!ARCHIVE[r.v]) { r.errors.push(fmt(L().errVersion, { v: r.v, known: KNOWN.join(", ") })); return r; }
-  const lib = ARCHIVE[r.v], keyMap = {};
-  for (const b of lib) { keyMap[b.key[0].toUpperCase()] = b; keyMap[b.key[1].toUpperCase()] = b; }
-  const body = txt.replace(/\bv\d+(?:\.\d+)+\b/ig, " ");
-  const seen = {};
-  for (const m of body.matchAll(/\b([A-Za-z]+)\s*=?\s*(\d+)\b/g)) {
-    const k = m[1].toUpperCase(), n = +m[2], b = keyMap[k];
+  const A = ARCHIVE[r.v];
+  for (const k in A.platforms) t = t.replace(new RegExp(A.platforms[k].label.replace(/\s+/g, "\\s+"), "ig"), " " + k + " ");
+  t = t.replace(/\s*=\s*/g, "=");
+  const keyMap = {};
+  for (const b of A.blocks) { keyMap[b.key[0].toUpperCase()] = b; keyMap[b.key[1].toUpperCase()] = b; }
+  const seen = {}, plats = new Set(), seps = new Set();
+  for (const tok of t.split(/[\s|·,;]+/).filter(Boolean)) {
+    const low = tok.toLowerCase();
+    if (/^v\d+(\.\d+)+$/i.test(tok)) continue;
+    if (low in A.platforms) { plats.add(low); continue; }
+    const sm = low.match(/^(?:sep=)?(nl|one|tag|break)$/);
+    if (sm && sm[1] in A.separators) { seps.add(sm[1]); continue; }
+    const m = tok.match(/^([A-Za-z]+)=?(-?\d+)?$/);
+    if (!m || m[2] === undefined) { r.errors.push(fmt(L().errToken, { t: tok })); continue; }
+    const b = keyMap[m[1].toUpperCase()];
     if (!b) { r.errors.push(fmt(L().errUnknownKey, { k: m[1] })); continue; }
-    const i = b.zero ? n : n - 1;
-    if (i < 0 || i >= b.texts.length) { r.errors.push(fmt(L().errRange, { k: m[1], n, a: b.zero ? 0 : 1, b: b.zero ? b.texts.length - 1 : b.texts.length })); continue; }
-    if (b.id in seen && seen[b.id].i !== i) { r.errors.push(fmt(L().errDup, { id: b.id, x: seen[b.id].tok, y: m[0].replace(/\s/g, "") })); continue; }
-    seen[b.id] = { i, tok: m[0].replace(/\s/g, "") }; r.sel[b.id] = i;
+    const n = +m[2], i = b.zero ? n : n - 1, lo = b.zero ? 0 : 1, hi = b.zero ? b.texts.length - 1 : b.texts.length;
+    if (!/^\d+$/.test(m[2]) || i < 0 || i >= b.texts.length) { r.errors.push(fmt(L().errRange, { k: m[1], n: m[2], a: lo, b: hi })); continue; }
+    if (b.id in seen && seen[b.id].i !== i) { r.errors.push(fmt(L().errDup, { id: b.id, x: seen[b.id].tok, y: tok })); continue; }
+    seen[b.id] = { i, tok }; r.sel[b.id] = i;
   }
-  const low = txt.toLowerCase();
-  for (const k in PLATFORMS) if (new RegExp(`\\b${k}\\b`).test(low) || low.includes(PLATFORMS[k].label.toLowerCase())) r.plat = k;
-  for (const s of SEPARATORS) if (new RegExp(`\\|\\s*${s}\\s*$`).test(low.trim()) || new RegExp(`\\bsep=${s}\\b`).test(low)) r.sep = s;
+  if (plats.size > 1) r.errors.push(fmt(L().errTwice, { what: L().what.platform, list: [...plats].join(", ") }));
+  if (seps.size > 1) r.errors.push(fmt(L().errTwice, { what: L().what.separator, list: [...seps].join(", ") }));
+  r.plat = [...plats][0] || null; r.sep = [...seps][0] || null;
   if (!r.errors.length && !Object.keys(r.sel).length) r.errors.push(L().errNone);
   return r;
 }
@@ -108,8 +130,12 @@ function loadRecipe() {
   showErrors([]);
   if (r.plat) S.plat = r.plat;
   if (r.sep) S.sep = r.sep; else if (r.plat) S.sep = PLATFORMS[r.plat].sep;
-  if (r.v !== LIB_VERSION) {                         // reproduce an older version exactly
-    S.pin = r.v; S.pinSel = { ...defaultsFor(r.v), ...r.sel }; S.notice = { key: "pinBanner", v: r.v };
+  if (r.v !== LIB_VERSION) {
+    // Older version: complete with THAT version's defaults; use it as current only if the text is identical.
+    const full = { ...ARCHIVE[r.v].defaults, ...r.sel };
+    const lockClash = Object.keys(full).some(id => S.locked[id] && full[id] !== S.sel[id]);
+    if (!lockClash && sameAsCurrent(r.v, full)) { S.pin = null; S.pinSel = null; S.sel = { ...S.sel, ...full }; changed(); return toast(L().loaded); }
+    S.pin = r.v; S.pinSel = full; S.notice = { key: "pinBanner", v: r.v };
     closeVariants(); changed(); return;
   }
   S.pin = null; S.pinSel = null; if (S.notice && S.notice.key !== "sessionUnknown") S.notice = null;

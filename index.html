@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mezclador de Prompts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: two columns — block menus (left) and a sticky "contact sheet" output (right); stacks on phones */
+:root{
+  --bg:#F1F3F2; --surface:#FFFFFF; --ink:#18211F; --muted:#5D6B67; --line:#D5DCD9;
+  --accent:#0E6B66; --accent-ink:#FFFFFF; --chip:#E7ECEA;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Public Sans", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  --h1:#B3541E; --h2:#8A6A00; --h3:#2E7D32; --h4:#00796B; --h5:#1565C0; --h6:#6A3FB5; --h7:#AD1457; --h8:#5D4037;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111816; --surface:#19221F; --ink:#E6EEEB; --muted:#9AA9A4; --line:#2C3834;
+  --accent:#4FC2B9; --accent-ink:#0B1513; --chip:#22302C;
+  --h1:#F0905A; --h2:#E2C04A; --h3:#7BCB7F; --h4:#4FC2B9; --h5:#7FB2F0; --h6:#B79BEB; --h7:#EE86B2; --h8:#C9A693;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111816; --surface:#19221F; --ink:#E6EEEB; --muted:#9AA9A4; --line:#2C3834;
+  --accent:#4FC2B9; --accent-ink:#0B1513; --chip:#22302C;
+  --h1:#F0905A; --h2:#E2C04A; --h3:#7BCB7F; --h4:#4FC2B9; --h5:#7FB2F0; --h6:#B79BEB; --h7:#EE86B2; --h8:#C9A693;
+  color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+.js #static{display:none}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;padding-inline:16px;padding-block:24px 48px}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:24px}
+header{display:grid;gap:6px}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,4vw,40px);line-height:1.05;margin:0;text-wrap:balance}
+.lede{color:var(--muted);max-width:68ch;margin:0}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:24px;align-items:start}
+@media (max-width:900px){.grid{grid-template-columns:minmax(0,1fr)}}
+.blocks{display:grid;gap:12px;min-width:0}
+.block{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:10px;border-left:4px solid var(--hue)}
+.bhead{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.bid{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--hue);letter-spacing:.04em}
+.bname{font-family:var(--display);font-weight:500;font-size:17px}
+.bhead .tools{margin-left:auto;display:flex;gap:6px}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt label{display:inline-flex;gap:6px;align-items:baseline;padding:6px 10px;border-radius:999px;background:var(--chip);cursor:pointer;font-size:14px;border:1px solid transparent}
+.opt label b{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--muted)}
+.opt input:checked + label{background:var(--hue);color:var(--surface);}
+.opt input:checked + label b{color:var(--surface)}
+.opt input:focus-visible + label{outline:2px solid var(--accent);outline-offset:2px}
+.btn{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:6px 10px;cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.out{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);display:grid;gap:14px;min-width:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:10px;min-width:0}
+.panel h2{font-family:var(--display);font-weight:500;font-size:18px;margin:0}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+select{font:inherit;font-size:14px;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);max-width:100%}
+pre{font-family:var(--mono);font-size:12.5px;line-height:1.55;white-space:pre-wrap;word-break:break-word;margin:0;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px;max-height:46vh;overflow:auto}
+pre span{color:var(--c)}
+.code{font-family:var(--mono);font-size:13px;color:var(--muted);word-break:break-all}
+.small{font-size:13px;color:var(--muted)}
+.toast{font-size:13px;color:var(--accent);min-height:1.2em}
+.variants{display:grid;gap:10px}
+.variant{border-top:1px solid var(--line);padding-top:10px;display:grid;gap:6px}
+.variant h3{font-size:14px;margin:0;font-weight:600}
+.tips{display:grid;gap:6px;font-size:13.5px;color:var(--muted);margin:0;padding-left:18px}
+@media (prefers-reduced-motion:no-preference){.opt label{transition:background .12s}}
+</style></head><body>
+
+<div class="wrap">
+  <header>
+    <h1>Mezclador de Prompts</h1>
+    <p class="lede">Elige la plataforma y una opción numerada por bloque, y copia el prompt ensamblado. Cada bloque va en su propia línea, así ves dónde empieza y termina sin alterar el prompt. Bloquea los bloques que no quieras tocar y usa <b>×3</b> para sacar tres variantes de un solo bloque.</p>
+  </header>
+
+  <div class="grid">
+    <section class="blocks" id="blocks" aria-label="Bloques"></section>
+<section id="static" class="blocks" aria-label="Biblioteca">
+<div class="panel"><h2>Modo lectura</h2><p class="small" style="margin:0">Este visor no permite usar los menús. Aquí tienes la biblioteca completa para copiar a mano. Para usar el mezclador, ábrelo en Chrome o Safari o con el link de Claude: <b>dreamcreatorstudio.github.io/prompt-builder</b></p></div>
+<div class="block" style="--hue:var(--h1)"><div class="bhead"><span class="bid">B1 · FOTO</span><span class="bname">Motor fotográfico</span></div><ol class="tips" style="padding-left:0;list-style:none">
+<li><b>1 · Realista DSLR:</b> RAW photo, photorealistic, real photograph, Canon EOS R5, 85mm lens, f/2.0, shallow depth of field, natural film grain, sharp focus, 8k uhd</li>
+<li><b>2 · Editorial de moda:</b> high-end fashion editorial photograph, medium format camera, 80mm lens, f/4, crisp detail, magazine quality, photorealistic</li>
+<li><b>3 · Catálogo de estudio:</b> clean commercial catalog photograph, 50mm lens, f/8, everything in sharp focus, even exposure, photorealistic</li>
+</ol></div>
+<div class="block" style="--hue:var(--h2)"><div class="bhead"><span class="bid">B2 · BRI</span><span class="bname">Brillo de piel</span></div><ol class="tips" style="padding-left:0;list-style:none">
+<li><b>1 · Natural mate:</b> natural matte skin finish, soft diffuse highlights</li>
+<li><b>2 · Glow saludable:</b> healthy dewy skin glow, subtle natural sheen on cheekbones and shoulders</li>
+<li><b>3 · Post-entreno:</b> light post-workout glow, faint natural sheen of perspiration</li>
+</ol></div>
+<div class="block" style="--hue:var(--h3)"><div class="bhead"><span class="bid">B3 · MOD</span><span class="bname">Modelo y expresión</span></div><ol class="tips" style="padding-left:0;list-style:none">
+<li><b>1 · 30 años, segura:</b> a 30-year-old woman, mature adult facial features, confident relaxed expression, soft natural smile</li>
+<li><b>2 · 35 años, elegante:</b> a 35-year-old woman, elegant mature features, calm self-assured gaze</li>
+<li><b>3 · 28 años, alegre:</b> a 28-year-old woman, adult facial features, bright friendly smile</li>
+<li><b>4 · 40 años, serena:</b> a 40-year-old woman, graceful mature features, serene warm expression</li>
+</ol></div>
+<div class="block" style="--hue:var(--h3)"><div class="bhead"><span class="bid">B3.1 · CAB</span><span class="bname">Cabello</span></div><ol class="tips" style="padding-left:0;list-style:none">
+<li><b>1 · Rubia:</b> long wavy honey-blonde hair</li>
+<li><b>2 · Pelirroja:</b> long copper-red hair with soft waves</li>
+<li><b>3 · Negro:</b> sleek long jet-black hair</li>
+<li><b>4 · Castaño:</b> shoulder-length chestnut-brown hair</li>
+<li><b>5 · Moño suelto:</b> ash-brown hair in a loose messy bun with face-framing strands</li>
+</ol></div>
+<div class="block" style="--hue:var(--h3)"><div class="bhead"><span class="bid">B3.2 · OJO</span><span class="bname">Ojos</span></div><ol class="tips" style="padding-left:0;list-style:none">
+<li><b>1 · Azules:</b> clear blue eyes</li>
+<li><b>2 · Verdes:</b> green eyes</li>
+<li><b>3 · Marrones:</b> warm brown eyes</li>
+<li><b>4 · Avellana:</b> hazel eyes</li>
+<li><b>5 · Grises:</b> grey eyes</li>
+</ol></div>
+<div class="block" style="--hue:var(--h4)"><div class="bhead"><span class="bid">B4 · PIEL</span><span class="bname">Piel y tono</span></div><ol class="tips" style="padding-left:0;list-style:none">
+<li><b>1 · Porcelana:</b> fair porcelain skin with warm pink undertones, natural skin texture, visible pores</li>
+<li><b>2 · Clara con pecas:</b> fair skin with light freckles across the nose and cheeks, natural skin texture</li>
+<li><b>3 · Oliva:</b> olive skin tone with golden undertones, natural skin texture</li>
+<li><b>4 · Morena:</b> warm tan brown skin, natural skin texture, subtle color variation</li>
+<li><b>5 · Oscura:</b> deep brown skin with rich undertones, natural skin texture</li>
+</ol></div>
+<div class="block" style="--hue:var(--h5)"><div class="bhead"><span class="bid">B5 · CUE</span><span class="bname">Cuerpo</span></div><ol class="tips" style="padding-left:0;list-style:none">
+<li><b>1 · Fitness atlética:</b> fit athletic adult build, toned shoulders and arms, defined core, strong toned legs</li>
+<li><b>2 · Pilates esbelta:</b> lean slender adult physique with long toned muscles, graceful upright posture</li>
+<li><b>3 · Corredora:</b> lean runner&#x27;s build, defined legs, athletic adult proportions</li>
+<li><b>4 · Natural:</b> healthy natural adult body, soft curves, relaxed posture</li>
+</ol></div>
+<div class="block" style="--hue:var(--h6)"><div class="bhead"><span class="bid">B6 · VES</span><span class="bname">Vestuario</span></div><ol class="tips" style="padding-left:0;list-style:none">
+<li><b>1 · Denim + crop blanco:</b> white ribbed cotton crop top, high-waisted light-wash denim shorts, white canvas sneakers</li>
+<li><b>2 · Deportivo negro:</b> black sports crop top, matching high-waisted biker shorts, running shoes</li>
+<li><b>3 · Lino verano:</b> cream linen button-up crop top, high-waisted linen shorts, leather sandals</li>
+<li><b>4 · Punto pastel:</b> sage green knit crop cardigan, high-waisted white tailored shorts, minimalist sandals</li>
+<li><b>5 · Yoga set:</b> dusty rose yoga set, fitted long-sleeve crop top and full-length leggings, barefoot</li>
+<li><b>6 · Heroína galáctica:</b> original superhero costume, full-coverage silver and teal bodysuit with geometric armor plates, short flowing cape, star emblem on the chest, knee-high boots</li>
+<li><b>7 · Capitana tormenta:</b> original superhero costume, full-coverage navy bodysuit with gold lightning-bolt piping, high collar, fingerless gloves, utility belt, armored boots</li>
+<li><b>8 · Guerrera de leyenda:</b> original fantasy warrior costume, bronze breastplate over a long crimson tunic, leather bracers, ornate belt, sandal boots, round shield on her back</li>
+<li><b>9 · Pirata:</b> pirate captain costume, white billowy blouse, burgundy brocade vest, tricorn hat, wide leather belt, tall boots, fitted dark trousers</li>
+<li><b>10 · Astronauta:</b> modern white astronaut suit with orange accents, mission patches, helmet held under one arm</li>
+<li><b>11 · Samurái:</b> samurai-inspired costume, dark lacquered armor pieces over an indigo hakama and kimono, red cord details</li>
+<li><b>12 · Flamenca:</b> traditional red flamenco dress with white polka dots, ruffled sleeves and tiers, flower in the hair, shawl with fringe</li>
+<li><b>13 · Vaquera:</b> western cowgirl outfit, suede fringe jacket, plaid shirt, high-waisted jeans, cowboy hat and boots</li>
+<li><b>14 · Steampunk:</b> steampunk explorer outfit, brown leather corset vest over a cream blouse, brass goggles on the hat, long skirt with buckles, gloves</li>
+<li><b>15 · Elfa del bosque:</b> original forest elf costume, long moss-green layered dress with leaf embroidery, hooded cape, elegant pointed ears, wooden bow</li>
+<li><b>16 · Piloto de carreras:</b> racing driver suit, red and white fireproof jumpsuit with sponsor-free patches, helmet held at the hip</li>
+<li><b>17 · Carnaval dominicano:</b> Dominican carnival Diablo Cojuelo costume, vibrant full-coverage satin suit covered in mirrors, bells and ribbons, ornate horned mask held in her hand</li>
+</ol></div>
+<div class="block" style="--hue:var(--h6)"><div class="bhead"><span class="bid">B6.1 · ACC</span><span class="bname">Accesorios</span></div><ol class="tips" style="padding-left:0;list-style:none">
+<li><b>0 · Ninguno:</b> (sin accesorios)</li>
+<li><b>1 · Collar esmeralda:</b> emerald pendant necklace on a fine gold chain</li>
+<li><b>2 · Aros dorados:</b> small gold hoop earrings</li>
+<li><b>3 · Reloj deportivo:</b> minimalist sports watch</li>
+<li><b>4 · Gorra:</b> beige baseball cap</li>
+</ol></div>
+<div class="block" style="--hue:var(--h7)"><div class="bhead"><span class="bid">B7 · CAM</span><span class="bname">Cámara y pose</span></div><ol class="tips" style="padding-left:0;list-style:none">
+<li><b>1 · Cuerpo entero 3/4:</b> full body shot, head to toe framing, standing relaxed, three-quarter turn, looking at camera</li>
+<li><b>2 · Medio cuerpo:</b> medium shot from the waist up, eye-level camera, looking at camera</li>
+<li><b>3 · Retrato:</b> close-up portrait, head and shoulders, eye-level camera</li>
+<li><b>4 · Caminando:</b> full body shot, walking toward camera, natural mid-stride motion</li>
+<li><b>5 · Sentada:</b> full body shot, sitting casually on a low wooden stool, relaxed posture</li>
+</ol></div>
+<div class="block" style="--hue:var(--h8)"><div class="bhead"><span class="bid">B8 · LUZ</span><span class="bname">Luz</span></div><ol class="tips" style="padding-left:0;list-style:none">
+<li><b>1 · Estudio suave:</b> soft even studio lighting, large softbox, gentle shadows</li>
+<li><b>2 · Hora dorada:</b> warm golden hour sunlight, soft rim light</li>
+<li><b>3 · Ventana:</b> soft natural window light from the side</li>
+<li><b>4 · Nublado:</b> bright overcast daylight, soft shadowless light</li>
+</ol></div>
+<div class="block" style="--hue:var(--h4)"><div class="bhead"><span class="bid">B11 · FON</span><span class="bname">Fondo / background</span></div><ol class="tips" style="padding-left:0;list-style:none">
+<li><b>1 · Void blanco:</b> seamless pure white background, infinite white studio void, soft contact shadow on the floor</li>
+<li><b>2 · Gris neutro:</b> seamless light grey studio backdrop</li>
+<li><b>3 · París:</b> Paris cityscape with the Eiffel Tower in the background, creamy bokeh</li>
+<li><b>4 · Playa:</b> tropical beach at sunset, palm trees, soft ocean bokeh</li>
+<li><b>5 · Sala de yoga:</b> bright yoga studio, light wooden floor, large windows, green plants</li>
+<li><b>6 · Calle urbana:</b> sunny city street, modern storefronts, soft background blur</li>
+</ol></div>
+</section>
+
+    <aside class="out">
+      <div class="panel">
+        <div class="row">
+          <h2>Plataforma</h2>
+          <span style="margin-left:auto"></span>
+          <select id="plat" aria-label="Plataforma">
+            <option value="venice" selected>Venice AI</option>
+            <option value="seaart">SeaArt</option>
+            <option value="perchance">Perchance AI</option>
+            <option value="gen">Genérico</option>
+          </select>
+        </div>
+        <p class="small" id="platNote" style="margin:0"></p>
+        <ul class="tips" id="platTips"></ul>
+      </div>
+      <div class="panel">
+        <div class="row">
+          <h2>Prompt</h2>
+          <span style="margin-left:auto"></span>
+          <button class="btn primary" id="copyPrompt">Copiar prompt</button>
+        </div>
+        <div class="row">
+          <label class="small" for="sep">Separador entre bloques</label>
+          <select id="sep">
+            <option value="nl" selected>Salto de línea (recomendado)</option>
+            <option value="one">Una sola línea</option>
+            <option value="tag">Etiquetas [B#] (solo para guardar)</option>
+            <option value="break">BREAK (SeaArt / SD avanzado)</option>
+          </select>
+        </div>
+        <pre id="prompt" aria-live="polite">RAW photo, photorealistic, real photograph, Canon EOS R5, 85mm lens, f/2.0, shallow depth of field, natural film grain, sharp focus, 8k uhd,
+healthy dewy skin glow, subtle natural sheen on cheekbones and shoulders,
+a 30-year-old woman, mature adult facial features, confident relaxed expression, soft natural smile,
+ash-brown hair in a loose messy bun with face-framing strands,
+green eyes,
+fair porcelain skin with warm pink undertones, natural skin texture, visible pores,
+fit athletic adult build, toned shoulders and arms, defined core, strong toned legs,
+white ribbed cotton crop top, high-waisted light-wash denim shorts, white canvas sneakers,
+full body shot, head to toe framing, standing relaxed, three-quarter turn, looking at camera,
+soft even studio lighting, large softbox, gentle shadows,
+seamless pure white background, infinite white studio void, soft contact shadow on the floor</pre>
+        <div class="row">
+          <span class="small">Receta:</span>
+          <span class="code" id="recipe">FOTO1 BRI2 MOD1 CAB5 OJO2 PIEL1 CUE1 VES1 ACC0 CAM1 LUZ1 FON1</span>
+          <button class="btn" id="copyRecipe">Copiar receta</button>
+        </div>
+        <div class="toast" id="toast"></div>
+      </div>
+
+      <div class="panel">
+        <div class="row"><h2>Prompt negativo</h2><span style="margin-left:auto"></span><button class="btn" id="copyNeg">Copiar</button></div>
+        <pre id="neg">cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features</pre>
+      </div>
+
+      <div class="panel" id="varPanel" hidden>
+        <div class="row"><h2 id="varTitle">Variantes</h2><span style="margin-left:auto"></span><button class="btn" id="closeVar">Cerrar</button></div>
+        <div class="variants" id="variants"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Separadores: qué usar</h2>
+        <ul class="tips">
+          <li><b>Salto de línea:</b> los generadores lo leen como un espacio, así que no cambia el resultado. Es la forma más limpia de ver los bloques.</li>
+          <li><b>Puntos (.... o .....):</b> mejor no. Se convierten en tokens, gastan espacio y a veces aparecen como ruido o texto en la imagen.</li>
+          <li><b>Etiquetas [B6]:</b> sirven para guardar y comparar. Bórralas antes de generar, porque los corchetes son sintaxis en SeaArt.</li>
+          <li><b>BREAK:</b> en modelos tipo SD separa los bloques en "paquetes" y reduce que se mezclen (por ejemplo, el color del pelo en la ropa). Sí cambia el resultado, úsalo a propósito.</li>
+          <li>Evita <code>| [ ] { } ( )</code> como separadores: son comandos en SeaArt y Stable Diffusion.</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+document.documentElement.classList.add("js");
+const BLOCKS = [
+ {id:"B1",key:"FOTO",name:"Motor fotográfico",hue:"--h1",opts:[
+  ["Realista DSLR","RAW photo, photorealistic, real photograph, Canon EOS R5, 85mm lens, f/2.0, shallow depth of field, natural film grain, sharp focus, 8k uhd"],
+  ["Editorial de moda","high-end fashion editorial photograph, medium format camera, 80mm lens, f/4, crisp detail, magazine quality, photorealistic"],
+  ["Catálogo de estudio","clean commercial catalog photograph, 50mm lens, f/8, everything in sharp focus, even exposure, photorealistic"]]},
+ {id:"B2",key:"BRI",name:"Brillo de piel",hue:"--h2",opts:[
+  ["Natural mate","natural matte skin finish, soft diffuse highlights"],
+  ["Glow saludable","healthy dewy skin glow, subtle natural sheen on cheekbones and shoulders"],
+  ["Post-entreno","light post-workout glow, faint natural sheen of perspiration"]]},
+ {id:"B3",key:"MOD",name:"Modelo y expresión",hue:"--h3",opts:[
+  ["30 años, segura","a 30-year-old woman, mature adult facial features, confident relaxed expression, soft natural smile"],
+  ["35 años, elegante","a 35-year-old woman, elegant mature features, calm self-assured gaze"],
+  ["28 años, alegre","a 28-year-old woman, adult facial features, bright friendly smile"],
+  ["40 años, serena","a 40-year-old woman, graceful mature features, serene warm expression"]]},
+ {id:"B3.1",key:"CAB",name:"Cabello",hue:"--h3",opts:[
+  ["Rubia","long wavy honey-blonde hair"],
+  ["Pelirroja","long copper-red hair with soft waves"],
+  ["Negro","sleek long jet-black hair"],
+  ["Castaño","shoulder-length chestnut-brown hair"],
+  ["Moño suelto","ash-brown hair in a loose messy bun with face-framing strands"]]},
+ {id:"B3.2",key:"OJO",name:"Ojos",hue:"--h3",opts:[
+  ["Azules","clear blue eyes"],["Verdes","green eyes"],["Marrones","warm brown eyes"],["Avellana","hazel eyes"],["Grises","grey eyes"]]},
+ {id:"B4",key:"PIEL",name:"Piel y tono",hue:"--h4",opts:[
+  ["Porcelana","fair porcelain skin with warm pink undertones, natural skin texture, visible pores"],
+  ["Clara con pecas","fair skin with light freckles across the nose and cheeks, natural skin texture"],
+  ["Oliva","olive skin tone with golden undertones, natural skin texture"],
+  ["Morena","warm tan brown skin, natural skin texture, subtle color variation"],
+  ["Oscura","deep brown skin with rich undertones, natural skin texture"]]},
+ {id:"B5",key:"CUE",name:"Cuerpo",hue:"--h5",opts:[
+  ["Fitness atlética","fit athletic adult build, toned shoulders and arms, defined core, strong toned legs"],
+  ["Pilates esbelta","lean slender adult physique with long toned muscles, graceful upright posture"],
+  ["Corredora","lean runner's build, defined legs, athletic adult proportions"],
+  ["Natural","healthy natural adult body, soft curves, relaxed posture"]]},
+ {id:"B6",key:"VES",name:"Vestuario",hue:"--h6",opts:[
+  ["Denim + crop blanco","white ribbed cotton crop top, high-waisted light-wash denim shorts, white canvas sneakers"],
+  ["Deportivo negro","black sports crop top, matching high-waisted biker shorts, running shoes"],
+  ["Lino verano","cream linen button-up crop top, high-waisted linen shorts, leather sandals"],
+  ["Punto pastel","sage green knit crop cardigan, high-waisted white tailored shorts, minimalist sandals"],
+  ["Yoga set","dusty rose yoga set, fitted long-sleeve crop top and full-length leggings, barefoot"],
+  ["Heroína galáctica","original superhero costume, full-coverage silver and teal bodysuit with geometric armor plates, short flowing cape, star emblem on the chest, knee-high boots"],
+  ["Capitana tormenta","original superhero costume, full-coverage navy bodysuit with gold lightning-bolt piping, high collar, fingerless gloves, utility belt, armored boots"],
+  ["Guerrera de leyenda","original fantasy warrior costume, bronze breastplate over a long crimson tunic, leather bracers, ornate belt, sandal boots, round shield on her back"],
+  ["Pirata","pirate captain costume, white billowy blouse, burgundy brocade vest, tricorn hat, wide leather belt, tall boots, fitted dark trousers"],
+  ["Astronauta","modern white astronaut suit with orange accents, mission patches, helmet held under one arm"],
+  ["Samurái","samurai-inspired costume, dark lacquered armor pieces over an indigo hakama and kimono, red cord details"],
+  ["Flamenca","traditional red flamenco dress with white polka dots, ruffled sleeves and tiers, flower in the hair, shawl with fringe"],
+  ["Vaquera","western cowgirl outfit, suede fringe jacket, plaid shirt, high-waisted jeans, cowboy hat and boots"],
+  ["Steampunk","steampunk explorer outfit, brown leather corset vest over a cream blouse, brass goggles on the hat, long skirt with buckles, gloves"],
+  ["Elfa del bosque","original forest elf costume, long moss-green layered dress with leaf embroidery, hooded cape, elegant pointed ears, wooden bow"],
+  ["Piloto de carreras","racing driver suit, red and white fireproof jumpsuit with sponsor-free patches, helmet held at the hip"],
+  ["Carnaval dominicano","Dominican carnival Diablo Cojuelo costume, vibrant full-coverage satin suit covered in mirrors, bells and ribbons, ornate horned mask held in her hand"]]},
+ {id:"B6.1",key:"ACC",name:"Accesorios",hue:"--h6",opts:[
+  ["Ninguno",""],["Collar esmeralda","emerald pendant necklace on a fine gold chain"],["Aros dorados","small gold hoop earrings"],["Reloj deportivo","minimalist sports watch"],["Gorra","beige baseball cap"]]},
+ {id:"B7",key:"CAM",name:"Cámara y pose",hue:"--h7",opts:[
+  ["Cuerpo entero 3/4","full body shot, head to toe framing, standing relaxed, three-quarter turn, looking at camera"],
+  ["Medio cuerpo","medium shot from the waist up, eye-level camera, looking at camera"],
+  ["Retrato","close-up portrait, head and shoulders, eye-level camera"],
+  ["Caminando","full body shot, walking toward camera, natural mid-stride motion"],
+  ["Sentada","full body shot, sitting casually on a low wooden stool, relaxed posture"]]},
+ {id:"B8",key:"LUZ",name:"Luz",hue:"--h8",opts:[
+  ["Estudio suave","soft even studio lighting, large softbox, gentle shadows"],
+  ["Hora dorada","warm golden hour sunlight, soft rim light"],
+  ["Ventana","soft natural window light from the side"],
+  ["Nublado","bright overcast daylight, soft shadowless light"]]},
+ {id:"B11",key:"FON",name:"Fondo / background",hue:"--h4",opts:[
+  ["Void blanco","seamless pure white background, infinite white studio void, soft contact shadow on the floor"],
+  ["Gris neutro","seamless light grey studio backdrop"],
+  ["París","Paris cityscape with the Eiffel Tower in the background, creamy bokeh"],
+  ["Playa","tropical beach at sunset, palm trees, soft ocean bokeh"],
+  ["Sala de yoga","bright yoga studio, light wooden floor, large windows, green plants"],
+  ["Calle urbana","sunny city street, modern storefronts, soft background blur"]]}
+];
+const NEG = "cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features";
+
+// Starting state: fitness model, porcelain skin, denim + white crop top, white void
+const state = {B1:0,B2:1,B3:0,"B3.1":4,"B3.2":1,B4:0,B5:0,B6:0,"B6.1":0,B7:0,B8:0,B11:0};
+const locked = {};
+
+const $ = s => document.querySelector(s);
+const blocksEl = $("#blocks");
+
+function render(){
+  blocksEl.innerHTML = "";
+  BLOCKS.forEach(b=>{
+    const sec = document.createElement("div");
+    sec.className="block"; sec.style.setProperty("--hue",`var(${b.hue})`);
+    const gid = "g-"+b.id.replace(".","_");
+    sec.innerHTML = `<div class="bhead"><span class="bid">${b.id} · ${b.key}</span><span class="bname">${b.name}</span>
+      <span class="tools"><button class="btn" data-lock="${b.id}" aria-pressed="${!!locked[b.id]}" title="Bloquear este bloque">${locked[b.id]?"Bloqueado":"Bloquear"}</button>
+      <button class="btn" data-var="${b.id}" title="Ver 3 variantes cambiando solo este bloque">×3</button></span></div>
+      <div class="opts" role="radiogroup" aria-label="${b.name}">${b.opts.map((o,i)=>`<span class="opt"><input type="radio" name="${gid}" id="${gid}-${i}" value="${i}" ${state[b.id]===i?"checked":""} ${locked[b.id]?"disabled":""}><label for="${gid}-${i}"><b>${b.key==="ACC"?i:i+1}</b>${o[0]}</label></span>`).join("")}</div>`;
+    blocksEl.appendChild(sec);
+  });
+  blocksEl.querySelectorAll("input[type=radio]").forEach(r=>r.addEventListener("change",e=>{
+    const id = e.target.name.slice(2).replace("_","."); state[id]=+e.target.value; out();
+  }));
+  blocksEl.querySelectorAll("[data-lock]").forEach(btn=>btn.addEventListener("click",()=>{
+    const id=btn.dataset.lock; locked[id]=!locked[id]; render();
+  }));
+  blocksEl.querySelectorAll("[data-var]").forEach(btn=>btn.addEventListener("click",()=>variants(btn.dataset.var)));
+  out();
+}
+
+const PLATS = {
+ venice:{sep:"nl",note:"Venice entiende bien frases descriptivas. Los ajustes dependen del modelo de imagen que elijas.",tips:[
+  "<b>Formato:</b> vertical 2:3 o 3:4 para cuerpo entero; 1:1 para retrato.",
+  "<b>Steps:</b> 25–30 si el modelo lo permite. Más pasos rara vez mejoran.",
+  "<b>CFG / guía:</b> 5–7 en modelos tipo SD; 3–4 en modelos tipo Flux.",
+  "<b>Seed:</b> fíjalo para comparar bloques y anótalo en la receta.",
+  "<b>Estilo predefinido:</b> ninguno, para que no pise tu B1.",
+  "<b>Negativo:</b> pégalo en su campo propio."]},
+ seaart:{sep:"nl",weights:true,note:"SeaArt usa modelos tipo Stable Diffusion: acepta pesos y prompt negativo. El vestuario y el fondo salen con peso 1.2 para que no se pierdan.",tips:[
+  "<b>Modelo:</b> un checkpoint fotorrealista (filtra por \"realistic\").",
+  "<b>Resolución:</b> 832×1216 vertical (SDXL) o 512×768 (SD 1.5).",
+  "<b>Sampler:</b> DPM++ 2M Karras · <b>Steps:</b> 25–30 · <b>CFG:</b> 5–7.",
+  "<b>Hires fix / upscale:</b> 1.5× si está disponible, para más detalle en piel.",
+  "<b>Seed:</b> fijo al comparar; −1 (aleatorio) al explorar.",
+  "<b>Pesos:</b> entre 1.1 y 1.3. Si algo no aparece, súbelo de a 0.1."]},
+ perchance:{sep:"one",short:true,note:"Perchance funciona mejor con prompts más cortos y en una sola línea. Se quitan etiquetas técnicas que aquí no ayudan.",tips:[
+  "<b>Estilo:</b> elige el de foto (professional / casual photo) en el menú de estilos.",
+  "<b>Forma:</b> portrait (vertical) para cuerpo entero.",
+  "<b>Negativo:</b> pégalo en el campo de lo que no quieres en la imagen.",
+  "<b>Varias imágenes:</b> genera 4 o más por receta para comparar, porque el control de seed es limitado.",
+  "Si un detalle se pierde, cambia el orden: pon ese bloque más arriba."]},
+ gen:{sep:"nl",note:"Formato neutro para Claude, Gemini, ChatGPT u otras plataformas.",tips:["Ajusta el separador según la plataforma."]}
+};
+const SHORT_DROP = ["8k uhd","RAW photo","real photograph","natural film grain","magazine quality"];
+function plat(){ return PLATS[$("#plat").value]; }
+
+function parts(s){
+  const P = plat();
+  return BLOCKS.map(b=>{
+    let t=b.opts[s[b.id]][1];
+    if(t && P.short) t=t.split(", ").filter(x=>!SHORT_DROP.includes(x)).join(", ");
+    if(t && P.weights && (b.key==="VES"||b.key==="FON")) t=`(${t}:1.2)`;
+    return {b,text:t};
+  }).filter(p=>p.text);
+}
+function showPlat(){
+  const P=plat(); $("#sep").value=P.sep;
+  $("#platNote").textContent=P.note;
+  $("#platTips").innerHTML=P.tips.map(t=>`<li>${t}</li>`).join("");
+  out();
+}
+
+function join(ps, mode, color){
+  const esc = t => t.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+  const piece = p => color ? `<span style="--c:var(${p.b.hue})">${esc(p.text)}</span>` : p.text;
+  if(mode==="one") return ps.map(piece).join(", ");
+  if(mode==="tag") return ps.map(p=>`[${p.b.id}] `+piece(p)).join(",\n");
+  if(mode==="break") return ps.map(piece).join(",\nBREAK\n");
+  return ps.map(piece).join(",\n");
+}
+
+function recipe(s){ return BLOCKS.map(b=>b.key+(b.key==="ACC"?s[b.id]:s[b.id]+1)).join(" ")+" · "+$("#plat").selectedOptions[0].text; }
+
+function out(){
+  const mode=$("#sep").value, ps=parts(state);
+  $("#prompt").innerHTML = join(ps,mode,true);
+  $("#recipe").textContent = recipe(state);
+  $("#neg").textContent = NEG;
+}
+
+function variants(id){
+  const b = BLOCKS.find(x=>x.id===id), cur=state[id];
+  const pool = b.opts.map((_,i)=>i).filter(i=>i!==cur && b.opts[i][1]!=="" || (i!==cur && b.key==="ACC"));
+  const pick = pool.slice(0,3);
+  const box=$("#variants"); box.innerHTML="";
+  $("#varTitle").textContent = `3 variantes de ${b.id} · ${b.name}`;
+  pick.forEach((i,k)=>{
+    const s = {...state,[id]:i}, text = join(parts(s),$("#sep").value,false);
+    const d=document.createElement("div"); d.className="variant";
+    d.innerHTML=`<div class="row"><h3>Variante ${k+1} de ${pick.length}: ${b.opts[i][0]}</h3><span style="margin-left:auto"></span><button class="btn">Copiar</button><button class="btn">Usar</button></div><span class="code">${recipe(s)}</span>`;
+    const [cp,use]=d.querySelectorAll("button");
+    cp.addEventListener("click",()=>copy(text,`Variante ${k+1} copiada`));
+    use.addEventListener("click",()=>{state[id]=i;render();});
+    box.appendChild(d);
+  });
+  $("#varPanel").hidden=false;
+}
+
+function copy(text,msg){
+  const done=()=>{$("#toast").textContent=msg; setTimeout(()=>$("#toast").textContent="",2200);};
+  try{ navigator.clipboard.writeText(text).then(done,()=>fallback(text,msg)); }catch(e){ fallback(text,msg); }
+}
+function fallback(text,msg){
+  const ta=document.createElement("textarea"); ta.value=text; document.body.appendChild(ta); ta.select();
+  try{document.execCommand("copy"); $("#toast").textContent=msg;}catch(e){$("#toast").textContent="Selecciona el texto y cópialo con Ctrl+C";}
+  ta.remove();
+}
+
+$("#sep").addEventListener("change",out);
+$("#copyPrompt").addEventListener("click",()=>copy(join(parts(state),$("#sep").value,false),"Prompt copiado"));
+$("#copyRecipe").addEventListener("click",()=>copy(recipe(state),"Receta copiada"));
+$("#copyNeg").addEventListener("click",()=>copy(NEG,"Negativo copiado"));
+$("#closeVar").addEventListener("click",()=>$("#varPanel").hidden=true);
+$("#plat").addEventListener("change",showPlat);
+render(); showPlat();
+</script>
+
+</body></html>

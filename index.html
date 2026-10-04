@@ -84,6 +84,23 @@ footer a{color:var(--accent)}
 .lang button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 footer{color:var(--muted);font-size:13px}
 footer a{color:var(--accent)}
+
+.top{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;justify-content:space-between}
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;flex:none}
+.lang button{font:inherit;font-size:13px;font-weight:600;border:0;background:var(--surface);color:var(--muted);padding:6px 12px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.lang button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+footer{color:var(--muted);font-size:13px}
+footer a{color:var(--accent)}
+
+.top{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;justify-content:space-between}
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;flex:none}
+.lang button{font:inherit;font-size:13px;font-weight:600;border:0;background:var(--surface);color:var(--muted);padding:6px 12px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.lang button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.tag{color:var(--muted);user-select:none;-webkit-user-select:none;opacity:.8}
+footer{color:var(--muted);font-size:13px}
+footer a{color:var(--accent)}
 </style>
 </head><body>
 <div class="wrap">
@@ -305,7 +322,7 @@ const T = {
   footer:"Prompts are always in English, which is what image generators understand best. Adults only, fictional people, no nudity, no trademarked characters. <a href=\""+REPO+"\">Source on GitHub</a>.",
   copied:"Prompt copied",recipeCopied:"Recipe copied",negCopied:"Negative copied",variantCopied:k=>"Variant "+k+" copied",
   variantsOf:(id,n)=>"3 variants of "+id+" · "+n,variant:(k,n,l)=>"Variant "+k+" of "+n+": "+l,manual:"Select the text and copy it with Ctrl+C",
-  sepTips:["<b>Line break:</b> generators read it as a space, so the result doesn't change. It's the cleanest way to see the blocks.",
+  sepTips:["<b>Line break:</b> generators read it as a space, so the result doesn't change. The grey [B#] labels you see on screen are not copied.",
    "<b>Dots (.... or .....):</b> avoid them. They become tokens, waste space and sometimes show up as noise or text in the image.",
    "<b>[B6] tags:</b> useful for saving and comparing. Remove them before generating — brackets are syntax in SeaArt and lower the weight of what they wrap.",
    "<b>BREAK:</b> in SD-type models it splits the blocks into separate chunks and reduces bleeding (e.g. hair color leaking into the outfit). It does change the result, so use it on purpose.",
@@ -342,7 +359,7 @@ const T = {
   footer:"Los prompts siempre van en inglés, que es lo que mejor entienden los generadores. Solo personas adultas y ficticias, sin desnudos ni personajes con marca registrada. <a href=\""+REPO+"\">Código en GitHub</a>.",
   copied:"Prompt copiado",recipeCopied:"Receta copiada",negCopied:"Negativo copiado",variantCopied:k=>"Variante "+k+" copiada",
   variantsOf:(id,n)=>"3 variantes de "+id+" · "+n,variant:(k,n,l)=>"Variante "+k+" de "+n+": "+l,manual:"Selecciona el texto y cópialo con Ctrl+C",
-  sepTips:["<b>Salto de línea:</b> los generadores lo leen como un espacio, así que no cambia el resultado. Es la forma más limpia de ver los bloques.",
+  sepTips:["<b>Salto de línea:</b> los generadores lo leen como un espacio, así que no cambia el resultado. Las etiquetas [B#] grises que ves en pantalla no se copian.",
    "<b>Puntos (.... o .....):</b> mejor no. Se convierten en tokens, gastan espacio y a veces aparecen como ruido o texto en la imagen.",
    "<b>Etiquetas [B6]:</b> sirven para guardar y comparar. Bórralas antes de generar: en SeaArt los corchetes son sintaxis y bajan el peso de lo que encierran.",
    "<b>BREAK:</b> en modelos tipo SD separa los bloques en paquetes y reduce que se mezclen (por ejemplo, el color del pelo en la ropa). Sí cambia el resultado, úsalo a propósito.",
@@ -374,8 +391,7 @@ const PLATS = {venice:{sep:"nl"},seaart:{sep:"nl",weights:true},perchance:{sep:"
 const SHORT_DROP = ["8k uhd","RAW photo","real photograph","natural film grain","magazine quality"];
 
 let lang = "en";
-try { const s = localStorage.getItem("pb-lang"); if (s==="en"||s==="es") lang=s; else if ((navigator.language||"").toLowerCase().startsWith("es")) lang="es"; }
-catch(e) { if ((navigator.language||"").toLowerCase().startsWith("es")) lang="es"; }
+try { const s = localStorage.getItem("pb-lang"); if (s==="en"||s==="es") lang=s; } catch(e) {}
 const L = () => T[lang];
 const LI = lang => lang==="en"?0:1;
 
@@ -440,7 +456,7 @@ function showPlat(resetSep=true){
   out();
 }
 function join(ps, mode, color){
-  const piece = p => color ? `<span style="--c:var(${p.b.hue})">${esc(p.text)}</span>` : p.text;
+  const piece = p => color ? (mode!=="tag"?`<span class="tag" aria-hidden="true">[${p.b.id}] </span>`:"")+`<span style="--c:var(${p.b.hue})">${esc(p.text)}</span>` : p.text;
   if(mode==="one") return ps.map(piece).join(", ");
   if(mode==="tag") return ps.map(p=>`[${p.b.id}] `+piece(p)).join(",\n");
   if(mode==="break") return ps.map(piece).join(",\nBREAK\n");

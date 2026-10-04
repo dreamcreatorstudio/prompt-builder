@@ -128,6 +128,16 @@ footer a{color:var(--accent)}
 .tag{color:var(--muted);user-select:none;-webkit-user-select:none;opacity:.8}
 footer{color:var(--muted);font-size:13px}
 footer a{color:var(--accent)}
+
+.top{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;justify-content:space-between}
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;flex:none}
+.lang button{font:inherit;font-size:13px;font-weight:600;border:0;background:var(--surface);color:var(--muted);padding:6px 12px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.lang button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.disclaimer{margin:4px 0 0;max-width:68ch;border-left:3px solid var(--line);padding-left:10px}
+.tag{color:var(--muted);user-select:none;-webkit-user-select:none;opacity:.8}
+footer{color:var(--muted);font-size:13px}
+footer a{color:var(--accent)}
 </style>
 </head><body>
 <div class="wrap">
@@ -135,6 +145,7 @@ footer a{color:var(--accent)}
     <div style="display:grid;gap:6px;min-width:0;flex:1">
       <h1 data-i="title">Prompt Builder</h1>
       <p class="lede" data-i="lede" data-html>Pick a platform and one numbered option per block, then copy the assembled prompt. Each block sits on its own line, so you can see where it starts and ends without changing the prompt. Lock the blocks you want to keep and use <b>×3</b> to get three variants of a single block.</p>
+      <p class="small disclaimer" data-i="disclaimer">Experimental project to test and share. Image generators don't always follow a prompt exactly — results vary by platform, model and seed. Use it as a guide, not a guarantee.</p>
     </div>
     <div class="lang" role="group" aria-label="Language">
       <button id="lang-en" aria-pressed="true">EN</button><button id="lang-es" aria-pressed="false">ES</button>
@@ -283,9 +294,9 @@ footer a{color:var(--accent)}
           <h2 data-i="platform">Platform</h2>
           <span style="margin-left:auto"></span>
           <select id="plat" aria-label="Platform">
-            <option value="venice" selected>Venice AI</option>
+            <option value="venice">Venice AI</option>
             <option value="seaart">SeaArt</option>
-            <option value="perchance">Perchance AI</option>
+            <option value="perchance" selected>Perchance AI</option>
             <option value="gen" data-i="generic">Generic</option>
           </select>
         </div>
@@ -307,18 +318,19 @@ footer a{color:var(--accent)}
             <option value="break" data-i="sepBreak">BREAK (SeaArt / advanced SD)</option>
           </select>
         </div>
-        <pre id="prompt" aria-live="polite">RAW photo, photorealistic, real photograph, Canon EOS R5, 85mm lens, f/2.0, shallow depth of field, natural film grain, sharp focus, 8k uhd,
+        <pre id="prompt" aria-live="polite">high-end fashion editorial photograph, medium format camera, 80mm lens, f/4, crisp detail, magazine quality, photorealistic,
 healthy dewy skin glow, subtle natural sheen on cheekbones and shoulders,
 a 25-year-old woman, adult facial features,
-confident relaxed expression, soft natural smile,
+calm self-assured gaze,
 ash-brown hair,
-loose messy bun with face-framing strands,
+neat hair bun,
 green eyes,
 fair porcelain skin with warm pink undertones, natural skin texture, visible pores,
 lean slender adult physique with long toned muscles, graceful upright posture,
-white ribbed cotton crop top, high-waisted light-wash denim shorts, white canvas sneakers,
+sage green knit crop cardigan, high-waisted white tailored shorts, minimalist sandals,
+small gold hoop earrings,
 full body shot, head to toe framing, standing relaxed, three-quarter turn, looking at camera,
-eye-level shot, neutral natural perspective,
+hip-level shot, camera at waist height,
 soft even studio lighting, large softbox, gentle shadows,
 seamless pure white background, infinite white studio void, soft contact shadow on the floor</pre>
         <p class="small" style="margin:0" data-i="labelNote">Grey [B#] labels are a visual guide only — they are not copied.</p>
@@ -357,7 +369,7 @@ const REPO = "https://github.com/dreamcreatorstudio/prompt-builder";
 const T = {
  en:{title:"Prompt Builder",
   lede:"Pick a platform and one numbered option per block, then copy the assembled prompt. Each block sits on its own line, so you can see where it starts and ends without changing the prompt. Lock the blocks you want to keep and use <b>×3</b> to get three variants of a single block.",
-  labelNote:"Grey [B#] labels are a visual guide only — they are not copied.",platform:"Platform",generic:"Generic",copyPrompt:"Copy prompt",sepLabel:"Separator between blocks",
+  disclaimer:"Experimental project to test and share. Image generators don't always follow a prompt exactly — results vary by platform, model and seed. Use it as a guide, not a guarantee.",labelNote:"Grey [B#] labels are a visual guide only — they are not copied.",platform:"Platform",generic:"Generic",copyPrompt:"Copy prompt",sepLabel:"Separator between blocks",
   sepNl:"Line break (recommended)",sepOne:"Single line",sepTag:"[B#] tags (for saving only)",sepBreak:"BREAK (SeaArt / advanced SD)",
   recipe:"Recipe:",copyRecipe:"Copy recipe",neg:"Negative prompt",copy:"Copy",close:"Close",use:"Use",
   lock:"Lock",locked:"Locked",lockTitle:"Lock this block",varTitle:"Show 3 variants changing only this block",
@@ -394,7 +406,7 @@ const T = {
    gen:{note:"Neutral format for Claude, Gemini, ChatGPT or other platforms.",tips:["Adjust the separator to the platform."]}}},
  es:{title:"Mezclador de Prompts",
   lede:"Elige la plataforma y una opción numerada por bloque, y copia el prompt ensamblado. Cada bloque va en su propia línea, así ves dónde empieza y termina sin alterar el prompt. Bloquea los bloques que no quieras tocar y usa <b>×3</b> para sacar tres variantes de un solo bloque.",
-  labelNote:"Las etiquetas [B#] grises son solo una guía visual: no se copian.",platform:"Plataforma",generic:"Genérico",copyPrompt:"Copiar prompt",sepLabel:"Separador entre bloques",
+  disclaimer:"Proyecto experimental para probar y compartir. Los generadores de imagen no siempre siguen el prompt al pie de la letra: el resultado cambia según la plataforma, el modelo y el seed. Úsalo como guía, no como garantía.",labelNote:"Las etiquetas [B#] grises son solo una guía visual: no se copian.",platform:"Plataforma",generic:"Genérico",copyPrompt:"Copiar prompt",sepLabel:"Separador entre bloques",
   sepNl:"Salto de línea (recomendado)",sepOne:"Una sola línea",sepTag:"Etiquetas [B#] (solo para guardar)",sepBreak:"BREAK (SeaArt / SD avanzado)",
   recipe:"Receta:",copyRecipe:"Copiar receta",neg:"Prompt negativo",copy:"Copiar",close:"Cerrar",use:"Usar",
   lock:"Bloquear",locked:"Bloqueado",lockTitle:"Bloquear este bloque",varTitle:"Ver 3 variantes cambiando solo este bloque",
@@ -438,7 +450,7 @@ try { const s = localStorage.getItem("pb-lang"); if (s==="en"||s==="es") lang=s;
 const L = () => T[lang];
 const LI = lang => lang==="en"?0:1;
 
-const state = {"B1": 0, "B2": 1, "B3": 0, "B3.3": 0, "B3.1": 5, "B3.4": 9, "B3.2": 1, "B4": 0, "B5": 1, "B6": 0, "B6.1": 0, "B7": 0, "B7.1": 0, "B8": 0, "B11": 0};
+const state = {"B1": 1, "B2": 1, "B3": 0, "B3.3": 2, "B3.1": 5, "B3.4": 8, "B3.2": 1, "B4": 0, "B5": 1, "B6": 3, "B6.1": 2, "B7": 0, "B7.1": 8, "B8": 0, "B11": 0};
 const locked = {};
 const $ = s => document.querySelector(s);
 const blocksEl = $("#blocks");

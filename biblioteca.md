@@ -1,139 +1,155 @@
-# Biblioteca de Bloques — Menú numerado
-**Fecha:** 4 oct 2026 · **Versión:** 1.0
-La misma biblioteca está en el mezclador: https://dreamcreatorstudio.github.io/prompt-builder
+# Block Library / Biblioteca de bloques
 
-## Cómo se usa
-- Cada bloque tiene una **clave corta** (CAB, OJO, VES, FON…) y opciones **numeradas**.
-- Una **receta** es una línea como: `FOTO1 BRI2 MOD1 CAB5 OJO2 PIEL1 CUE1 VES1 ACC0 CAM1 LUZ1 FON1`
-- En un chat con Claude, ChatGPT o Gemini basta con escribir: `/receta CAB=2 OJO=1 FON=3` y solo cambian esos bloques.
-- `/menu CAB` muestra las opciones del bloque; `/variar VES n=3` entrega 3 prompts cambiando solo el vestuario.
-- **Separador recomendado:** cada bloque en su propia línea terminada en coma. El salto de línea se lee como un espacio y no altera el prompt. Evita puntos (....) y los signos `| [ ] { } ( )` como separadores.
-- Reglas de contenido: modelos claramente adultas, ficticias, sin desnudos ni contenido sexual.
+Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
-## B1 · FOTO — Motor fotográfico
-| # | Opción | Texto (inglés) |
-|---|---|---|
-| 1 | Realista DSLR | RAW photo, photorealistic, real photograph, Canon EOS R5, 85mm lens, f/2.0, shallow depth of field, natural film grain, sharp focus, 8k uhd |
-| 2 | Editorial de moda | high-end fashion editorial photograph, medium format camera, 80mm lens, f/4, crisp detail, magazine quality, photorealistic |
-| 3 | Catálogo de estudio | clean commercial catalog photograph, 50mm lens, f/8, everything in sharp focus, even exposure, photorealistic |
+Each block has a short key and numbered options. A **recipe** is one line such as `PHOTO1 GLOW2 AGE1 EXPR1 HAIR6 STYLE10 EYES2 SKIN1 BODY1 OUTFIT1 ACC0 CAM1 LIGHT1 BG1`.
+New options are always added at the end of a block, so old recipes keep working.
 
-## B2 · BRI — Brillo de piel
-| # | Opción | Texto (inglés) |
-|---|---|---|
-| 1 | Natural mate | natural matte skin finish, soft diffuse highlights |
-| 2 | Glow saludable | healthy dewy skin glow, subtle natural sheen on cheekbones and shoulders |
-| 3 | Post-entreno | light post-workout glow, faint natural sheen of perspiration |
+## B1 · PHOTO / FOTO — Photo engine / Motor fotográfico
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 1 | Realistic DSLR | Realista DSLR | RAW photo, photorealistic, real photograph, Canon EOS R5, 85mm lens, f/2.0, shallow depth of field, natural film grain, sharp focus, 8k uhd |
+| 2 | Fashion editorial | Editorial de moda | high-end fashion editorial photograph, medium format camera, 80mm lens, f/4, crisp detail, magazine quality, photorealistic |
+| 3 | Studio catalog | Catálogo de estudio | clean commercial catalog photograph, 50mm lens, f/8, everything in sharp focus, even exposure, photorealistic |
 
-## B3 · MOD — Modelo y expresión
-| # | Opción | Texto (inglés) |
-|---|---|---|
-| 1 | 30 años, segura | a 30-year-old woman, mature adult facial features, confident relaxed expression, soft natural smile |
-| 2 | 35 años, elegante | a 35-year-old woman, elegant mature features, calm self-assured gaze |
-| 3 | 28 años, alegre | a 28-year-old woman, adult facial features, bright friendly smile |
-| 4 | 40 años, serena | a 40-year-old woman, graceful mature features, serene warm expression |
+## B2 · GLOW / BRI — Skin glow / Brillo de piel
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 1 | Natural matte | Natural mate | natural matte skin finish, soft diffuse highlights |
+| 2 | Healthy glow | Glow saludable | healthy dewy skin glow, subtle natural sheen on cheekbones and shoulders |
+| 3 | Post-workout | Post-entreno | light post-workout glow, faint natural sheen of perspiration |
 
-## B3.1 · CAB — Cabello
-| # | Opción | Texto (inglés) |
-|---|---|---|
-| 1 | Rubia | long wavy honey-blonde hair |
-| 2 | Pelirroja | long copper-red hair with soft waves |
-| 3 | Negro | sleek long jet-black hair |
-| 4 | Castaño | shoulder-length chestnut-brown hair |
-| 5 | Moño suelto | ash-brown hair in a loose messy bun with face-framing strands |
+## B3 · AGE / EDAD — Model age / Edad de la modelo
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 1 | 25 | 25 años | a 25-year-old woman, adult facial features |
+| 2 | 30 | 30 años | a 30-year-old woman, adult facial features |
+| 3 | 35 | 35 años | a 35-year-old woman, mature adult features |
+| 4 | 40 | 40 años | a 40-year-old woman, mature adult features |
+| 5 | 45 | 45 años | a 45-year-old woman, graceful mature features |
+| 6 | 50 | 50 años | a 50-year-old woman, graceful mature features, subtle laugh lines |
 
-## B3.2 · OJO — Ojos
-| # | Opción | Texto (inglés) |
-|---|---|---|
-| 1 | Azules | clear blue eyes |
-| 2 | Verdes | green eyes |
-| 3 | Marrones | warm brown eyes |
-| 4 | Avellana | hazel eyes |
-| 5 | Grises | grey eyes |
+## B3.3 · EXPR / EXP — Expression / Expresión
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 1 | Confident | Segura | confident relaxed expression, soft natural smile |
+| 2 | Cheerful | Alegre | bright friendly smile |
+| 3 | Elegant | Elegante | calm self-assured gaze |
+| 4 | Serene | Serena | serene warm expression |
+| 5 | Playful | Divertida | playful laughing expression |
 
-## B4 · PIEL — Piel y tono
-| # | Opción | Texto (inglés) |
-|---|---|---|
-| 1 | Porcelana | fair porcelain skin with warm pink undertones, natural skin texture, visible pores |
-| 2 | Clara con pecas | fair skin with light freckles across the nose and cheeks, natural skin texture |
-| 3 | Oliva | olive skin tone with golden undertones, natural skin texture |
-| 4 | Morena | warm tan brown skin, natural skin texture, subtle color variation |
-| 5 | Oscura | deep brown skin with rich undertones, natural skin texture |
+## B3.1 · HAIR / CAB — Hair color / Color de cabello
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 1 | Honey blonde | Rubia miel | honey-blonde hair |
+| 2 | Platinum blonde | Rubia platino | platinum blonde hair |
+| 3 | Redhead | Pelirroja | copper-red hair |
+| 4 | Auburn | Caoba | auburn hair |
+| 5 | Chestnut | Castaño | chestnut-brown hair |
+| 6 | Ash brown | Castaño ceniza | ash-brown hair |
+| 7 | Black | Negro | jet-black hair |
+| 8 | Silver grey | Gris plata | silver-grey hair |
 
-## B5 · CUE — Cuerpo
-| # | Opción | Texto (inglés) |
-|---|---|---|
-| 1 | Fitness atlética | fit athletic adult build, toned shoulders and arms, defined core, strong toned legs |
-| 2 | Pilates esbelta | lean slender adult physique with long toned muscles, graceful upright posture |
-| 3 | Corredora | lean runner's build, defined legs, athletic adult proportions |
-| 4 | Natural | healthy natural adult body, soft curves, relaxed posture |
+## B3.4 · STYLE / PEI — Hairstyle / Peinado
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 1 | Sleek straight | Liso perfecto | sleek straight hair |
+| 2 | Straight | Liso natural | straight hair |
+| 3 | Subtle waves | Ondas sutiles | subtle natural waves |
+| 4 | Wavy | Ondulado | wavy hair |
+| 5 | Beach waves | Ondas de playa | loose beach waves |
+| 6 | Curly | Rizado | curly hair |
+| 7 | Coily / afro | Muy rizado / afro | coily hair, afro hair |
+| 8 | High ponytail | Coleta alta | high ponytail |
+| 9 | Neat bun | Moño pulido | neat hair bun |
+| 10 | Messy bun | Moño suelto | loose messy bun with face-framing strands |
+| 11 | Pixie cut | Corte pixie | pixie cut |
+| 12 | Short bob | Bob corto | short bob cut |
 
-## B6 · VES — Vestuario
-| # | Opción | Texto (inglés) |
-|---|---|---|
-| 1 | Denim + crop blanco | white ribbed cotton crop top, high-waisted light-wash denim shorts, white canvas sneakers |
-| 2 | Deportivo negro | black sports crop top, matching high-waisted biker shorts, running shoes |
-| 3 | Lino verano | cream linen button-up crop top, high-waisted linen shorts, leather sandals |
-| 4 | Punto pastel | sage green knit crop cardigan, high-waisted white tailored shorts, minimalist sandals |
-| 5 | Yoga set | dusty rose yoga set, fitted long-sleeve crop top and full-length leggings, barefoot |
-| 6 | Heroína galáctica | original superhero costume, full-coverage silver and teal bodysuit with geometric armor plates, short flowing cape, star emblem on the chest, knee-high boots |
-| 7 | Capitana tormenta | original superhero costume, full-coverage navy bodysuit with gold lightning-bolt piping, high collar, fingerless gloves, utility belt, armored boots |
-| 8 | Guerrera de leyenda | original fantasy warrior costume, bronze breastplate over a long crimson tunic, leather bracers, ornate belt, sandal boots, round shield on her back |
-| 9 | Pirata | pirate captain costume, white billowy blouse, burgundy brocade vest, tricorn hat, wide leather belt, tall boots, fitted dark trousers |
-| 10 | Astronauta | modern white astronaut suit with orange accents, mission patches, helmet held under one arm |
-| 11 | Samurái | samurai-inspired costume, dark lacquered armor pieces over an indigo hakama and kimono, red cord details |
-| 12 | Flamenca | traditional red flamenco dress with white polka dots, ruffled sleeves and tiers, flower in the hair, shawl with fringe |
-| 13 | Vaquera | western cowgirl outfit, suede fringe jacket, plaid shirt, high-waisted jeans, cowboy hat and boots |
-| 14 | Steampunk | steampunk explorer outfit, brown leather corset vest over a cream blouse, brass goggles on the hat, long skirt with buckles, gloves |
-| 15 | Elfa del bosque | original forest elf costume, long moss-green layered dress with leaf embroidery, hooded cape, elegant pointed ears, wooden bow |
-| 16 | Piloto de carreras | racing driver suit, red and white fireproof jumpsuit with sponsor-free patches, helmet held at the hip |
-| 17 | Carnaval dominicano | Dominican carnival Diablo Cojuelo costume, vibrant full-coverage satin suit covered in mirrors, bells and ribbons, ornate horned mask held in her hand |
+## B3.2 · EYES / OJO — Eyes / Ojos
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 1 | Blue | Azules | clear blue eyes |
+| 2 | Green | Verdes | green eyes |
+| 3 | Brown | Marrones | warm brown eyes |
+| 4 | Hazel | Avellana | hazel eyes |
+| 5 | Grey | Grises | grey eyes |
 
-## B6.1 · ACC — Accesorios
-| # | Opción | Texto (inglés) |
-|---|---|---|
-| 0 | Ninguno | (sin accesorios) |
-| 1 | Collar esmeralda | emerald pendant necklace on a fine gold chain |
-| 2 | Aros dorados | small gold hoop earrings |
-| 3 | Reloj deportivo | minimalist sports watch |
-| 4 | Gorra | beige baseball cap |
+## B4 · SKIN / PIEL — Skin tone / Piel y tono
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 1 | Porcelain | Porcelana | fair porcelain skin with warm pink undertones, natural skin texture, visible pores |
+| 2 | Fair, freckles | Clara con pecas | fair skin with light freckles across the nose and cheeks, natural skin texture |
+| 3 | Olive | Oliva | olive skin tone with golden undertones, natural skin texture |
+| 4 | Tan | Morena | warm tan brown skin, natural skin texture, subtle color variation |
+| 5 | Deep | Oscura | deep brown skin with rich undertones, natural skin texture |
 
-## B7 · CAM — Cámara y pose
-| # | Opción | Texto (inglés) |
-|---|---|---|
-| 1 | Cuerpo entero 3/4 | full body shot, head to toe framing, standing relaxed, three-quarter turn, looking at camera |
-| 2 | Medio cuerpo | medium shot from the waist up, eye-level camera, looking at camera |
-| 3 | Retrato | close-up portrait, head and shoulders, eye-level camera |
-| 4 | Caminando | full body shot, walking toward camera, natural mid-stride motion |
-| 5 | Sentada | full body shot, sitting casually on a low wooden stool, relaxed posture |
+## B5 · BODY / CUE — Body / Cuerpo
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 1 | Athletic fit | Fitness atlética | fit athletic adult build, toned shoulders and arms, defined core, strong toned legs |
+| 2 | Lean pilates | Pilates esbelta | lean slender adult physique with long toned muscles, graceful upright posture |
+| 3 | Runner | Corredora | lean runner's build, defined legs, athletic adult proportions |
+| 4 | Natural | Natural | healthy natural adult body, soft curves, relaxed posture |
 
-## B8 · LUZ — Luz
-| # | Opción | Texto (inglés) |
-|---|---|---|
-| 1 | Estudio suave | soft even studio lighting, large softbox, gentle shadows |
-| 2 | Hora dorada | warm golden hour sunlight, soft rim light |
-| 3 | Ventana | soft natural window light from the side |
-| 4 | Nublado | bright overcast daylight, soft shadowless light |
+## B6 · OUTFIT / VES — Outfit / Vestuario
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 1 | Denim + white crop | Denim + crop blanco | white ribbed cotton crop top, high-waisted light-wash denim shorts, white canvas sneakers |
+| 2 | Black athletic | Deportivo negro | black sports crop top, matching high-waisted biker shorts, running shoes |
+| 3 | Summer linen | Lino verano | cream linen button-up crop top, high-waisted linen shorts, leather sandals |
+| 4 | Pastel knit | Punto pastel | sage green knit crop cardigan, high-waisted white tailored shorts, minimalist sandals |
+| 5 | Yoga set | Yoga set | dusty rose yoga set, fitted long-sleeve crop top and full-length leggings, barefoot |
+| 6 | Galactic heroine | Heroína galáctica | original superhero costume, full-coverage silver and teal bodysuit with geometric armor plates, short flowing cape, star emblem on the chest, knee-high boots |
+| 7 | Storm captain | Capitana tormenta | original superhero costume, full-coverage navy bodysuit with gold lightning-bolt piping, high collar, fingerless gloves, utility belt, armored boots |
+| 8 | Legend warrior | Guerrera de leyenda | original fantasy warrior costume, bronze breastplate over a long crimson tunic, leather bracers, ornate belt, sandal boots, round shield on her back |
+| 9 | Pirate | Pirata | pirate captain costume, white billowy blouse, burgundy brocade vest, tricorn hat, wide leather belt, tall boots, fitted dark trousers |
+| 10 | Astronaut | Astronauta | modern white astronaut suit with orange accents, mission patches, helmet held under one arm |
+| 11 | Samurai | Samurái | samurai-inspired costume, dark lacquered armor pieces over an indigo hakama and kimono, red cord details |
+| 12 | Flamenco | Flamenca | traditional red flamenco dress with white polka dots, ruffled sleeves and tiers, flower in the hair, shawl with fringe |
+| 13 | Cowgirl | Vaquera | western cowgirl outfit, suede fringe jacket, plaid shirt, high-waisted jeans, cowboy hat and boots |
+| 14 | Steampunk | Steampunk | steampunk explorer outfit, brown leather corset vest over a cream blouse, brass goggles on the hat, long skirt with buckles, gloves |
+| 15 | Forest elf | Elfa del bosque | original forest elf costume, long moss-green layered dress with leaf embroidery, hooded cape, elegant pointed ears, wooden bow |
+| 16 | Race driver | Piloto de carreras | racing driver suit, red and white fireproof jumpsuit with sponsor-free patches, helmet held at the hip |
+| 17 | Dominican carnival | Carnaval dominicano | Dominican carnival Diablo Cojuelo costume, vibrant full-coverage satin suit covered in mirrors, bells and ribbons, ornate horned mask held in her hand |
 
-## B11 · FON — Fondo / background
-| # | Opción | Texto (inglés) |
-|---|---|---|
-| 1 | Void blanco | seamless pure white background, infinite white studio void, soft contact shadow on the floor |
-| 2 | Gris neutro | seamless light grey studio backdrop |
-| 3 | París | Paris cityscape with the Eiffel Tower in the background, creamy bokeh |
-| 4 | Playa | tropical beach at sunset, palm trees, soft ocean bokeh |
-| 5 | Sala de yoga | bright yoga studio, light wooden floor, large windows, green plants |
-| 6 | Calle urbana | sunny city street, modern storefronts, soft background blur |
+## B6.1 · ACC / ACC — Accessories / Accesorios
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 0 | None | Ninguno | (none) |
+| 1 | Emerald necklace | Collar esmeralda | emerald pendant necklace on a fine gold chain |
+| 2 | Gold hoops | Aros dorados | small gold hoop earrings |
+| 3 | Sports watch | Reloj deportivo | minimalist sports watch |
+| 4 | Cap | Gorra | beige baseball cap |
 
-## B0 · NEG — Prompt negativo (fijo)
+## B7 · CAM / CAM — Camera & pose / Cámara y pose
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 1 | Full body 3/4 | Cuerpo entero 3/4 | full body shot, head to toe framing, standing relaxed, three-quarter turn, looking at camera |
+| 2 | Half body | Medio cuerpo | medium shot from the waist up, eye-level camera, looking at camera |
+| 3 | Portrait | Retrato | close-up portrait, head and shoulders, eye-level camera |
+| 4 | Walking | Caminando | full body shot, walking toward camera, natural mid-stride motion |
+| 5 | Seated | Sentada | full body shot, sitting casually on a low wooden stool, relaxed posture |
+
+## B8 · LIGHT / LUZ — Lighting / Luz
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 1 | Soft studio | Estudio suave | soft even studio lighting, large softbox, gentle shadows |
+| 2 | Golden hour | Hora dorada | warm golden hour sunlight, soft rim light |
+| 3 | Window | Ventana | soft natural window light from the side |
+| 4 | Overcast | Nublado | bright overcast daylight, soft shadowless light |
+
+## B11 · BG / FON — Background / Fondo
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 1 | White void | Void blanco | seamless pure white background, infinite white studio void, soft contact shadow on the floor |
+| 2 | Neutral grey | Gris neutro | seamless light grey studio backdrop |
+| 3 | Paris | París | Paris cityscape with the Eiffel Tower in the background, creamy bokeh |
+| 4 | Beach | Playa | tropical beach at sunset, palm trees, soft ocean bokeh |
+| 5 | Yoga studio | Sala de yoga | bright yoga studio, light wooden floor, large windows, green plants |
+| 6 | City street | Calle urbana | sunny city street, modern storefronts, soft background blur |
+
+## B0 · NEG — Negative prompt
 ```
 cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features
 ```
-
-## Receta inicial (ejemplo)
-`FOTO1 BRI2 MOD1 CAB5 OJO2 PIEL1 CUE1 VES1 ACC0 CAM1 LUZ1 FON1`
-Modelo fitness de 30 años, piel porcelana, moño suelto, ojos verdes, short denim + crop top blanco, cuerpo entero, luz de estudio, **void blanco**.
-
-## Cómo crecer la biblioteca
-1. Prueba una opción nueva cambiando un solo bloque y con el mismo seed.
-2. Si sale bien (★4–5), agrégala al final del bloque con el siguiente número. No renumeres las opciones existentes, para que las recetas viejas sigan funcionando.
-3. Anota en el registro de pruebas: receta, plataforma, seed y ★.

@@ -6,7 +6,7 @@ from playwright.sync_api import sync_playwright
 HTML = (Path(__file__).resolve().parent.parent / "index.html").read_text()
 import json, re
 _arch = json.loads(re.search(r"const ARCHIVE = (\{.*?\});\n", HTML).group(1))
-_old = json.loads(json.dumps(_arch["1.5"])); _old["blocks"][[x["id"] for x in _old["blocks"]].index("B3.1")]["texts"][0] = "OLD honey hair"
+_old = json.loads(json.dumps(_arch["1.6"])); _old["blocks"][[x["id"] for x in _old["blocks"]].index("B3.1")]["texts"][0] = "OLD honey hair"
 _old["separators"]["one"]["joiner"] = " ; "   # frozen formatting rule that differs from today
 _arch["1.1"] = _old
 OLD_HTML = re.sub(r"const ARCHIVE = \{.*?\};\n", lambda m: "const ARCHIVE = " + json.dumps(_arch) + ";\n", HTML, count=1)
@@ -100,7 +100,7 @@ with sync_playwright() as p:
 
     # recipe round-trip
     rec = pg.inner_text("#recipe"); prompt = ev(pg, "promptText()")
-    check("recipe records version, platform and separator", rec.startswith("v1.5 |") and "| seaart | break" in rec, rec)
+    check("recipe records version, platform and separator", rec.startswith("v1.6 |") and "| seaart | break" in rec, rec)
     pg.click("#resetBtn")
     pg.fill("#recipeIn", rec); pg.click("#loadBtn")
     check("pasting the recipe restores the exact prompt", ev(pg, "promptText()") == prompt)
@@ -132,8 +132,8 @@ with sync_playwright() as p:
     check("recipe with no options shows an error", unchanged and err, err)
     unchanged, err = attempt("ACC0")
     check("zero-based block accepts 0", not err)
-    unchanged, err = attempt("ACC5")
-    check("zero-based block rejects past its range", unchanged and "0–4" in err, err)
+    unchanged, err = attempt("ACC12")
+    check("zero-based block rejects past its range", unchanged and "0–11" in err, err)
     unchanged, err = attempt("AGE2 HAIR=-1")
     check("negative option number is rejected (AGE not applied)", unchanged and "-1" in err, err)
     unchanged, err = attempt("AGE2 | typo | wrong")
@@ -148,9 +148,9 @@ with sync_playwright() as p:
                         ("v1.3,v1.2,AGE2", "1.2"), ("v1.3·v1.2 AGE2", "1.2"), ("AGE2·v8.0", "8.0")]:
         unchanged, err = attempt(txt)
         check(f"version after any divider is checked: {txt!r}", unchanged and needle in err, err)
-    unchanged, err = attempt("v1.5,AGE2")
+    unchanged, err = attempt("v1.6,AGE2")
     check("known version after a comma loads", not err and ev(pg, 'S.sel["B3"]') == 1, err)
-    unchanged, err = attempt("v1.5·AGE3·BG2")
+    unchanged, err = attempt("v1.6·AGE3·BG2")
     check("middle dot divider loads", not err and ev(pg, 'S.sel["B3"]') == 2 and ev(pg, 'S.sel["B11"]') == 1, err)
     unchanged, err = attempt("v1.3 | OUTFIT18")
     check("v1.3 recipe can't use outfits added in v1.4", unchanged and "1–17" in err, err)
@@ -160,6 +160,23 @@ with sync_playwright() as p:
     check("v1.3 recipe still loads normally (same text today)", not err and ev(pg, "S.pin") is None, err)
     unchanged, err = attempt("v1.4 | HAIR2")
     check("v1.4 partial recipe completes with the v1.4 base (yoga catalog), not the new one", not err and ev(pg, 'S.sel["B6"]') == 4 and ev(pg, 'S.sel["B1"]') == 2, err)
+    # multi-select accessories
+    unchanged, err = attempt("ACC1+3")
+    check("ACC1+3 selects two accessories", not err and ev(pg, 'JSON.stringify(S.sel["B6.1"])') == "[1,3]", err)
+    check("…and both appear in the prompt", "emerald pendant necklace on a fine gold chain, minimalist sports watch" in ev(pg, "promptText()"))
+    check("…and the recipe writes ACC1+3", "ACC1+3" in pg.inner_text("#recipe"))
+    unchanged, err = attempt("ACC0+2")
+    check("ACC0 can't be combined", unchanged and "0" in err, err)
+    unchanged, err = attempt("HAIR1+2")
+    check("single-choice blocks reject +", unchanged and "only one" in err, err)
+    unchanged, err = attempt("ACC1+12")
+    check("multi rejects an out-of-range part", unchanged and "12" in err, err)
+    unchanged, err = attempt("ACC3+1 ACC1+3")
+    check("same set written twice is accepted", not err, err)
+    unchanged, err = attempt("ACC0")
+    check("ACC0 clears accessories", not err and ev(pg, 'JSON.stringify(S.sel["B6.1"])') == "[]", err)
+    unchanged, err = attempt("v1.5 | ACC2")
+    check("old single-number ACC2 still works (v1.5)", not err and ev(pg, 'JSON.stringify(S.sel["B6.1"])') == "[2]" and ev(pg, "S.pin") is None, err)
     unchanged, err = attempt("STYLE3")
     check("partial valid recipe still works and clears errors", not err and ev(pg, 'S.sel["B3.4"]') == 2)
 
@@ -230,6 +247,27 @@ with sync_playwright() as p:
     pg2.reload()
     check("session restores selections, platform, separator and language",
           pg2.evaluate('S.sel["B3.1"]') == 2 and pg2.input_value("#plat") == "venice" and pg2.input_value("#sep") == "tag" and pg2.inner_text("h1") == "Mezclador de Prompts")
+
+    # multi-select in the page: toggle on, toggle off, None clears
+    pg.click("#resetBtn")
+    pg.click(radio("B6.1", 2)); pg.click(radio("B6.1", 5))
+    check("clicking two accessories keeps both", ev(pg, 'JSON.stringify(S.sel["B6.1"])') == "[2,5]")
+    pg.click(radio("B6.1", 2))
+    check("clicking again removes it", ev(pg, 'JSON.stringify(S.sel["B6.1"])') == "[5]")
+    pg.click(radio("B6.1", 0))
+    check("None clears all accessories", ev(pg, 'JSON.stringify(S.sel["B6.1"])') == "[]")
+    check("Variants is disabled for the multi-select block", pg.is_disabled('[data-var="B6.1"]'))
+    pg.click(radio("B6.1", 4)); pg.click(radio("B6.1", 6))
+    check("cap + straw hat is flagged incompatible", "incompatible" in pg.inner_text("#warnPanel").lower())
+    pg.click(radio("B6.1", 0))
+    # per-block reset
+    check("block Reset is disabled while at its default", pg.is_disabled('[data-reset="B3.1"]'))
+    pg.click(radio("B3.1", 2))
+    pg.click('[data-reset="B3.1"]')
+    check("block Reset restores only that block", ev(pg, 'S.sel["B3.1"]') == DEFAULT_HAIR)
+    pg.click(radio("B3.1", 2)); pg.click('[data-lock="B3.1"]')
+    check("block Reset is disabled while locked", pg.is_disabled('[data-reset="B3.1"]'))
+    pg.click('[data-lock="B3.1"]'); pg.click("#resetBtn")
 
     # copy options of one block
     txt = ev(pg, 'optionsText("B6")')

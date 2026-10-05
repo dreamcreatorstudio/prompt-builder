@@ -7,12 +7,27 @@ const BY_ID = Object.fromEntries(BLOCKS.map(b => [b.id, b]));
 const esc = t => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;");
 const fmt = (s, o) => s.replace(/\{(\w+)\}/g, (_, k) => o[k]);
 const num = (b, i) => b.zero ? i : i + 1;
+const vals = x => Array.isArray(x) ? x : [x];                 // multi-select blocks store an array
+const clone = o => JSON.parse(JSON.stringify(o));
+const same = (x, y) => JSON.stringify(x) === JSON.stringify(y);
+// Express a selection in the shape a version expects (older versions stored ACC as one number; 0 = none).
+function normFor(v, sel) {
+  const out = {};
+  for (const b of ARCHIVE[v].blocks) {
+    if (!(b.id in sel)) continue;
+    const x = sel[b.id];
+    if (b.multi) out[b.id] = [...new Set(vals(x).filter(i => i !== 0))].sort((p, q) => p - q);
+    else out[b.id] = Array.isArray(x) ? (x.length ? x[0] : 0) : x;
+  }
+  return out;
+}
+const okIn = (b, x) => vals(x).every(i => Number.isInteger(i) && i >= 0 && i < b.texts.length);
 const VAR_PAGE = 3;
 const KNOWN = Object.keys(ARCHIVE);            // every published library version, current included
 
 // ---------- state ----------
 // sel: current-library selection. pin: an older library version being reproduced exactly (read-only), with pinSel.
-const S = { lang: "en", plat: DEFAULT_PLATFORM, sep: PLATFORMS[DEFAULT_PLATFORM].sep, sel: { ...DEFAULT }, locked: {}, pin: null, pinSel: null, notice: null };
+const S = { lang: "en", plat: DEFAULT_PLATFORM, sep: PLATFORMS[DEFAULT_PLATFORM].sep, sel: clone(DEFAULT), locked: {}, pin: null, pinSel: null, notice: null };
 let VAR = null;
 
 function store(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
@@ -22,8 +37,12 @@ function save() {
 }
 function validSel(ver, sel) {           // keep only indexes that exist in that version
   const out = {};
-  for (const b of ARCHIVE[ver].blocks) { const i = sel && sel[b.id]; if (Number.isInteger(i) && i >= 0 && i < b.texts.length) out[b.id] = i; }
-  return out;
+  for (const b of ARCHIVE[ver].blocks) {
+    if (!sel || !(b.id in sel)) continue;
+    const x = sel[b.id];
+    if (b.multi ? (Array.isArray(x) || Number.isInteger(x)) && okIn(b, x) : Number.isInteger(x) && okIn(b, x)) out[b.id] = x;
+  }
+  return normFor(ver, out);
 }
 function restore() {
   const lang = load("pb-lang"); if (lang === "en" || lang === "es") S.lang = lang;
@@ -37,7 +56,7 @@ function restore() {
   } else if (ARCHIVE[s.v]) {                        // older known version
     const full = { ...ARCHIVE[s.v].defaults, ...validSel(s.v, s.sel) };
     if (sameAsCurrent(s.v, full)) {                 // identical prompt today: keep working normally
-      S.sel = { ...S.sel, ...full };
+      S.sel = { ...S.sel, ...normFor(LIB_VERSION, full) };
       for (const id in (s.locked || {})) if (BY_ID[id] && s.locked[id]) S.locked[id] = true;
     } else { S.pin = s.v; S.pinSel = full; S.notice = { key: "sessionOld", v: s.v }; }   // reproduce exactly, ask before migrating
   } else {                                          // unknown version: don't reinterpret its numbers
@@ -46,8 +65,9 @@ function restore() {
 }
 // An older-version selection can be used as-is when every option still exists and the prompt text is identical.
 function sameAsCurrent(v, sel) {
-  for (const id in sel) if (!BY_ID[id] || sel[id] >= BY_ID[id].opts.length) return false;
-  const now = { ...S.sel, ...sel };
+  const cur = normFor(LIB_VERSION, sel);
+  for (const id in sel) if (!BY_ID[id] || !(id in cur) || !okIn(ARCHIVE[LIB_VERSION].blocks.find(b => b.id === id), cur[id])) return false;
+  const now = { ...S.sel, ...cur };
   return Object.keys(sel).length === ARCHIVE[v].blocks.length &&
     Object.keys(ARCHIVE[v].platforms).every(pl => Object.keys(ARCHIVE[v].separators).every(sp =>
       pl in PLATFORMS && sp in SEPARATORS && textFor(v, sel, pl, sp) === textFor(LIB_VERSION, now, pl, sp)));
@@ -62,7 +82,7 @@ const curSel = () => S.pin ? S.pinSel : S.sel;
 function parts(sel, plat, v = ver()) {
   const P = ARCHIVE[v].platforms[plat] || PLATFORMS[plat];
   return ARCHIVE[v].blocks.map(b => {
-    let t = b.texts[sel[b.id]];
+    let t = vals(sel[b.id]).map(i => b.texts[i]).filter(Boolean).join(", ");
     if (t && P.drop) t = t.split(", ").filter(x => !P.drop.includes(x)).join(", ");
     if (t && P.weights && P.weights.includes(b.id)) t = `(${t}:1.2)`;
     return { id: b.id, hue: (BY_ID[b.id] || {}).hue || "--muted", text: t };
@@ -93,7 +113,8 @@ function blocksText() {
 // Format: v1.2 | PHOTO2 GLOW2 ... BG1 | perchance | one   (Spanish keys accepted; partial recipes allowed)
 function recipe(sel = curSel(), v = ver()) {
   const li = LI();
-  return `v${v} | ` + ARCHIVE[v].blocks.map(b => b.key[li] + (b.zero ? sel[b.id] : sel[b.id] + 1)).join(" ") + ` | ${S.plat} | ${S.sep}`;
+  const tok = (b, x) => b.multi ? (vals(x).length ? vals(x).map(i => num(b, i)).join("+") : "0") : num(b, x);
+  return `v${v} | ` + ARCHIVE[v].blocks.map(b => b.key[li] + tok(b, sel[b.id])).join(" ") + ` | ${S.plat} | ${S.sep}`;
 }
 // Strict grammar: every token must be a version (v1.3), a block option (HAIR6 or HAIR=6), a platform
 // (perchance / "Perchance AI"), a separator (one, nl, tag, break, or sep=one) or a "|" / "·" / "," divider.
@@ -118,14 +139,19 @@ function parseRecipe(txt) {
     if (low in A.platforms) { plats.add(low); continue; }
     const sm = low.match(/^(?:sep=)?(nl|one|tag|break)$/);
     if (sm && sm[1] in A.separators) { seps.add(sm[1]); continue; }
-    const m = tok.match(/^([A-Za-z]+)=?(-?\d+)?$/);
+    const m = tok.match(/^([A-Za-z]+)=?(-?\d+(?:\+-?\d+)*)?$/);
     if (!m || m[2] === undefined) { r.errors.push(fmt(L().errToken, { t: tok })); continue; }
     const b = keyMap[m[1].toUpperCase()];
     if (!b) { r.errors.push(fmt(L().errUnknownKey, { k: m[1] })); continue; }
-    const n = +m[2], i = b.zero ? n : n - 1, lo = b.zero ? 0 : 1, hi = b.zero ? b.texts.length - 1 : b.texts.length;
-    if (!/^\d+$/.test(m[2]) || i < 0 || i >= b.texts.length) { r.errors.push(fmt(L().errRange, { k: m[1], n: m[2], a: lo, b: hi })); continue; }
-    if (b.id in seen && seen[b.id].i !== i) { r.errors.push(fmt(L().errDup, { id: b.id, x: seen[b.id].tok, y: tok })); continue; }
-    seen[b.id] = { i, tok }; r.sel[b.id] = i;
+    const nums = m[2].split("+"), lo = b.zero ? 0 : 1, hi = b.zero ? b.texts.length - 1 : b.texts.length;
+    if (nums.length > 1 && !b.multi) { r.errors.push(fmt(L().errMulti, { k: m[1] })); continue; }
+    const bad = nums.find(n => !/^\d+$/.test(n) || +n < lo || +n > hi);
+    if (bad !== undefined) { r.errors.push(fmt(L().errRange, { k: m[1], n: bad, a: lo, b: hi })); continue; }
+    const idx = nums.map(n => b.zero ? +n : +n - 1);
+    if (b.multi && idx.length > 1 && idx.includes(0)) { r.errors.push(fmt(L().errZeroMix, { k: m[1] })); continue; }
+    const val = b.multi ? [...new Set(idx.filter(i => i !== 0))].sort((p, q) => p - q) : idx[0];
+    if (b.id in seen && !same(seen[b.id].val, val)) { r.errors.push(fmt(L().errDup, { id: b.id, x: seen[b.id].tok, y: tok })); continue; }
+    seen[b.id] = { val, tok }; r.sel[b.id] = val;
   }
   if (plats.size > 1) r.errors.push(fmt(L().errTwice, { what: L().what.platform, list: [...plats].join(", ") }));
   if (seps.size > 1) r.errors.push(fmt(L().errTwice, { what: L().what.separator, list: [...seps].join(", ") }));
@@ -146,23 +172,25 @@ function loadRecipe() {
   if (r.v !== LIB_VERSION) {
     // Older version: complete with THAT version's defaults; use it as current only if the text is identical.
     const full = { ...ARCHIVE[r.v].defaults, ...r.sel };
-    const lockClash = Object.keys(full).some(id => S.locked[id] && full[id] !== S.sel[id]);
-    if (!lockClash && sameAsCurrent(r.v, full)) { S.pin = null; S.pinSel = null; S.sel = { ...S.sel, ...full }; changed(); return toast(L().loaded); }
+    const asNow = normFor(LIB_VERSION, full);
+    const lockClash = Object.keys(asNow).some(id => S.locked[id] && !same(asNow[id], S.sel[id]));
+    if (!lockClash && sameAsCurrent(r.v, full)) { S.pin = null; S.pinSel = null; S.sel = { ...S.sel, ...asNow }; changed(); return toast(L().loaded); }
     S.pin = r.v; S.pinSel = full; S.notice = { key: "pinBanner", v: r.v };
     closeVariants(); changed(); return;
   }
   S.pin = null; S.pinSel = null; if (S.notice && S.notice.key !== "sessionUnknown") S.notice = null;
   const skipped = [];
-  for (const id in r.sel) { if (S.locked[id]) { if (r.sel[id] !== S.sel[id]) skipped.push(id); } else S.sel[id] = r.sel[id]; }
+  for (const id in r.sel) { if (S.locked[id]) { if (!same(r.sel[id], S.sel[id])) skipped.push(id); } else S.sel[id] = r.sel[id]; }
   changed();
   toast(L().loaded + (skipped.length ? " · " + fmt(L().loadSkipped, { list: skipped.join(", ") }) : ""), 5000);
 }
 function migrate() {                                // same option numbers, current texts — may change the prompt
   const from = S.pin, missing = [];
+  const asNow = normFor(LIB_VERSION, S.pinSel);
   for (const id in S.pinSel) {
-    const b = BY_ID[id];
-    if (!b || S.pinSel[id] >= b.opts.length) { missing.push(id); continue; }
-    if (!S.locked[id]) S.sel[id] = S.pinSel[id];
+    const b = ARCHIVE[LIB_VERSION].blocks.find(x => x.id === id);
+    if (!b || !(id in asNow) || !okIn(b, asNow[id])) { missing.push(id); continue; }
+    if (!S.locked[id]) S.sel[id] = asNow[id];
   }
   S.pin = null; S.pinSel = null; S.notice = null; changed();
   toast(fmt(L().migrated, { cur: LIB_VERSION, v: from }) + (missing.length ? " (" + missing.join(", ") + ")" : ""), 6000);
@@ -197,18 +225,31 @@ function renderBlocks() {
   el.innerHTML = "";
   for (const b of BLOCKS) {
     const lk = !!S.locked[b.id], off = lk || frozen, gid = "g-" + b.id.replace(".", "_");
+    const isDefault = same(S.sel[b.id], DEFAULT[b.id]);
+    const picked = i => b.multi ? (i === 0 ? !vals(S.sel[b.id]).length : vals(S.sel[b.id]).includes(i)) : S.sel[b.id] === i;
     const sec = document.createElement("div");
     sec.className = "block"; sec.style.setProperty("--hue", `var(${b.hue})`);
     sec.innerHTML = `<div class="bhead"><span class="bid">${b.id} · ${b.key[li]}</span><span class="bname">${esc(b.name[li])}</span>
-      <span class="tools"><button class="btn" data-lock="${b.id}" aria-pressed="${lk}" ${frozen ? "disabled" : ""} title="${L().lockTitle}">${lk ? L().locked : L().lock}</button>
-      <button class="btn" data-var="${b.id}" ${off ? "disabled" : ""} title="${lk ? L().lockedNoVar : L().varTitle}">${L().variants} (${b.opts.length - 1})</button>
+      <span class="tools"><button class="btn" data-reset="${b.id}" ${off || isDefault ? "disabled" : ""} title="${L().reset1Title}">${L().reset1}</button>
+      <button class="btn" data-lock="${b.id}" aria-pressed="${lk}" ${frozen ? "disabled" : ""} title="${L().lockTitle}">${lk ? L().locked : L().lock}</button>
+      <button class="btn" data-var="${b.id}" ${off || b.multi ? "disabled" : ""} title="${b.multi ? L().noVarMulti : lk ? L().lockedNoVar : L().varTitle}">${L().variants}${b.multi ? "" : ` (${b.opts.length - 1})`}</button>
       <button class="btn" data-opts="${b.id}">${L().copyOptions}</button></span></div>
-      <div class="opts" role="radiogroup" aria-label="${esc(b.name[li])}">${b.opts.map((o, i) => `<span class="opt"><input type="radio" name="${gid}" id="${gid}-${i}" value="${i}" ${S.sel[b.id] === i && !frozen ? "checked" : ""} ${off ? "disabled" : ""}><label for="${gid}-${i}"><b>${num(b, i)}</b>${esc(o[li])}</label></span>`).join("")}</div>`;
+      ${b.multi ? `<p class="small" style="margin:0">${esc(L().multiNote)}</p>` : ""}
+      <div class="opts" role="${b.multi ? "group" : "radiogroup"}" aria-label="${esc(b.name[li])}">${b.opts.map((o, i) => `<span class="opt"><input type="${b.multi ? "checkbox" : "radio"}" name="${gid}" id="${gid}-${i}" value="${i}" ${picked(i) && !frozen ? "checked" : ""} ${off ? "disabled" : ""}><label for="${gid}-${i}"><b>${num(b, i)}</b>${esc(o[li])}</label></span>`).join("")}</div>`;
     el.appendChild(sec);
   }
-  el.querySelectorAll("input[type=radio]").forEach(r => r.addEventListener("change", e => {
-    const id = e.target.name.slice(2).replace("_", ".");
-    if (S.locked[id] || S.pin) return; S.sel[id] = +e.target.value; changed();
+  el.querySelectorAll("input").forEach(r => r.addEventListener("change", e => {
+    const id = e.target.name.slice(2).replace("_", "."), b = BY_ID[id], i = +e.target.value;
+    if (S.locked[id] || S.pin) return;
+    if (b.multi) {
+      const cur = vals(S.sel[id]);
+      S.sel[id] = i === 0 ? [] : (cur.includes(i) ? cur.filter(x => x !== i) : [...cur, i].sort((p, q) => p - q));
+    } else S.sel[id] = i;
+    changed();
+  }));
+  el.querySelectorAll("[data-reset]").forEach(btn => btn.addEventListener("click", () => {
+    const id = btn.dataset.reset; if (S.locked[id] || S.pin) return;
+    S.sel[id] = clone(DEFAULT[id]); changed();
   }));
   el.querySelectorAll("[data-lock]").forEach(btn => btn.addEventListener("click", () => {
     if (S.pin) return; const id = btn.dataset.lock; S.locked[id] = !S.locked[id]; if (!S.locked[id]) delete S.locked[id]; changed();
@@ -224,7 +265,8 @@ function renderPlat() {
 }
 function activeNotes() {
   if (S.pin) return [];
-  return CONFLICTS.filter(c => c.a_opts.includes(S.sel[c.a]) && (!c.b || c.b_opts.includes(S.sel[c.b])));
+  const has = (id, opts) => vals(S.sel[id]).some(i => opts.includes(i));
+  return CONFLICTS.filter(c => has(c.a, c.a_opts) && (!c.b || has(c.b, c.b_opts)));
 }
 function renderOut() {
   $("#prompt").innerHTML = join(parts(curSel(), S.plat), S.sep, true);
@@ -238,7 +280,7 @@ function renderOut() {
 // ---------- variants ----------
 function ctxKey(id) { const sel = { ...S.sel }; delete sel[id]; return JSON.stringify([sel, S.plat, S.sep, !!S.locked[id], S.pin]); }
 function openVariants(id, offset) {
-  if (S.locked[id] || S.pin) return toast(L().lockedUse);
+  if (S.locked[id] || S.pin || BY_ID[id].multi) return toast(L().lockedUse);
   VAR = { id, offset, ctx: ctxKey(id) }; renderVariants();
 }
 function closeVariants() { VAR = null; $("#varPanel").hidden = true; }
@@ -299,7 +341,7 @@ $("#copyNeg").addEventListener("click", () => copy(NEG, L().negCopied));
 $("#loadBtn").addEventListener("click", loadRecipe);
 $("#recipeIn").addEventListener("keydown", e => { if (e.key === "Enter") loadRecipe(); });
 $("#recipeIn").addEventListener("input", () => showErrors([]));
-$("#resetBtn").addEventListener("click", () => { S.sel = { ...DEFAULT }; S.locked = {}; S.pin = null; S.pinSel = null; S.notice = null; S.plat = DEFAULT_PLATFORM; S.sep = PLATFORMS[DEFAULT_PLATFORM].sep; closeVariants(); showErrors([]); changed(); toast(L().resetDone); });
+$("#resetBtn").addEventListener("click", () => { S.sel = clone(DEFAULT); S.locked = {}; S.pin = null; S.pinSel = null; S.notice = null; S.plat = DEFAULT_PLATFORM; S.sep = PLATFORMS[DEFAULT_PLATFORM].sep; closeVariants(); showErrors([]); changed(); toast(L().resetDone); });
 $("#closeVar").addEventListener("click", closeVariants);
 $("#varPrev").addEventListener("click", () => { VAR.offset = Math.max(0, VAR.offset - VAR_PAGE); renderVariants(); });
 $("#varNext").addEventListener("click", () => { VAR.offset += VAR_PAGE; renderVariants(); });

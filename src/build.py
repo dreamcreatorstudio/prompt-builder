@@ -21,7 +21,7 @@ ARCHIVE_DIR = SRC / "archive"
 def snapshot():
     """Everything that decides the prompt text for a recipe: block texts, defaults used to complete
     partial recipes, platform formatting rules and separators."""
-    return {"blocks": [{"id": b["id"], "key": list(b["key"]), "zero": bool(b.get("zero")), "texts": [o[2] for o in b["opts"]]} for b in BLOCKS],
+    return {"blocks": [{"id": b["id"], "key": list(b["key"]), "zero": bool(b.get("zero")), **({"multi": True} if b.get("multi") else {}), "texts": [o[2] for o in b["opts"]]} for b in BLOCKS],
             "defaults": DEFAULT, "default_platform": DEFAULT_PLATFORM, "platforms": PLATFORMS, "separators": SEPARATORS}
 
 def load_archive():
@@ -39,13 +39,19 @@ def load_archive():
     return {p.stem[1:]: json.loads(p.read_text()) for p in sorted(ARCHIVE_DIR.glob("v*.json"))}
 
 def n(b, i): return i if b.get("zero") else i + 1
+def token(b, v):
+    if b.get("multi"):
+        return "+".join(str(n(b, i)) for i in v) if v else "0"
+    return str(n(b, v))
+
 def default_recipe(li=0):
-    return f"v{LIB_VERSION} | " + " ".join(b["key"][li] + str(n(b, DEFAULT[b["id"]])) for b in BLOCKS) + f" | {DEFAULT_PLATFORM} | {PLATFORMS[DEFAULT_PLATFORM]['sep']}"
+    return f"v{LIB_VERSION} | " + " ".join(b["key"][li] + token(b, DEFAULT[b["id"]]) for b in BLOCKS) + f" | {DEFAULT_PLATFORM} | {PLATFORMS[DEFAULT_PLATFORM]['sep']}"
 
 def default_prompt():
     P = PLATFORMS[DEFAULT_PLATFORM]; out = []
     for b in BLOCKS:
-        t = b["opts"][DEFAULT[b["id"]]][2]
+        v = DEFAULT[b["id"]]
+        t = ", ".join(b["opts"][i][2] for i in (v if isinstance(v, list) else [v]) if b["opts"][i][2])
         if not t: continue
         if P.get("drop"): t = ", ".join(x for x in t.split(", ") if x not in P["drop"])
         out.append(t)
@@ -187,7 +193,7 @@ def library_md():
          "Spanish keys work too: " + f"`{default_recipe(1)}`", "",
          "New options are always added at the end of a block and existing numbers never change, so old recipes keep working.", ""]
     for b in BLOCKS:
-        L.append(f"## {b['id']} · {b['key'][0]} / {b['key'][1]} — {b['name'][0]} / {b['name'][1]}")
+        L.append(f"## {b['id']} · {b['key'][0]} / {b['key'][1]} — {b['name'][0]} / {b['name'][1]}" + (" (choose several: `ACC1+3`; `ACC0` = none)" if b.get("multi") else ""))
         L.append("| # | EN | ES | Prompt text |\n|---|---|---|---|")
         L += [f"| {n(b,i)} | {en} | {es} | {t or '(none)'} |" for i, (en, es, t) in enumerate(b['opts'])]
         L.append("")

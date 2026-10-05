@@ -79,8 +79,15 @@ BLOCKS = [
   ("Oruro morenada","Morenada de Oruro","Oruro carnival morenada dancer costume, embroidered layered pollera skirt, sequined shawl, bowler hat"),
   ("Puno Candelaria","Candelaria de Puno","Candelaria festival dancer outfit from Puno, multiple bright layered polleras, embroidered jacket, bowler hat, woven shawl"),
   ("Venice carnival","Carnaval de Venecia","Venetian carnival gown, brocade bodice with long full skirt, ornate Colombina half-mask, feathered headpiece")]),
- dict(id="B6.1", key=("ACC","ACC"), name=("Accessories","Accesorios"), hue="--h6", zero=True, opts=[
-  ("None","Ninguno",""),("Emerald necklace","Collar esmeralda","emerald pendant necklace on a fine gold chain"),("Gold hoops","Aros dorados","small gold hoop earrings"),("Sports watch","Reloj deportivo","minimalist sports watch"),("Cap","Gorra","beige baseball cap")]),
+ dict(id="B6.1", key=("ACC","ACC"), name=("Accessories","Accesorios"), hue="--h6", zero=True, multi=True, opts=[
+  ("None","Ninguno",""),("Emerald necklace","Collar esmeralda","emerald pendant necklace on a fine gold chain"),("Gold hoops","Aros dorados","small gold hoop earrings"),("Sports watch","Reloj deportivo","minimalist sports watch"),("Cap","Gorra","beige baseball cap"),
+  ("Sunglasses","Gafas de sol","oversized tortoiseshell sunglasses"),
+  ("Straw hat","Sombrero de paja","wide-brim straw hat"),
+  ("Silk scarf","Pañuelo de seda","patterned silk scarf"),
+  ("Pearl earrings","Aretes de perla","small pearl stud earrings"),
+  ("Gold bracelets","Pulseras doradas","stack of thin gold bracelets"),
+  ("Tote bag","Bolso tote","canvas tote bag on the shoulder"),
+  ("Yoga mat","Esterilla de yoga","rolled yoga mat under one arm")]),
  dict(id="B7", key=("CAM","CAM"), name=("Framing & pose","Encuadre y pose"), hue="--h7", opts=[
   ("Full body 3/4","Cuerpo entero 3/4","full body shot, head to toe framing, standing relaxed, three-quarter turn, looking at camera"),
   ("Half body","Medio cuerpo","medium shot from the waist up, looking at camera"),
@@ -114,10 +121,10 @@ BLOCKS = [
   ("City street","Calle urbana","sunny city street, modern storefronts, soft background blur")]),
 ]
 NEG = "cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features"
-DEFAULT = {"B1":0,"B2":0,"B3":0,"B3.3":1,"B3.1":0,"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":21,"B6.1":0,"B7":0,"B7.1":0,"B8":0,"B11":5}  # Venice carnival in the city (chosen by Alex)
+DEFAULT = {"B1":0,"B2":0,"B3":0,"B3.3":1,"B3.1":0,"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":21,"B6.1":[],"B7":0,"B7.1":0,"B8":0,"B11":5}  # Venice carnival in the city (chosen by Alex)
 
 # Library version: bump when any prompt text changes, so recipes record which texts they used.
-LIB_VERSION = "1.5"   # 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
+LIB_VERSION = "1.6"   # 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
 
 PLATFORMS = {  # separator default + transforms applied to the prompt text
     "venice":    {"label": "Venice AI",    "sep": "nl"},
@@ -140,6 +147,12 @@ SEPARATORS = {
 #   test         : may work, but depends on the model — try it with a fixed seed
 # A rule matches when block a is one of a_opts and (if given) block b is one of b_opts. Indexes are 0-based.
 CONFLICTS = [
+    dict(kind="incompatible", a="B6.1", a_opts=[4], b="B6.1", b_opts=[6],
+         en="Cap and straw hat together: pick one headwear.",
+         es="Gorra y sombrero de paja a la vez: elige una sola prenda para la cabeza."),
+    dict(kind="incompatible", a="B6.1", a_opts=[4, 6], b="B6", b_opts=[8, 12, 19, 20, 21],
+         en="This outfit already includes headwear (tricorn, cowboy hat, bowler hat or feathered headpiece); a cap or straw hat will clash.",
+         es="Este vestuario ya incluye algo en la cabeza (tricornio, sombrero vaquero, bombín o tocado de plumas); la gorra o el sombrero de paja chocarán."),
     dict(kind="incompatible", a="B7.1", a_opts=[7], b="B7", b_opts=[0, 1],
          en="ANGLE 8 (profile) vs. this framing, which asks for a three-quarter turn or looking at the camera.",
          es="ÁNGULO 8 (perfil) frente a este encuadre, que pide giro de tres cuartos o mirar a cámara."),

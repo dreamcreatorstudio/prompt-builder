@@ -1,9 +1,14 @@
 # Block Library / Biblioteca de bloques
 
-Live tool: https://dreamcreatorstudio.github.io/prompt-builder
+Library version **v1.3** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
-Each block has a short key and numbered options. A **recipe** is one line such as `PHOTO1 GLOW2 AGE1 EXPR1 HAIR6 STYLE10 EYES2 SKIN1 BODY1 OUTFIT1 ACC0 CAM1 LIGHT1 BG1`.
-New options are always added at the end of a block, so old recipes keep working.
+Each block has a short key and numbered options. A **recipe** records the library version, one option per block, the platform and the separator:
+
+`v1.3 | PHOTO3 GLOW1 AGE1 EXPR4 HAIR6 STYLE9 EYES2 SKIN3 BODY2 OUTFIT5 ACC0 CAM1 ANGLE1 LIGHT1 BG1 | perchance | one`
+
+Spanish keys work too: `v1.3 | FOTO3 BRI1 EDAD1 EXP4 CAB6 PEI9 OJO2 PIEL3 CUE2 VES5 ACC0 CAM1 ANG1 LUZ1 FON1 | perchance | one`
+
+New options are always added at the end of a block and existing numbers never change, so old recipes keep working.
 
 ## B1 · PHOTO / FOTO — Photo engine / Motor fotográfico
 | # | EN | ES | Prompt text |
@@ -122,14 +127,30 @@ New options are always added at the end of a block, so old recipes keep working.
 | 3 | Sports watch | Reloj deportivo | minimalist sports watch |
 | 4 | Cap | Gorra | beige baseball cap |
 
-## B7 · CAM / CAM — Camera & pose / Cámara y pose
+## B7 · CAM / CAM — Framing & pose / Encuadre y pose
 | # | EN | ES | Prompt text |
 |---|---|---|---|
 | 1 | Full body 3/4 | Cuerpo entero 3/4 | full body shot, head to toe framing, standing relaxed, three-quarter turn, looking at camera |
-| 2 | Half body | Medio cuerpo | medium shot from the waist up, eye-level camera, looking at camera |
-| 3 | Portrait | Retrato | close-up portrait, head and shoulders, eye-level camera |
+| 2 | Half body | Medio cuerpo | medium shot from the waist up, looking at camera |
+| 3 | Portrait | Retrato | close-up portrait, head and shoulders |
 | 4 | Walking | Caminando | full body shot, walking toward camera, natural mid-stride motion |
 | 5 | Seated | Sentada | full body shot, sitting casually on a low wooden stool, relaxed posture |
+
+## B7.1 · ANGLE / ANG — Camera angle / Ángulo de cámara
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 1 | Eye-level | A la altura de los ojos | eye-level shot, neutral natural perspective |
+| 2 | Low angle | Contrapicado | low angle shot looking up at the subject, powerful heroic perspective |
+| 3 | High angle | Picado | high angle shot looking down at the subject |
+| 4 | Bird's-eye / top-down | Cenital | bird's-eye view, top-down overhead shot |
+| 5 | Worm's-eye | Nadir | worm's-eye view from the ground looking straight up, dramatic height |
+| 6 | Dutch angle | Ángulo holandés | dutch angle, tilted horizon, dynamic tension |
+| 7 | Over-the-shoulder | Sobre el hombro | over-the-shoulder shot, blurred shoulder in the foreground |
+| 8 | Profile / side view | Perfil | side view profile shot |
+| 9 | Hip level | Altura de cadera | hip-level shot, camera at waist height |
+| 10 | Knee level | Altura de rodilla | knee-level shot, camera low near the knees |
+| 11 | Aerial drone | Dron aéreo | aerial drone shot from high above |
+| 12 | POV | Punto de vista (POV) | first-person point of view shot |
 
 ## B8 · LIGHT / LUZ — Lighting / Luz
 | # | EN | ES | Prompt text |
@@ -153,3 +174,18 @@ New options are always added at the end of a block, so old recipes keep working.
 ```
 cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features
 ```
+
+## Combination notes / Notas de combinación
+Shown as notes, grouped by kind; the tool never changes your choices. / Se muestran como notas por tipo; la herramienta nunca cambia tu elección.
+
+**Incompatible**
+- ANGLE 8 (profile) vs. this framing, which asks for a three-quarter turn or looking at the camera.
+
+**Out of frame / Fuera de encuadre**
+- Half-body and portrait framings crop the lower body: shorts, footwear and leg details from OUTFIT or BODY won't show.
+
+**Needs testing / Requiere pruebas**
+- Top-down or worm's-eye with a head-and-shoulders portrait can give unusual crops. Test with a fixed seed.
+- An aerial drone shot over a studio backdrop is unusual; models may add a landscape. Test it.
+- POV plus 'looking at camera' may read as a selfie. Test it.
+

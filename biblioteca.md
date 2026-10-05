@@ -1,12 +1,12 @@
 # Block Library / Biblioteca de bloques
 
-Library version **v1.5** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
+Library version **v1.6** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
 Each block has a short key and numbered options. A **recipe** records the library version, one option per block, the platform and the separator:
 
-`v1.5 | PHOTO1 GLOW1 AGE1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
+`v1.6 | PHOTO1 GLOW1 AGE1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
 
-Spanish keys work too: `v1.5 | FOTO1 BRI1 EDAD1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
+Spanish keys work too: `v1.6 | FOTO1 BRI1 EDAD1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
 
 New options are always added at the end of a block and existing numbers never change, so old recipes keep working.
 
@@ -123,7 +123,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 21 | Puno Candelaria | Candelaria de Puno | Candelaria festival dancer outfit from Puno, multiple bright layered polleras, embroidered jacket, bowler hat, woven shawl |
 | 22 | Venice carnival | Carnaval de Venecia | Venetian carnival gown, brocade bodice with long full skirt, ornate Colombina half-mask, feathered headpiece |
 
-## B6.1 · ACC / ACC — Accessories / Accesorios
+## B6.1 · ACC / ACC — Accessories / Accesorios (choose several: `ACC1+3`; `ACC0` = none)
 | # | EN | ES | Prompt text |
 |---|---|---|---|
 | 0 | None | Ninguno | (none) |
@@ -131,6 +131,13 @@ New options are always added at the end of a block and existing numbers never ch
 | 2 | Gold hoops | Aros dorados | small gold hoop earrings |
 | 3 | Sports watch | Reloj deportivo | minimalist sports watch |
 | 4 | Cap | Gorra | beige baseball cap |
+| 5 | Sunglasses | Gafas de sol | oversized tortoiseshell sunglasses |
+| 6 | Straw hat | Sombrero de paja | wide-brim straw hat |
+| 7 | Silk scarf | Pañuelo de seda | patterned silk scarf |
+| 8 | Pearl earrings | Aretes de perla | small pearl stud earrings |
+| 9 | Gold bracelets | Pulseras doradas | stack of thin gold bracelets |
+| 10 | Tote bag | Bolso tote | canvas tote bag on the shoulder |
+| 11 | Yoga mat | Esterilla de yoga | rolled yoga mat under one arm |
 
 ## B7 · CAM / CAM — Framing & pose / Encuadre y pose
 | # | EN | ES | Prompt text |
@@ -184,6 +191,8 @@ cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra finge
 Shown as notes, grouped by kind; the tool never changes your choices. / Se muestran como notas por tipo; la herramienta nunca cambia tu elección.
 
 **Incompatible**
+- Cap and straw hat together: pick one headwear.
+- This outfit already includes headwear (tricorn, cowboy hat, bowler hat or feathered headpiece); a cap or straw hat will clash.
 - ANGLE 8 (profile) vs. this framing, which asks for a three-quarter turn or looking at the camera.
 
 **Out of frame / Fuera de encuadre**

@@ -114,10 +114,10 @@ BLOCKS = [
   ("City street","Calle urbana","sunny city street, modern storefronts, soft background blur")]),
 ]
 NEG = "cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features"
-DEFAULT = {"B1":2,"B2":0,"B3":0,"B3.3":3,"B3.1":5,"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":4,"B6.1":0,"B7":0,"B7.1":0,"B8":0,"B11":0}  # yoga catalog base
+DEFAULT = {"B1":0,"B2":0,"B3":0,"B3.3":1,"B3.1":0,"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":21,"B6.1":0,"B7":0,"B7.1":0,"B8":0,"B11":5}  # Venice carnival in the city (chosen by Alex)
 
 # Library version: bump when any prompt text changes, so recipes record which texts they used.
-LIB_VERSION = "1.4"   # 1.4: outfits 18–22 (carnival traditions); 1.3: yoga catalog base
+LIB_VERSION = "1.5"   # 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
 
 PLATFORMS = {  # separator default + transforms applied to the prompt text
     "venice":    {"label": "Venice AI",    "sep": "nl"},

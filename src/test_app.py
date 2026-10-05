@@ -6,7 +6,7 @@ from playwright.sync_api import sync_playwright
 HTML = (Path(__file__).resolve().parent.parent / "index.html").read_text()
 import json, re
 _arch = json.loads(re.search(r"const ARCHIVE = (\{.*?\});\n", HTML).group(1))
-_old = json.loads(json.dumps(_arch["1.4"])); _old["blocks"][[x["id"] for x in _old["blocks"]].index("B3.1")]["texts"][0] = "OLD honey hair"
+_old = json.loads(json.dumps(_arch["1.5"])); _old["blocks"][[x["id"] for x in _old["blocks"]].index("B3.1")]["texts"][0] = "OLD honey hair"
 _old["separators"]["one"]["joiner"] = " ; "   # frozen formatting rule that differs from today
 _arch["1.1"] = _old
 OLD_HTML = re.sub(r"const ARCHIVE = \{.*?\};\n", lambda m: "const ARCHIVE = " + json.dumps(_arch) + ";\n", HTML, count=1)
@@ -100,7 +100,7 @@ with sync_playwright() as p:
 
     # recipe round-trip
     rec = pg.inner_text("#recipe"); prompt = ev(pg, "promptText()")
-    check("recipe records version, platform and separator", rec.startswith("v1.4 |") and "| seaart | break" in rec, rec)
+    check("recipe records version, platform and separator", rec.startswith("v1.5 |") and "| seaart | break" in rec, rec)
     pg.click("#resetBtn")
     pg.fill("#recipeIn", rec); pg.click("#loadBtn")
     check("pasting the recipe restores the exact prompt", ev(pg, "promptText()") == prompt)
@@ -148,9 +148,9 @@ with sync_playwright() as p:
                         ("v1.3,v1.2,AGE2", "1.2"), ("v1.3·v1.2 AGE2", "1.2"), ("AGE2·v8.0", "8.0")]:
         unchanged, err = attempt(txt)
         check(f"version after any divider is checked: {txt!r}", unchanged and needle in err, err)
-    unchanged, err = attempt("v1.4,AGE2")
+    unchanged, err = attempt("v1.5,AGE2")
     check("known version after a comma loads", not err and ev(pg, 'S.sel["B3"]') == 1, err)
-    unchanged, err = attempt("v1.4·AGE3·BG2")
+    unchanged, err = attempt("v1.5·AGE3·BG2")
     check("middle dot divider loads", not err and ev(pg, 'S.sel["B3"]') == 2 and ev(pg, 'S.sel["B11"]') == 1, err)
     unchanged, err = attempt("v1.3 | OUTFIT18")
     check("v1.3 recipe can't use outfits added in v1.4", unchanged and "1–17" in err, err)
@@ -158,6 +158,8 @@ with sync_playwright() as p:
     check("current recipe accepts the new outfit 22", not err and ev(pg, 'S.sel["B6"]') == 21, err)
     unchanged, err = attempt("v1.3 | OUTFIT5")
     check("v1.3 recipe still loads normally (same text today)", not err and ev(pg, "S.pin") is None, err)
+    unchanged, err = attempt("v1.4 | HAIR2")
+    check("v1.4 partial recipe completes with the v1.4 base (yoga catalog), not the new one", not err and ev(pg, 'S.sel["B6"]') == 4 and ev(pg, 'S.sel["B1"]') == 2, err)
     unchanged, err = attempt("STYLE3")
     check("partial valid recipe still works and clears errors", not err and ev(pg, 'S.sel["B3.4"]') == 2)
 
@@ -199,10 +201,10 @@ with sync_playwright() as p:
 
     # new base: fresh session and Reset use the yoga catalog defaults, with no notes
     pgC, _ = fresh(b)
-    base = "PHOTO3 GLOW1 AGE1 EXPR4 HAIR6 STYLE9 EYES2 SKIN3 BODY2 OUTFIT5 ACC0 CAM1 ANGLE1 LIGHT1 BG1"
-    check("new session starts with the yoga catalog base", base in pgC.inner_text("#recipe") and not pgC.is_visible("#warnPanel"))
+    base = "PHOTO1 GLOW1 AGE1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6"
+    check("new session starts with the default base", base in pgC.inner_text("#recipe") and not pgC.is_visible("#warnPanel"))
     pgC.click('label[for="g-B6-0"]'); pgC.click("#resetBtn")
-    check("Reset returns to the yoga catalog base", base in pgC.inner_text("#recipe"))
+    check("Reset returns to the default base", base in pgC.inner_text("#recipe"))
 
     # 4. notes by kind; seated + upright and walking + helmet are no longer flagged
     pg.click("#resetBtn")

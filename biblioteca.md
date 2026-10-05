@@ -1,12 +1,12 @@
 # Block Library / Biblioteca de bloques
 
-Library version **v1.3** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
+Library version **v1.4** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
 Each block has a short key and numbered options. A **recipe** records the library version, one option per block, the platform and the separator:
 
-`v1.3 | PHOTO3 GLOW1 AGE1 EXPR4 HAIR6 STYLE9 EYES2 SKIN3 BODY2 OUTFIT5 ACC0 CAM1 ANGLE1 LIGHT1 BG1 | perchance | one`
+`v1.4 | PHOTO3 GLOW1 AGE1 EXPR4 HAIR6 STYLE9 EYES2 SKIN3 BODY2 OUTFIT5 ACC0 CAM1 ANGLE1 LIGHT1 BG1 | perchance | one`
 
-Spanish keys work too: `v1.3 | FOTO3 BRI1 EDAD1 EXP4 CAB6 PEI9 OJO2 PIEL3 CUE2 VES5 ACC0 CAM1 ANG1 LUZ1 FON1 | perchance | one`
+Spanish keys work too: `v1.4 | FOTO3 BRI1 EDAD1 EXP4 CAB6 PEI9 OJO2 PIEL3 CUE2 VES5 ACC0 CAM1 ANG1 LUZ1 FON1 | perchance | one`
 
 New options are always added at the end of a block and existing numbers never change, so old recipes keep working.
 
@@ -117,6 +117,11 @@ New options are always added at the end of a block and existing numbers never ch
 | 15 | Forest elf | Elfa del bosque | original forest elf costume, long moss-green layered dress with leaf embroidery, hooded cape, elegant pointed ears, wooden bow |
 | 16 | Race driver | Piloto de carreras | racing driver suit, red and white fireproof jumpsuit with sponsor-free patches, helmet held at the hip |
 | 17 | Dominican carnival | Carnaval dominicano | Dominican carnival Diablo Cojuelo costume, vibrant full-coverage satin suit covered in mirrors, bells and ribbons, ornate horned mask held in her hand |
+| 18 | Brazil baiana | Baiana de Brasil | traditional Bahian samba-school baiana costume, wide hoop skirt with lace layers, embroidered blouse, colorful head wrap, bead necklaces |
+| 19 | Barranquilla cumbia | Cumbia de Barranquilla | Barranquilla carnival cumbia dancer outfit, long red, yellow and blue pollera skirt with ruffles, off-shoulder ruffled blouse, flower crown |
+| 20 | Oruro morenada | Morenada de Oruro | Oruro carnival morenada dancer costume, embroidered layered pollera skirt, sequined shawl, bowler hat |
+| 21 | Puno Candelaria | Candelaria de Puno | Candelaria festival dancer outfit from Puno, multiple bright layered polleras, embroidered jacket, bowler hat, woven shawl |
+| 22 | Venice carnival | Carnaval de Venecia | Venetian carnival gown, brocade bodice with long full skirt, ornate Colombina half-mask, feathered headpiece |
 
 ## B6.1 · ACC / ACC — Accessories / Accesorios
 | # | EN | ES | Prompt text |

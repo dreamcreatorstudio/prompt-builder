@@ -91,7 +91,8 @@ def page(head_close, archive):
     <div style="display:grid;gap:6px;min-width:0;flex:1">
       <h1 data-i="title">{en["title"]}</h1>
       <p class="lede" data-i="lede" data-html>{en["lede"]}</p>
-      <p class="small disclaimer" data-i="disclaimer">{en["disclaimer"]}</p>
+      <div class="small disclaimer"><b data-i="aboutTitle">{en["aboutTitle"]}</b> — <span data-i="disclaimer">{en["disclaimer"]}</span></div>
+      <p class="small help" data-i="help" data-html>{en["help"]}</p>
     </div>
     <div class="lang" role="group" aria-label="Language">
       <button id="lang-en" aria-pressed="true">EN</button><button id="lang-es" aria-pressed="false">ES</button>
@@ -121,6 +122,7 @@ def page(head_close, archive):
           <h2>Prompt</h2>
           <span style="margin-left:auto"></span>
           <button class="btn primary" id="copyPrompt" data-i="copyPrompt">{en["copyPrompt"]}</button>
+          <button class="btn" id="copyBlocks" data-i="copyBlocks">{en["copyBlocks"]}</button>
         </div>
         <div class="row">
           <label class="small" for="sep" data-i="sepLabel">{en["sepLabel"]}</label>
@@ -129,7 +131,7 @@ def page(head_close, archive):
           </select>
         </div>
         <pre id="prompt" aria-live="polite">{H.escape(default_prompt())}</pre>
-        <p class="small" style="margin:0" data-i="labelNote">{en["labelNote"]}</p>
+        <p class="small" style="margin:0" data-i="labelNote" data-html>{en["labelNote"]}</p>
         <div class="row">
           <span class="small" data-i="recipe">{en["recipe"]}</span>
           <span class="code" id="recipe">{H.escape(default_recipe())}</span>
@@ -205,12 +207,14 @@ Build image prompts from **blocks** and copy a ready-to-use prompt. Pick one num
 
 **Use it here:** https://{URL}/
 
-> Experimental project to test and share. Image generators don't always follow a prompt exactly — results vary by platform, model and seed. Use it as a guide, not a guarantee.
+> **About this project** — {T["en"]["disclaimer"]}
 
 ## Features
 - Numbered options per block; hair **color** (`HAIR`) and **hairstyle** (`STYLE`) are separate, and so are **framing** (`CAM`) and **camera angle** (`ANGLE`).
 - Formatting and suggested settings for **Perchance AI** (default), **Venice AI** and **SeaArt**.
-- **Lock** blocks; **Variants** compares the other options of one block (page through all of them).
+- **Lock** keeps a block's choice in the tool (it doesn't make the generator keep the same face or body); **Variants** compares the other options of one block (page through all of them).
+- **Copy for generating** (clean prompt) or **Copy with blocks** (keeps `[B#]` labels, for saving or asking for changes).
+- To compare fairly, keep the same model, format and settings, and the same seed when available. Recipes are starting points; "tested" is reserved for combinations with recorded results and the platform/model used.
 - **Recipes** record library version, options, platform and separator:
   `{default_recipe()}`
 - Paste a recipe to load it. Invalid recipes are rejected as a whole with a list of errors; partial recipes are fine.

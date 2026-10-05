@@ -77,6 +77,11 @@ function join(ps, sep, html, v = ver()) {
 }
 const textFor = (v, sel, plat, sep) => join(parts(sel, plat, v), sep, false, v);
 const promptText = (sel = curSel()) => textFor(ver(), sel, S.plat, S.sep);
+// Same prompt, with a [B#] label before every block (for saving or asking for changes).
+function blocksText() {
+  const SP = ARCHIVE[ver()].separators[S.sep] || SEPARATORS[S.sep];
+  return parts(curSel(), S.plat).map(p => `[${p.id}] ${p.text}`).join(SP.joiner);
+}
 
 // ---------- recipe ----------
 // Format: v1.2 | PHOTO2 GLOW2 ... BG1 | perchance | one   (Spanish keys accepted; partial recipes allowed)
@@ -280,6 +285,7 @@ $("#lang-es").addEventListener("click", () => setLang("es"));
 $("#plat").addEventListener("change", e => { S.plat = e.target.value; S.sep = PLATFORMS[S.plat].sep; changed(); });
 $("#sep").addEventListener("change", e => { S.sep = e.target.value; changed(); });
 $("#copyPrompt").addEventListener("click", () => copy(promptText(), L().copied));
+$("#copyBlocks").addEventListener("click", () => copy(blocksText(), L().blocksCopied));
 $("#copyRecipe").addEventListener("click", () => copy(recipe(), L().recipeCopied));
 $("#copyNeg").addEventListener("click", () => copy(NEG, L().negCopied));
 $("#loadBtn").addEventListener("click", loadRecipe);

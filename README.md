@@ -4,12 +4,14 @@ Build image prompts from **blocks** and copy a ready-to-use prompt. Pick one num
 
 **Use it here:** https://dreamcreatorstudio.github.io/prompt-builder/
 
-> Experimental project to test and share. Image generators don't always follow a prompt exactly — results vary by platform, model and seed. Use it as a guide, not a guarantee.
+> **About this project** — An experimental tool for learning and creating image prompts. Explore combinations, change one block at a time, and discover what works for you. Results vary by generator, model and settings; prompts are a starting point, not a guarantee.
 
 ## Features
 - Numbered options per block; hair **color** (`HAIR`) and **hairstyle** (`STYLE`) are separate, and so are **framing** (`CAM`) and **camera angle** (`ANGLE`).
 - Formatting and suggested settings for **Perchance AI** (default), **Venice AI** and **SeaArt**.
-- **Lock** blocks; **Variants** compares the other options of one block (page through all of them).
+- **Lock** keeps a block's choice in the tool (it doesn't make the generator keep the same face or body); **Variants** compares the other options of one block (page through all of them).
+- **Copy for generating** (clean prompt) or **Copy with blocks** (keeps `[B#]` labels, for saving or asking for changes).
+- To compare fairly, keep the same model, format and settings, and the same seed when available. Recipes are starting points; "tested" is reserved for combinations with recorded results and the platform/model used.
 - **Recipes** record library version, options, platform and separator:
   `v1.3 | PHOTO3 GLOW1 AGE1 EXPR4 HAIR6 STYLE9 EYES2 SKIN3 BODY2 OUTFIT5 ACC0 CAM1 ANGLE1 LIGHT1 BG1 | perchance | one`
 - Paste a recipe to load it. Invalid recipes are rejected as a whole with a list of errors; partial recipes are fine.

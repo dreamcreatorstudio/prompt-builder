@@ -299,7 +299,7 @@ $("#copyNeg").addEventListener("click", () => copy(NEG, L().negCopied));
 $("#loadBtn").addEventListener("click", loadRecipe);
 $("#recipeIn").addEventListener("keydown", e => { if (e.key === "Enter") loadRecipe(); });
 $("#recipeIn").addEventListener("input", () => showErrors([]));
-$("#resetBtn").addEventListener("click", () => { S.sel = { ...DEFAULT }; S.locked = {}; S.pin = null; S.pinSel = null; S.notice = null; S.plat = DEFAULT_PLATFORM; S.sep = PLATFORMS[DEFAULT_PLATFORM].sep; closeVariants(); showErrors([]); changed(); });
+$("#resetBtn").addEventListener("click", () => { S.sel = { ...DEFAULT }; S.locked = {}; S.pin = null; S.pinSel = null; S.notice = null; S.plat = DEFAULT_PLATFORM; S.sep = PLATFORMS[DEFAULT_PLATFORM].sep; closeVariants(); showErrors([]); changed(); toast(L().resetDone); });
 $("#closeVar").addEventListener("click", closeVariants);
 $("#varPrev").addEventListener("click", () => { VAR.offset = Math.max(0, VAR.offset - VAR_PAGE); renderVariants(); });
 $("#varNext").addEventListener("click", () => { VAR.offset += VAR_PAGE; renderVariants(); });

@@ -58,6 +58,8 @@ footer a{color:var(--accent)}
 .btn:disabled{opacity:.45;cursor:not-allowed}
 .warn{border-color:var(--h2)}
 .warn h2{color:var(--h2)}
+.intro{display:grid;gap:6px;min-width:0;flex:1 1 320px}
+.topbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .help{margin:2px 0 0;max-width:68ch;color:var(--muted)}
 .notice{border-color:var(--accent)}
 .notice .row{gap:8px}

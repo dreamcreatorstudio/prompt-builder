@@ -88,14 +88,17 @@ def page(head_close, archive):
 {head_close}
 <div class="wrap">
   <header class="top">
-    <div style="display:grid;gap:6px;min-width:0;flex:1">
+    <div class="intro">
       <h1 data-i="title">{en["title"]}</h1>
       <p class="lede" data-i="lede" data-html>{en["lede"]}</p>
       <div class="small disclaimer"><b data-i="aboutTitle">{en["aboutTitle"]}</b> — <span data-i="disclaimer">{en["disclaimer"]}</span></div>
       <p class="small help" data-i="help" data-html>{en["help"]}</p>
     </div>
-    <div class="lang" role="group" aria-label="Language">
-      <button id="lang-en" aria-pressed="true">EN</button><button id="lang-es" aria-pressed="false">ES</button>
+    <div class="topbar">
+      <button class="btn" id="resetBtn" data-i="reset" title="">{en["reset"]}</button>
+      <div class="lang" role="group" aria-label="Language">
+        <button id="lang-en" aria-pressed="true">EN</button><button id="lang-es" aria-pressed="false">ES</button>
+      </div>
     </div>
   </header>
 
@@ -141,7 +144,6 @@ def page(head_close, archive):
           <label class="small" for="recipeIn" data-i="loadLabel">{en["loadLabel"]}</label>
           <input id="recipeIn" class="input" type="text" spellcheck="false" autocomplete="off" placeholder="HAIR2 STYLE5 BG3">
           <button class="btn" id="loadBtn" data-i="load">{en["load"]}</button>
-          <button class="btn" id="resetBtn" data-i="reset">{en["reset"]}</button>
         </div>
         <div id="loadErr" hidden></div>
         <div class="toast" id="toast" role="status"></div>

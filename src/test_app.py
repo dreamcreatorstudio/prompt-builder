@@ -205,6 +205,9 @@ with sync_playwright() as p:
     check("new session starts with the default base", base in pgC.inner_text("#recipe") and not pgC.is_visible("#warnPanel"))
     pgC.click('label[for="g-B6-0"]'); pgC.click("#resetBtn")
     check("Reset returns to the default base", base in pgC.inner_text("#recipe"))
+    check("Reset button is in the header, next to EN/ES", pgC.locator("header #resetBtn").count() == 1)
+    pgC.click('[data-lock="B3"]'); pgC.click("#resetBtn")
+    check("Reset also clears locks", pgC.evaluate("Object.keys(S.locked).length") == 0)
 
     # 4. notes by kind; seated + upright and walking + helmet are no longer flagged
     pg.click("#resetBtn")

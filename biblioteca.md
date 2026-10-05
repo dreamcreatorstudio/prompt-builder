@@ -1,12 +1,12 @@
 # Block Library / Biblioteca de bloques
 
-Library version **v1.6** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
+Library version **v1.7** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
 Each block has a short key and numbered options. A **recipe** records the library version, one option per block, the platform and the separator:
 
-`v1.6 | PHOTO1 GLOW1 AGE1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
+`v1.7 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
 
-Spanish keys work too: `v1.6 | FOTO1 BRI1 EDAD1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
+Spanish keys work too: `v1.7 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
 
 New options are always added at the end of a block and existing numbers never change, so old recipes keep working.
 
@@ -33,6 +33,24 @@ New options are always added at the end of a block and existing numbers never ch
 | 4 | 40 | 40 años | a 40-year-old woman, mature adult features |
 | 5 | 45 | 45 años | a 45-year-old woman, graceful mature features |
 | 6 | 50 | 50 años | a 50-year-old woman, graceful mature features, subtle laugh lines |
+
+## B3.5 · ETHN / ETN — Heritage / Origen
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 0 | Unspecified | Sin especificar | (none) |
+| 1 | Slavic | Eslava | Slavic heritage |
+| 2 | Nordic | Nórdica | Nordic Scandinavian heritage |
+| 3 | Russian | Rusa | Russian heritage |
+| 4 | Latina | Latina | Latina heritage |
+| 5 | Mediterranean | Mediterránea | Mediterranean heritage |
+| 6 | Celtic | Celta | Celtic Irish heritage |
+| 7 | Afro-Caribbean | Afrocaribeña | Afro-Caribbean heritage |
+| 8 | African | Africana | African heritage |
+| 9 | Middle Eastern | Medio Oriente | Middle Eastern heritage |
+| 10 | South Asian | Sur de Asia | South Asian heritage |
+| 11 | East Asian | Asia oriental | East Asian heritage |
+| 12 | Southeast Asian | Sudeste asiático | Southeast Asian heritage |
+| 13 | Mixed | Mixta | mixed heritage |
 
 ## B3.3 · EXPR / EXP — Expression / Expresión
 | # | EN | ES | Prompt text |

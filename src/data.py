@@ -73,7 +73,12 @@ BLOCKS = [
   ("Steampunk","Steampunk","steampunk explorer outfit, brown leather corset vest over a cream blouse, brass goggles on the hat, long skirt with buckles, gloves"),
   ("Forest elf","Elfa del bosque","original forest elf costume, long moss-green layered dress with leaf embroidery, hooded cape, elegant pointed ears, wooden bow"),
   ("Race driver","Piloto de carreras","racing driver suit, red and white fireproof jumpsuit with sponsor-free patches, helmet held at the hip"),
-  ("Dominican carnival","Carnaval dominicano","Dominican carnival Diablo Cojuelo costume, vibrant full-coverage satin suit covered in mirrors, bells and ribbons, ornate horned mask held in her hand")]),
+  ("Dominican carnival","Carnaval dominicano","Dominican carnival Diablo Cojuelo costume, vibrant full-coverage satin suit covered in mirrors, bells and ribbons, ornate horned mask held in her hand"),
+  ("Brazil baiana","Baiana de Brasil","traditional Bahian samba-school baiana costume, wide hoop skirt with lace layers, embroidered blouse, colorful head wrap, bead necklaces"),
+  ("Barranquilla cumbia","Cumbia de Barranquilla","Barranquilla carnival cumbia dancer outfit, long red, yellow and blue pollera skirt with ruffles, off-shoulder ruffled blouse, flower crown"),
+  ("Oruro morenada","Morenada de Oruro","Oruro carnival morenada dancer costume, embroidered layered pollera skirt, sequined shawl, bowler hat"),
+  ("Puno Candelaria","Candelaria de Puno","Candelaria festival dancer outfit from Puno, multiple bright layered polleras, embroidered jacket, bowler hat, woven shawl"),
+  ("Venice carnival","Carnaval de Venecia","Venetian carnival gown, brocade bodice with long full skirt, ornate Colombina half-mask, feathered headpiece")]),
  dict(id="B6.1", key=("ACC","ACC"), name=("Accessories","Accesorios"), hue="--h6", zero=True, opts=[
   ("None","Ninguno",""),("Emerald necklace","Collar esmeralda","emerald pendant necklace on a fine gold chain"),("Gold hoops","Aros dorados","small gold hoop earrings"),("Sports watch","Reloj deportivo","minimalist sports watch"),("Cap","Gorra","beige baseball cap")]),
  dict(id="B7", key=("CAM","CAM"), name=("Framing & pose","Encuadre y pose"), hue="--h7", opts=[
@@ -112,7 +117,7 @@ NEG = "cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extr
 DEFAULT = {"B1":2,"B2":0,"B3":0,"B3.3":3,"B3.1":5,"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":4,"B6.1":0,"B7":0,"B7.1":0,"B8":0,"B11":0}  # yoga catalog base
 
 # Library version: bump when any prompt text changes, so recipes record which texts they used.
-LIB_VERSION = "1.3"   # 1.3: new default base (yoga catalog); texts unchanged from 1.2
+LIB_VERSION = "1.4"   # 1.4: outfits 18–22 (carnival traditions); 1.3: yoga catalog base
 
 PLATFORMS = {  # separator default + transforms applied to the prompt text
     "venice":    {"label": "Venice AI",    "sep": "nl"},

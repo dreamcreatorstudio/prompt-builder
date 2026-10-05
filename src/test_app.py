@@ -6,7 +6,7 @@ from playwright.sync_api import sync_playwright
 HTML = (Path(__file__).resolve().parent.parent / "index.html").read_text()
 import json, re
 _arch = json.loads(re.search(r"const ARCHIVE = (\{.*?\});\n", HTML).group(1))
-_old = json.loads(json.dumps(_arch["1.3"])); _old["blocks"][[x["id"] for x in _old["blocks"]].index("B3.1")]["texts"][0] = "OLD honey hair"
+_old = json.loads(json.dumps(_arch["1.4"])); _old["blocks"][[x["id"] for x in _old["blocks"]].index("B3.1")]["texts"][0] = "OLD honey hair"
 _old["separators"]["one"]["joiner"] = " ; "   # frozen formatting rule that differs from today
 _arch["1.1"] = _old
 OLD_HTML = re.sub(r"const ARCHIVE = \{.*?\};\n", lambda m: "const ARCHIVE = " + json.dumps(_arch) + ";\n", HTML, count=1)
@@ -77,9 +77,9 @@ with sync_playwright() as p:
     check("PHOTO shows 2 alternatives, not 3", pg.locator("#variants .variant").count() == 2 and "of 2" in t, t)
     check("no paging when everything fits", not pg.is_visible("#varNav"))
     pg.click('[data-var="B6"]')
-    check("OUTFIT shows 16 alternatives", "of 16" in pg.inner_text("#varTitle"))
+    check("OUTFIT shows 21 alternatives", "of 21" in pg.inner_text("#varTitle"))
     pg.click("#varNext"); pg.click("#varNext")
-    check("paging reaches later options", "7–9 of 16" in pg.inner_text("#varTitle"), pg.inner_text("#varTitle"))
+    check("paging reaches later options", "7–9 of 21" in pg.inner_text("#varTitle"), pg.inner_text("#varTitle"))
     check("Variants button shows real count", "(2)" in pg.inner_text('[data-var="B1"]'))
 
     # EN/ES must not alter the prompt
@@ -100,7 +100,7 @@ with sync_playwright() as p:
 
     # recipe round-trip
     rec = pg.inner_text("#recipe"); prompt = ev(pg, "promptText()")
-    check("recipe records version, platform and separator", rec.startswith("v1.3 |") and "| seaart | break" in rec, rec)
+    check("recipe records version, platform and separator", rec.startswith("v1.4 |") and "| seaart | break" in rec, rec)
     pg.click("#resetBtn")
     pg.fill("#recipeIn", rec); pg.click("#loadBtn")
     check("pasting the recipe restores the exact prompt", ev(pg, "promptText()") == prompt)
@@ -148,10 +148,16 @@ with sync_playwright() as p:
                         ("v1.3,v1.2,AGE2", "1.2"), ("v1.3·v1.2 AGE2", "1.2"), ("AGE2·v8.0", "8.0")]:
         unchanged, err = attempt(txt)
         check(f"version after any divider is checked: {txt!r}", unchanged and needle in err, err)
-    unchanged, err = attempt("v1.3,AGE2")
+    unchanged, err = attempt("v1.4,AGE2")
     check("known version after a comma loads", not err and ev(pg, 'S.sel["B3"]') == 1, err)
-    unchanged, err = attempt("v1.3·AGE3·BG2")
+    unchanged, err = attempt("v1.4·AGE3·BG2")
     check("middle dot divider loads", not err and ev(pg, 'S.sel["B3"]') == 2 and ev(pg, 'S.sel["B11"]') == 1, err)
+    unchanged, err = attempt("v1.3 | OUTFIT18")
+    check("v1.3 recipe can't use outfits added in v1.4", unchanged and "1–17" in err, err)
+    unchanged, err = attempt("OUTFIT22")
+    check("current recipe accepts the new outfit 22", not err and ev(pg, 'S.sel["B6"]') == 21, err)
+    unchanged, err = attempt("v1.3 | OUTFIT5")
+    check("v1.3 recipe still loads normally (same text today)", not err and ev(pg, "S.pin") is None, err)
     unchanged, err = attempt("STYLE3")
     check("partial valid recipe still works and clears errors", not err and ev(pg, 'S.sel["B3.4"]') == 2)
 
@@ -223,7 +229,7 @@ with sync_playwright() as p:
     # copy options of one block
     txt = ev(pg, 'optionsText("B6")')
     check("Copy options: header with ID, EN/ES keys and names", txt.startswith("B6 · OUTFIT / VES — Outfit / Vestuario\n\n1. Denim + white crop / Denim + crop blanco"), txt[:80])
-    check("Copy options: all 17 outfits, last is Dominican carnival", txt.rstrip().endswith("17. Dominican carnival / Carnaval dominicano") and txt.count("\n") == 18)
+    check("Copy options: all 22 outfits, last is Venice carnival", "\n17. Dominican carnival / Carnaval dominicano\n" in txt and txt.rstrip().endswith("22. Venice carnival / Carnaval de Venecia") and txt.count("\n") == 23)
     check("Copy options: ACC keeps 0", "\n0. None / Ninguno" in ev(pg, 'optionsText("B6.1")'))
     check("Copy options: no button labels inside", "Lock" not in txt and "Variants" not in txt)
     before = ev(pg, "JSON.stringify([S.sel, S.locked])")

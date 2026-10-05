@@ -29,7 +29,9 @@ BLOCKS = [
   ("South Asian","Sur de Asia","South Asian heritage"),
   ("East Asian","Asia oriental","East Asian heritage"),
   ("Southeast Asian","Sudeste asiático","Southeast Asian heritage"),
-  ("Mixed","Mixta","mixed heritage")]),
+  ("Mixed","Mixta","mixed heritage"),
+  ("Greek","Griega","Greek heritage"),
+  ("Native American","Indígena norteamericana","Native American First Nations heritage")]),
  dict(id="B3.3", key=("EXPR","EXP"), name=("Expression","Expresión"), hue="--h3", opts=[
   ("Confident","Segura","confident relaxed expression, soft natural smile"),
   ("Cheerful","Alegre","bright friendly smile"),
@@ -44,7 +46,14 @@ BLOCKS = [
   ("Chestnut","Castaño","chestnut-brown hair"),
   ("Ash brown","Castaño ceniza","ash-brown hair"),
   ("Black","Negro","jet-black hair"),
-  ("Silver grey","Gris plata","silver-grey hair")]),
+  ("Silver grey","Gris plata","silver-grey hair"),
+  ("Pastel blue","Azul pastel","pastel blue dyed hair"),
+  ("Electric blue","Azul eléctrico","vivid electric-blue dyed hair"),
+  ("Pink","Rosa","soft pink dyed hair"),
+  ("Lavender","Lavanda","lavender purple dyed hair"),
+  ("Mint green","Verde menta","mint green dyed hair"),
+  ("Blue-violet ombré","Degradado azul-violeta","blue to violet ombré dyed hair"),
+  ("Rainbow","Multicolor arcoíris","rainbow multicolor dyed hair in pastel streaks")]),
  dict(id="B3.4", key=("STYLE","PEI"), name=("Hairstyle","Peinado"), hue="--h3", opts=[
   ("Sleek straight","Liso perfecto","sleek straight hair"),
   ("Straight","Liso natural","straight hair"),
@@ -93,7 +102,12 @@ BLOCKS = [
   ("Barranquilla cumbia","Cumbia de Barranquilla","Barranquilla carnival cumbia dancer outfit, long red, yellow and blue pollera skirt with ruffles, off-shoulder ruffled blouse, flower crown"),
   ("Oruro morenada","Morenada de Oruro","Oruro carnival morenada dancer costume, embroidered layered pollera skirt, sequined shawl, bowler hat"),
   ("Puno Candelaria","Candelaria de Puno","Candelaria festival dancer outfit from Puno, multiple bright layered polleras, embroidered jacket, bowler hat, woven shawl"),
-  ("Venice carnival","Carnaval de Venecia","Venetian carnival gown, brocade bodice with long full skirt, ornate Colombina half-mask, feathered headpiece")]),
+  ("Venice carnival","Carnaval de Venecia","Venetian carnival gown, brocade bodice with long full skirt, ornate Colombina half-mask, feathered headpiece"),
+  ("Retro soda shop","Cafetería retro","1950s retro soda-shop outfit, mint and cream letterman cardigan, mustard plaid pleated skirt, white ankle socks, penny loafers"),
+  ("70s mystery sleuth","Detective años 70","1970s amateur detective outfit, mustard corduroy jacket, teal turtleneck, brown bell-bottom trousers, platform boots, flashlight in hand"),
+  ("Farm-town hero","Heroína de pueblo","small-town farm outfit, forest green flannel shirt, worn denim jacket, straight jeans, leather work boots"),
+  ("Emerald heroine (cape)","Heroína esmeralda (capa)","original superhero costume, full-coverage emerald and silver bodysuit, short silver cape, stylized leaf emblem on the chest, knee-high silver boots"),
+  ("Emerald heroine (no cape)","Heroína esmeralda (sin capa)","original superhero costume, full-coverage emerald and silver bodysuit with sleek armored panels, stylized leaf emblem on the chest, silver gauntlets, knee-high silver boots, no cape")]),
  dict(id="B6.1", key=("ACC","ACC"), name=("Accessories","Accesorios"), hue="--h6", zero=True, multi=True, opts=[
   ("None","Ninguno",""),("Emerald necklace","Collar esmeralda","emerald pendant necklace on a fine gold chain"),("Gold hoops","Aros dorados","small gold hoop earrings"),("Sports watch","Reloj deportivo","minimalist sports watch"),("Cap","Gorra","beige baseball cap"),
   ("Sunglasses","Gafas de sol","oversized tortoiseshell sunglasses"),
@@ -139,7 +153,7 @@ NEG = "cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extr
 DEFAULT = {"B1":0,"B2":0,"B3":0,"B3.5":1,"B3.3":1,"B3.1":0,"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":21,"B6.1":[],"B7":0,"B7.1":0,"B8":0,"B11":5}  # Venice carnival in the city (chosen by Alex)
 
 # Library version: bump when any prompt text changes, so recipes record which texts they used.
-LIB_VERSION = "1.7"   # 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
+LIB_VERSION = "1.8"   # 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
 
 PLATFORMS = {  # separator default + transforms applied to the prompt text
     "venice":    {"label": "Venice AI",    "sep": "nl"},

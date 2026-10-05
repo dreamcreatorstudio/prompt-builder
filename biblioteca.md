@@ -1,12 +1,12 @@
 # Block Library / Biblioteca de bloques
 
-Library version **v1.7** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
+Library version **v1.8** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
 Each block has a short key and numbered options. A **recipe** records the library version, one option per block, the platform and the separator:
 
-`v1.7 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
+`v1.8 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
 
-Spanish keys work too: `v1.7 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
+Spanish keys work too: `v1.8 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
 
 New options are always added at the end of a block and existing numbers never change, so old recipes keep working.
 
@@ -51,6 +51,8 @@ New options are always added at the end of a block and existing numbers never ch
 | 11 | East Asian | Asia oriental | East Asian heritage |
 | 12 | Southeast Asian | Sudeste asiático | Southeast Asian heritage |
 | 13 | Mixed | Mixta | mixed heritage |
+| 14 | Greek | Griega | Greek heritage |
+| 15 | Native American | Indígena norteamericana | Native American First Nations heritage |
 
 ## B3.3 · EXPR / EXP — Expression / Expresión
 | # | EN | ES | Prompt text |
@@ -72,6 +74,13 @@ New options are always added at the end of a block and existing numbers never ch
 | 6 | Ash brown | Castaño ceniza | ash-brown hair |
 | 7 | Black | Negro | jet-black hair |
 | 8 | Silver grey | Gris plata | silver-grey hair |
+| 9 | Pastel blue | Azul pastel | pastel blue dyed hair |
+| 10 | Electric blue | Azul eléctrico | vivid electric-blue dyed hair |
+| 11 | Pink | Rosa | soft pink dyed hair |
+| 12 | Lavender | Lavanda | lavender purple dyed hair |
+| 13 | Mint green | Verde menta | mint green dyed hair |
+| 14 | Blue-violet ombré | Degradado azul-violeta | blue to violet ombré dyed hair |
+| 15 | Rainbow | Multicolor arcoíris | rainbow multicolor dyed hair in pastel streaks |
 
 ## B3.4 · STYLE / PEI — Hairstyle / Peinado
 | # | EN | ES | Prompt text |
@@ -140,6 +149,11 @@ New options are always added at the end of a block and existing numbers never ch
 | 20 | Oruro morenada | Morenada de Oruro | Oruro carnival morenada dancer costume, embroidered layered pollera skirt, sequined shawl, bowler hat |
 | 21 | Puno Candelaria | Candelaria de Puno | Candelaria festival dancer outfit from Puno, multiple bright layered polleras, embroidered jacket, bowler hat, woven shawl |
 | 22 | Venice carnival | Carnaval de Venecia | Venetian carnival gown, brocade bodice with long full skirt, ornate Colombina half-mask, feathered headpiece |
+| 23 | Retro soda shop | Cafetería retro | 1950s retro soda-shop outfit, mint and cream letterman cardigan, mustard plaid pleated skirt, white ankle socks, penny loafers |
+| 24 | 70s mystery sleuth | Detective años 70 | 1970s amateur detective outfit, mustard corduroy jacket, teal turtleneck, brown bell-bottom trousers, platform boots, flashlight in hand |
+| 25 | Farm-town hero | Heroína de pueblo | small-town farm outfit, forest green flannel shirt, worn denim jacket, straight jeans, leather work boots |
+| 26 | Emerald heroine (cape) | Heroína esmeralda (capa) | original superhero costume, full-coverage emerald and silver bodysuit, short silver cape, stylized leaf emblem on the chest, knee-high silver boots |
+| 27 | Emerald heroine (no cape) | Heroína esmeralda (sin capa) | original superhero costume, full-coverage emerald and silver bodysuit with sleek armored panels, stylized leaf emblem on the chest, silver gauntlets, knee-high silver boots, no cape |
 
 ## B6.1 · ACC / ACC — Accessories / Accesorios (choose several: `ACC1+3`; `ACC0` = none)
 | # | EN | ES | Prompt text |

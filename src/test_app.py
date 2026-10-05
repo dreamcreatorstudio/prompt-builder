@@ -220,6 +220,18 @@ with sync_playwright() as p:
     check("session restores selections, platform, separator and language",
           pg2.evaluate('S.sel["B3.1"]') == 2 and pg2.input_value("#plat") == "venice" and pg2.input_value("#sep") == "tag" and pg2.inner_text("h1") == "Mezclador de Prompts")
 
+    # copy options of one block
+    txt = ev(pg, 'optionsText("B6")')
+    check("Copy options: header with ID, EN/ES keys and names", txt.startswith("B6 · OUTFIT / VES — Outfit / Vestuario\n\n1. Denim + white crop / Denim + crop blanco"), txt[:80])
+    check("Copy options: all 17 outfits, last is Dominican carnival", txt.rstrip().endswith("17. Dominican carnival / Carnaval dominicano") and txt.count("\n") == 18)
+    check("Copy options: ACC keeps 0", "\n0. None / Ninguno" in ev(pg, 'optionsText("B6.1")'))
+    check("Copy options: no button labels inside", "Lock" not in txt and "Variants" not in txt)
+    before = ev(pg, "JSON.stringify([S.sel, S.locked])")
+    pg.click('[data-lock="B6"]'); pg.click('[data-opts="B6"]')
+    check("Copy options works on a locked block", pg.is_enabled('[data-opts="B6"]'))
+    pg.click('[data-lock="B6"]')
+    check("Copy options doesn't change selections or locks", ev(pg, "JSON.stringify([S.sel, S.locked])") == before)
+
     # two copy modes
     check("'Copy with blocks' keeps [B#] labels", ev(pg, "blocksText()").startswith("[B1] ") and "[B11] " in ev(pg, "blocksText()"))
     check("'Copy with blocks' has the same text once labels are removed",

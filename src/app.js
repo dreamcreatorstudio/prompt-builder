@@ -77,6 +77,12 @@ function join(ps, sep, html, v = ver()) {
 }
 const textFor = (v, sel, plat, sep) => join(parts(sel, plat, v), sep, false, v);
 const promptText = (sel = curSel()) => textFor(ver(), sel, S.plat, S.sep);
+// One block's menu, bilingual and numbered as in the tool (read-only: never changes selections or locks).
+function optionsText(id) {
+  const b = BY_ID[id];
+  return `${b.id} · ${b.key[0]} / ${b.key[1]} — ${b.name[0]} / ${b.name[1]}\n\n` +
+    b.opts.map((o, i) => `${num(b, i)}. ${o[0]} / ${o[1]}`).join("\n");
+}
 // Same prompt, with a [B#] label before every block (for saving or asking for changes).
 function blocksText() {
   const SP = ARCHIVE[ver()].separators[S.sep] || SEPARATORS[S.sep];
@@ -195,7 +201,8 @@ function renderBlocks() {
     sec.className = "block"; sec.style.setProperty("--hue", `var(${b.hue})`);
     sec.innerHTML = `<div class="bhead"><span class="bid">${b.id} · ${b.key[li]}</span><span class="bname">${esc(b.name[li])}</span>
       <span class="tools"><button class="btn" data-lock="${b.id}" aria-pressed="${lk}" ${frozen ? "disabled" : ""} title="${L().lockTitle}">${lk ? L().locked : L().lock}</button>
-      <button class="btn" data-var="${b.id}" ${off ? "disabled" : ""} title="${lk ? L().lockedNoVar : L().varTitle}">${L().variants} (${b.opts.length - 1})</button></span></div>
+      <button class="btn" data-var="${b.id}" ${off ? "disabled" : ""} title="${lk ? L().lockedNoVar : L().varTitle}">${L().variants} (${b.opts.length - 1})</button>
+      <button class="btn" data-opts="${b.id}">${L().copyOptions}</button></span></div>
       <div class="opts" role="radiogroup" aria-label="${esc(b.name[li])}">${b.opts.map((o, i) => `<span class="opt"><input type="radio" name="${gid}" id="${gid}-${i}" value="${i}" ${S.sel[b.id] === i && !frozen ? "checked" : ""} ${off ? "disabled" : ""}><label for="${gid}-${i}"><b>${num(b, i)}</b>${esc(o[li])}</label></span>`).join("")}</div>`;
     el.appendChild(sec);
   }
@@ -207,6 +214,7 @@ function renderBlocks() {
     if (S.pin) return; const id = btn.dataset.lock; S.locked[id] = !S.locked[id]; if (!S.locked[id]) delete S.locked[id]; changed();
   }));
   el.querySelectorAll("[data-var]").forEach(btn => btn.addEventListener("click", () => openVariants(btn.dataset.var, 0)));
+  el.querySelectorAll("[data-opts]").forEach(btn => btn.addEventListener("click", () => copy(optionsText(btn.dataset.opts), L().optionsCopied)));
 }
 function renderPlat() {
   const P = L().plats[S.plat];

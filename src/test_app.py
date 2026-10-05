@@ -101,7 +101,7 @@ with sync_playwright() as p:
 
     # recipe round-trip
     rec = pg.inner_text("#recipe"); prompt = ev(pg, "promptText()")
-    check("recipe records version, platform and separator", rec.startswith("v1.6 |") and "| seaart | break" in rec, rec)
+    check("recipe records version, platform and separator", rec.startswith("v1.7 |") and "| seaart | break" in rec, rec)
     pg.click("#resetBtn")
     pg.fill("#recipeIn", rec); pg.click("#loadBtn")
     check("pasting the recipe restores the exact prompt", ev(pg, "promptText()") == prompt)
@@ -219,10 +219,19 @@ with sync_playwright() as p:
 
     # new base: fresh session and Reset use the yoga catalog defaults, with no notes
     pgC, _ = fresh(b)
-    base = "PHOTO1 GLOW1 AGE1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6"
+    base = "PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6"
     check("new session starts with the default base", base in pgC.inner_text("#recipe") and not pgC.is_visible("#warnPanel"))
     pgC.click('label[for="g-B6-0"]'); pgC.click("#resetBtn")
     check("Reset returns to the default base", base in pgC.inner_text("#recipe"))
+    check("default prompt includes Slavic heritage after the age", "a 25-year-old woman, adult facial features, Slavic heritage" in ev(pgC, "promptText()"))
+    pgC.fill("#recipeIn", "v1.7 | ETHN0"); pgC.click("#loadBtn")
+    check("ETHN0 leaves heritage out of the prompt", "heritage" not in ev(pgC, "promptText()") and "adult facial features, " in ev(pgC, "promptText()"))
+    pgC.fill("#recipeIn", "v1.7 | ETHN2"); pgC.click("#loadBtn")
+    check("ETHN2 adds Nordic heritage", "Nordic Scandinavian heritage" in ev(pgC, "promptText()"))
+    pgC.fill("#recipeIn", "v1.7 | ETHN14"); pgC.click("#loadBtn")
+    check("ETHN14 is out of range", pgC.is_visible("#loadErr"))
+    pgC.fill("#recipeIn", "v1.6 | PHOTO1 GLOW1 AGE1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one"); pgC.click("#loadBtn")
+    check("v1.6 recipe loads as current with heritage unspecified (same text)", "ETHN0" in pgC.inner_text("#recipe") and "heritage" not in ev(pgC, "promptText()"))
     check("Reset button is in the header, next to EN/ES", pgC.locator("header #resetBtn").count() == 1)
     pgC.click('[data-lock="B3"]'); pgC.click("#resetBtn")
     check("Reset also clears locks", pgC.evaluate("Object.keys(S.locked).length") == 0)

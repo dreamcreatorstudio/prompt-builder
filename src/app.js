@@ -56,18 +56,24 @@ function restore() {
   } else if (ARCHIVE[s.v]) {                        // older known version
     const full = { ...ARCHIVE[s.v].defaults, ...validSel(s.v, s.sel) };
     if (sameAsCurrent(s.v, full)) {                 // identical prompt today: keep working normally
-      S.sel = { ...S.sel, ...normFor(LIB_VERSION, full) };
+      S.sel = { ...S.sel, ...fillNew(normFor(LIB_VERSION, full)) };
       for (const id in (s.locked || {})) if (BY_ID[id] && s.locked[id]) S.locked[id] = true;
     } else { S.pin = s.v; S.pinSel = full; S.notice = { key: "sessionOld", v: s.v }; }   // reproduce exactly, ask before migrating
   } else {                                          // unknown version: don't reinterpret its numbers
     S.notice = { key: "sessionUnknown", v: s.v || "?" };
   }
 }
+// Blocks that didn't exist in an older version start empty (option 0) so the old prompt text is kept.
+function fillNew(sel) {
+  const out = { ...sel };
+  for (const b of ARCHIVE[LIB_VERSION].blocks) if (!(b.id in out)) out[b.id] = b.zero ? (b.multi ? [] : 0) : clone(DEFAULT[b.id]);
+  return out;
+}
 // An older-version selection can be used as-is when every option still exists and the prompt text is identical.
 function sameAsCurrent(v, sel) {
   const cur = normFor(LIB_VERSION, sel);
   for (const id in sel) if (!BY_ID[id] || !(id in cur) || !okIn(ARCHIVE[LIB_VERSION].blocks.find(b => b.id === id), cur[id])) return false;
-  const now = { ...S.sel, ...cur };
+  const now = { ...S.sel, ...fillNew(cur) };
   return Object.keys(sel).length === ARCHIVE[v].blocks.length &&
     Object.keys(ARCHIVE[v].platforms).every(pl => Object.keys(ARCHIVE[v].separators).every(sp =>
       pl in PLATFORMS && sp in SEPARATORS && textFor(v, sel, pl, sp) === textFor(LIB_VERSION, now, pl, sp)));
@@ -172,7 +178,7 @@ function loadRecipe() {
   if (r.v !== LIB_VERSION) {
     // Older version: complete with THAT version's defaults; use it as current only if the text is identical.
     const full = { ...ARCHIVE[r.v].defaults, ...r.sel };
-    const asNow = normFor(LIB_VERSION, full);
+    const asNow = fillNew(normFor(LIB_VERSION, full));
     const lockClash = Object.keys(asNow).some(id => S.locked[id] && !same(asNow[id], S.sel[id]));
     if (!lockClash && sameAsCurrent(r.v, full)) { S.pin = null; S.pinSel = null; S.sel = { ...S.sel, ...asNow }; changed(); return toast(L().loaded); }
     S.pin = r.v; S.pinSel = full; S.notice = { key: "pinBanner", v: r.v };
@@ -186,8 +192,8 @@ function loadRecipe() {
 }
 function migrate() {                                // same option numbers, current texts — may change the prompt
   const from = S.pin, missing = [];
-  const asNow = normFor(LIB_VERSION, S.pinSel);
-  for (const id in S.pinSel) {
+  const asNow = fillNew(normFor(LIB_VERSION, S.pinSel));
+  for (const id of new Set([...Object.keys(S.pinSel), ...Object.keys(asNow)])) {
     const b = ARCHIVE[LIB_VERSION].blocks.find(x => x.id === id);
     if (!b || !(id in asNow) || !okIn(b, asNow[id])) { missing.push(id); continue; }
     if (!S.locked[id]) S.sel[id] = asNow[id];

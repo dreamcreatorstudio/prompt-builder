@@ -15,6 +15,21 @@ BLOCKS = [
   ("40","40 años","a 40-year-old woman, mature adult features"),
   ("45","45 años","a 45-year-old woman, graceful mature features"),
   ("50","50 años","a 50-year-old woman, graceful mature features, subtle laugh lines")]),
+ dict(id="B3.5", key=("ETHN","ETN"), name=("Heritage","Origen"), hue="--h3", zero=True, opts=[
+  ("Unspecified","Sin especificar",""),
+  ("Slavic","Eslava","Slavic heritage"),
+  ("Nordic","Nórdica","Nordic Scandinavian heritage"),
+  ("Russian","Rusa","Russian heritage"),
+  ("Latina","Latina","Latina heritage"),
+  ("Mediterranean","Mediterránea","Mediterranean heritage"),
+  ("Celtic","Celta","Celtic Irish heritage"),
+  ("Afro-Caribbean","Afrocaribeña","Afro-Caribbean heritage"),
+  ("African","Africana","African heritage"),
+  ("Middle Eastern","Medio Oriente","Middle Eastern heritage"),
+  ("South Asian","Sur de Asia","South Asian heritage"),
+  ("East Asian","Asia oriental","East Asian heritage"),
+  ("Southeast Asian","Sudeste asiático","Southeast Asian heritage"),
+  ("Mixed","Mixta","mixed heritage")]),
  dict(id="B3.3", key=("EXPR","EXP"), name=("Expression","Expresión"), hue="--h3", opts=[
   ("Confident","Segura","confident relaxed expression, soft natural smile"),
   ("Cheerful","Alegre","bright friendly smile"),
@@ -121,10 +136,10 @@ BLOCKS = [
   ("City street","Calle urbana","sunny city street, modern storefronts, soft background blur")]),
 ]
 NEG = "cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features"
-DEFAULT = {"B1":0,"B2":0,"B3":0,"B3.3":1,"B3.1":0,"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":21,"B6.1":[],"B7":0,"B7.1":0,"B8":0,"B11":5}  # Venice carnival in the city (chosen by Alex)
+DEFAULT = {"B1":0,"B2":0,"B3":0,"B3.5":1,"B3.3":1,"B3.1":0,"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":21,"B6.1":[],"B7":0,"B7.1":0,"B8":0,"B11":5}  # Venice carnival in the city (chosen by Alex)
 
 # Library version: bump when any prompt text changes, so recipes record which texts they used.
-LIB_VERSION = "1.6"   # 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
+LIB_VERSION = "1.7"   # 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
 
 PLATFORMS = {  # separator default + transforms applied to the prompt text
     "venice":    {"label": "Venice AI",    "sep": "nl"},

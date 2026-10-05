@@ -1,0 +1,354 @@
+{
+ "blocks": [
+  {
+   "id": "B1",
+   "key": [
+    "PHOTO",
+    "FOTO"
+   ],
+   "zero": false,
+   "texts": [
+    "RAW photo, photorealistic, real photograph, Canon EOS R5, 85mm lens, f/2.0, shallow depth of field, natural film grain, sharp focus, 8k uhd",
+    "high-end fashion editorial photograph, medium format camera, 80mm lens, f/4, crisp detail, magazine quality, photorealistic",
+    "clean commercial catalog photograph, 50mm lens, f/8, everything in sharp focus, even exposure, photorealistic"
+   ]
+  },
+  {
+   "id": "B2",
+   "key": [
+    "GLOW",
+    "BRI"
+   ],
+   "zero": false,
+   "texts": [
+    "natural matte skin finish, soft diffuse highlights",
+    "healthy dewy skin glow, subtle natural sheen on cheekbones and shoulders",
+    "light post-workout glow, faint natural sheen of perspiration"
+   ]
+  },
+  {
+   "id": "B3",
+   "key": [
+    "AGE",
+    "EDAD"
+   ],
+   "zero": false,
+   "texts": [
+    "a 25-year-old woman, adult facial features",
+    "a 30-year-old woman, adult facial features",
+    "a 35-year-old woman, mature adult features",
+    "a 40-year-old woman, mature adult features",
+    "a 45-year-old woman, graceful mature features",
+    "a 50-year-old woman, graceful mature features, subtle laugh lines"
+   ]
+  },
+  {
+   "id": "B3.5",
+   "key": [
+    "ETHN",
+    "ETN"
+   ],
+   "zero": true,
+   "texts": [
+    "",
+    "Slavic heritage",
+    "Nordic Scandinavian heritage",
+    "Russian heritage",
+    "Latina heritage",
+    "Mediterranean heritage",
+    "Celtic Irish heritage",
+    "Afro-Caribbean heritage",
+    "African heritage",
+    "Middle Eastern heritage",
+    "South Asian heritage",
+    "East Asian heritage",
+    "Southeast Asian heritage",
+    "mixed heritage"
+   ]
+  },
+  {
+   "id": "B3.3",
+   "key": [
+    "EXPR",
+    "EXP"
+   ],
+   "zero": false,
+   "texts": [
+    "confident relaxed expression, soft natural smile",
+    "bright friendly smile",
+    "calm self-assured gaze",
+    "serene warm expression",
+    "playful laughing expression"
+   ]
+  },
+  {
+   "id": "B3.1",
+   "key": [
+    "HAIR",
+    "CAB"
+   ],
+   "zero": false,
+   "texts": [
+    "honey-blonde hair",
+    "platinum blonde hair",
+    "copper-red hair",
+    "auburn hair",
+    "chestnut-brown hair",
+    "ash-brown hair",
+    "jet-black hair",
+    "silver-grey hair"
+   ]
+  },
+  {
+   "id": "B3.4",
+   "key": [
+    "STYLE",
+    "PEI"
+   ],
+   "zero": false,
+   "texts": [
+    "sleek straight hair",
+    "straight hair",
+    "subtle natural waves",
+    "wavy hair",
+    "loose beach waves",
+    "curly hair",
+    "coily hair, afro hair",
+    "high ponytail",
+    "neat hair bun",
+    "loose messy bun with face-framing strands",
+    "pixie cut",
+    "short bob cut"
+   ]
+  },
+  {
+   "id": "B3.2",
+   "key": [
+    "EYES",
+    "OJO"
+   ],
+   "zero": false,
+   "texts": [
+    "clear blue eyes",
+    "green eyes",
+    "warm brown eyes",
+    "hazel eyes",
+    "grey eyes"
+   ]
+  },
+  {
+   "id": "B4",
+   "key": [
+    "SKIN",
+    "PIEL"
+   ],
+   "zero": false,
+   "texts": [
+    "fair porcelain skin with warm pink undertones, natural skin texture, visible pores",
+    "fair skin with light freckles across the nose and cheeks, natural skin texture",
+    "olive skin tone with golden undertones, natural skin texture",
+    "warm tan brown skin, natural skin texture, subtle color variation",
+    "deep brown skin with rich undertones, natural skin texture"
+   ]
+  },
+  {
+   "id": "B5",
+   "key": [
+    "BODY",
+    "CUE"
+   ],
+   "zero": false,
+   "texts": [
+    "fit athletic adult build, toned shoulders and arms, defined core, strong toned legs",
+    "lean slender adult physique with long toned muscles, graceful upright posture",
+    "lean runner's build, defined legs, athletic adult proportions",
+    "healthy natural adult body, soft curves, relaxed posture"
+   ]
+  },
+  {
+   "id": "B6",
+   "key": [
+    "OUTFIT",
+    "VES"
+   ],
+   "zero": false,
+   "texts": [
+    "white ribbed cotton crop top, high-waisted light-wash denim shorts, white canvas sneakers",
+    "black sports crop top, matching high-waisted biker shorts, running shoes",
+    "cream linen button-up crop top, high-waisted linen shorts, leather sandals",
+    "sage green knit crop cardigan, high-waisted white tailored shorts, minimalist sandals",
+    "dusty rose yoga set, fitted long-sleeve crop top and full-length leggings, barefoot",
+    "original superhero costume, full-coverage silver and teal bodysuit with geometric armor plates, short flowing cape, star emblem on the chest, knee-high boots",
+    "original superhero costume, full-coverage navy bodysuit with gold lightning-bolt piping, high collar, fingerless gloves, utility belt, armored boots",
+    "original fantasy warrior costume, bronze breastplate over a long crimson tunic, leather bracers, ornate belt, sandal boots, round shield on her back",
+    "pirate captain costume, white billowy blouse, burgundy brocade vest, tricorn hat, wide leather belt, tall boots, fitted dark trousers",
+    "modern white astronaut suit with orange accents, mission patches, helmet held under one arm",
+    "samurai-inspired costume, dark lacquered armor pieces over an indigo hakama and kimono, red cord details",
+    "traditional red flamenco dress with white polka dots, ruffled sleeves and tiers, flower in the hair, shawl with fringe",
+    "western cowgirl outfit, suede fringe jacket, plaid shirt, high-waisted jeans, cowboy hat and boots",
+    "steampunk explorer outfit, brown leather corset vest over a cream blouse, brass goggles on the hat, long skirt with buckles, gloves",
+    "original forest elf costume, long moss-green layered dress with leaf embroidery, hooded cape, elegant pointed ears, wooden bow",
+    "racing driver suit, red and white fireproof jumpsuit with sponsor-free patches, helmet held at the hip",
+    "Dominican carnival Diablo Cojuelo costume, vibrant full-coverage satin suit covered in mirrors, bells and ribbons, ornate horned mask held in her hand",
+    "traditional Bahian samba-school baiana costume, wide hoop skirt with lace layers, embroidered blouse, colorful head wrap, bead necklaces",
+    "Barranquilla carnival cumbia dancer outfit, long red, yellow and blue pollera skirt with ruffles, off-shoulder ruffled blouse, flower crown",
+    "Oruro carnival morenada dancer costume, embroidered layered pollera skirt, sequined shawl, bowler hat",
+    "Candelaria festival dancer outfit from Puno, multiple bright layered polleras, embroidered jacket, bowler hat, woven shawl",
+    "Venetian carnival gown, brocade bodice with long full skirt, ornate Colombina half-mask, feathered headpiece"
+   ]
+  },
+  {
+   "id": "B6.1",
+   "key": [
+    "ACC",
+    "ACC"
+   ],
+   "zero": true,
+   "multi": true,
+   "texts": [
+    "",
+    "emerald pendant necklace on a fine gold chain",
+    "small gold hoop earrings",
+    "minimalist sports watch",
+    "beige baseball cap",
+    "oversized tortoiseshell sunglasses",
+    "wide-brim straw hat",
+    "patterned silk scarf",
+    "small pearl stud earrings",
+    "stack of thin gold bracelets",
+    "canvas tote bag on the shoulder",
+    "rolled yoga mat under one arm"
+   ]
+  },
+  {
+   "id": "B7",
+   "key": [
+    "CAM",
+    "CAM"
+   ],
+   "zero": false,
+   "texts": [
+    "full body shot, head to toe framing, standing relaxed, three-quarter turn, looking at camera",
+    "medium shot from the waist up, looking at camera",
+    "close-up portrait, head and shoulders",
+    "full body shot, walking toward camera, natural mid-stride motion",
+    "full body shot, sitting casually on a low wooden stool, relaxed posture"
+   ]
+  },
+  {
+   "id": "B7.1",
+   "key": [
+    "ANGLE",
+    "ANG"
+   ],
+   "zero": false,
+   "texts": [
+    "eye-level shot, neutral natural perspective",
+    "low angle shot looking up at the subject, powerful heroic perspective",
+    "high angle shot looking down at the subject",
+    "bird's-eye view, top-down overhead shot",
+    "worm's-eye view from the ground looking straight up, dramatic height",
+    "dutch angle, tilted horizon, dynamic tension",
+    "over-the-shoulder shot, blurred shoulder in the foreground",
+    "side view profile shot",
+    "hip-level shot, camera at waist height",
+    "knee-level shot, camera low near the knees",
+    "aerial drone shot from high above",
+    "first-person point of view shot"
+   ]
+  },
+  {
+   "id": "B8",
+   "key": [
+    "LIGHT",
+    "LUZ"
+   ],
+   "zero": false,
+   "texts": [
+    "soft even studio lighting, large softbox, gentle shadows",
+    "warm golden hour sunlight, soft rim light",
+    "soft natural window light from the side",
+    "bright overcast daylight, soft shadowless light"
+   ]
+  },
+  {
+   "id": "B11",
+   "key": [
+    "BG",
+    "FON"
+   ],
+   "zero": false,
+   "texts": [
+    "seamless pure white background, infinite white studio void, soft contact shadow on the floor",
+    "seamless light grey studio backdrop",
+    "Paris cityscape with the Eiffel Tower in the background, creamy bokeh",
+    "tropical beach at sunset, palm trees, soft ocean bokeh",
+    "bright yoga studio, light wooden floor, large windows, green plants",
+    "sunny city street, modern storefronts, soft background blur"
+   ]
+  }
+ ],
+ "defaults": {
+  "B1": 0,
+  "B2": 0,
+  "B3": 0,
+  "B3.5": 1,
+  "B3.3": 1,
+  "B3.1": 0,
+  "B3.4": 8,
+  "B3.2": 1,
+  "B4": 2,
+  "B5": 1,
+  "B6": 21,
+  "B6.1": [],
+  "B7": 0,
+  "B7.1": 0,
+  "B8": 0,
+  "B11": 5
+ },
+ "default_platform": "perchance",
+ "platforms": {
+  "venice": {
+   "label": "Venice AI",
+   "sep": "nl"
+  },
+  "seaart": {
+   "label": "SeaArt",
+   "sep": "nl",
+   "weights": [
+    "B6",
+    "B11"
+   ]
+  },
+  "perchance": {
+   "label": "Perchance AI",
+   "sep": "one",
+   "drop": [
+    "8k uhd",
+    "RAW photo",
+    "real photograph",
+    "natural film grain",
+    "magazine quality"
+   ]
+  },
+  "gen": {
+   "label": "Generic",
+   "sep": "nl"
+  }
+ },
+ "separators": {
+  "nl": {
+   "joiner": ",\n"
+  },
+  "one": {
+   "joiner": ", "
+  },
+  "tag": {
+   "joiner": ",\n",
+   "prefix": true
+  },
+  "break": {
+   "joiner": ",\nBREAK\n"
+  }
+ }
+}

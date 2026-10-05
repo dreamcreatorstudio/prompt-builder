@@ -32,6 +32,7 @@ with sync_playwright() as p:
     pg, errs = fresh(b)
     check("loads without JS errors", not errs, str(errs))
     check("English by default", pg.inner_text("h1") == "Prompt Builder")
+    check("footer keeps the library version after the page loads", "Library v" in pg.inner_text("footer"))
     check("Perchance is the default platform", pg.input_value("#plat") == "perchance")
 
     # 1. locks: lock BEFORE opening variants

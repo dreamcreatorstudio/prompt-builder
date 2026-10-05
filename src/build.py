@@ -177,7 +177,7 @@ def page(head_close, archive):
       </div>
     </aside>
   </div>
-  <footer data-i="footer" data-html>{en["footer"]} · Library v{LIB_VERSION}</footer>
+  <footer><span data-i="footer" data-html>{en["footer"]}</span> · Library v{LIB_VERSION}</footer>
 </div>
 
 <script>

@@ -129,7 +129,8 @@ BLOCKS = [
   ("Pearl earrings","Aretes de perla","small pearl stud earrings"),
   ("Gold bracelets","Pulseras doradas","stack of thin gold bracelets"),
   ("Tote bag","Bolso tote","canvas tote bag on the shoulder"),
-  ("Yoga mat","Esterilla de yoga","rolled yoga mat under one arm")]),
+  ("Yoga mat","Esterilla de yoga","rolled yoga mat under one arm"),
+  ("Delicate henna","Henna delicada","delicate golden-brown henna design on the backs of the hands and fingers, fine floral and vine lines, subtle and elegant")]),
  dict(id="B7", key=("CAM","CAM"), name=("Framing & pose","Encuadre y pose"), hue="--h7", opts=[
   ("Full body 3/4","Cuerpo entero 3/4","full body shot, head to toe framing, standing relaxed, three-quarter turn, looking at camera"),
   ("Half body","Medio cuerpo","medium shot from the waist up, looking at camera"),
@@ -169,7 +170,7 @@ NEG = "cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extr
 DEFAULT = {"B1":0,"B2":0,"B3":0,"B3.5":[1],"B3.3":1,"B3.1":[0],"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":21,"B6.1":[],"B7":0,"B7.1":0,"B8":0,"B11":5}  # Venice carnival in the city (chosen by Alex)
 
 # Library version: bump when any prompt text changes, so recipes record which texts they used.
-LIB_VERSION = "1.11"  # 1.11: lily princess outfits 30–31; 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
+LIB_VERSION = "1.12"  # 1.12: delicate henna accessory (ACC12); 1.11: lily princess outfits 30–31; 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
 
 PLATFORMS = {  # separator default + transforms applied to the prompt text
     "venice":    {"label": "Venice AI",    "sep": "nl"},

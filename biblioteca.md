@@ -1,12 +1,12 @@
 # Block Library / Biblioteca de bloques
 
-Library version **v1.11** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
+Library version **v1.12** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
 Each block has a short key and numbered options. A **recipe** records the library version, one option per block, the platform and the separator:
 
-`v1.11 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
+`v1.12 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
 
-Spanish keys work too: `v1.11 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
+Spanish keys work too: `v1.12 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
 
 New options are always added at the end of a block and existing numbers never change, so old recipes keep working.
 
@@ -181,6 +181,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 9 | Gold bracelets | Pulseras doradas | stack of thin gold bracelets |
 | 10 | Tote bag | Bolso tote | canvas tote bag on the shoulder |
 | 11 | Yoga mat | Esterilla de yoga | rolled yoga mat under one arm |
+| 12 | Delicate henna | Henna delicada | delicate golden-brown henna design on the backs of the hands and fingers, fine floral and vine lines, subtle and elegant |
 
 ## B7 · CAM / CAM — Framing & pose / Encuadre y pose
 | # | EN | ES | Prompt text |

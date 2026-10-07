@@ -118,7 +118,9 @@ BLOCKS = [
   ("Emerald heroine (cape)","Heroína esmeralda (capa)","original superhero costume, full-coverage emerald and silver bodysuit, short silver cape, stylized leaf emblem on the chest, knee-high silver boots"),
   ("Emerald heroine (no cape)","Heroína esmeralda (sin capa)","original superhero costume, full-coverage emerald and silver bodysuit with sleek armored panels, stylized leaf emblem on the chest, silver gauntlets, knee-high silver boots, no cape"),
   ("Forest princess (short)", "Princesa del bosque (corto)", "original forest princess outfit, dress made of layered green leaves, vine-laced bodice, puffed leaf sleeves, ruffled knee-length leaf skirt, vine-wrapped heeled sandals, no wings"),
-  ("Forest princess (gown)", "Princesa del bosque (largo)", "original forest princess gown made of layered green leaves, vine-laced bodice, puffed leaf sleeves, flowing full-length leaf skirt with tiny white blossoms, no wings")]),
+  ("Forest princess (gown)", "Princesa del bosque (largo)", "original forest princess gown made of layered green leaves, vine-laced bodice, puffed leaf sleeves, flowing full-length leaf skirt with tiny white blossoms, no wings"),
+  ("Lily princess (short)", "Princesa lirio (corto)", "original flower princess dress made of layered white star-shaped lily petals with pale green tips, fitted petal bodice with fine golden stamen embroidery, soft chiffon underlayer, tiny crystal dewdrops, thin green vine belt, knee-length petal skirt, satin heeled sandals, no wings"),
+  ("Lily princess (gown)", "Princesa lirio (largo)", "original flower princess gown made of cascading white star-shaped lily petals with pale green tips, fitted petal bodice with fine golden stamen embroidery, sheer chiffon sleeves, tiny crystal dewdrops, thin green vine belt, flowing full-length petal skirt with a short train, no wings")]),
  dict(id="B6.1", key=("ACC","ACC"), name=("Accessories","Accesorios"), hue="--h6", zero=True, multi=True, opts=[
   ("None","Ninguno",""),("Emerald necklace","Collar esmeralda","emerald pendant necklace on a fine gold chain"),("Gold hoops","Aros dorados","small gold hoop earrings"),("Sports watch","Reloj deportivo","minimalist sports watch"),("Cap","Gorra","beige baseball cap"),
   ("Sunglasses","Gafas de sol","oversized tortoiseshell sunglasses"),
@@ -167,7 +169,7 @@ NEG = "cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extr
 DEFAULT = {"B1":0,"B2":0,"B3":0,"B3.5":[1],"B3.3":1,"B3.1":[0],"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":21,"B6.1":[],"B7":0,"B7.1":0,"B8":0,"B11":5}  # Venice carnival in the city (chosen by Alex)
 
 # Library version: bump when any prompt text changes, so recipes record which texts they used.
-LIB_VERSION = "1.10"  # 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
+LIB_VERSION = "1.11"  # 1.11: lily princess outfits 30–31; 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
 
 PLATFORMS = {  # separator default + transforms applied to the prompt text
     "venice":    {"label": "Venice AI",    "sep": "nl"},

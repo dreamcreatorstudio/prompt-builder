@@ -1,12 +1,12 @@
 # Block Library / Biblioteca de bloques
 
-Library version **v1.10** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
+Library version **v1.11** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
 Each block has a short key and numbered options. A **recipe** records the library version, one option per block, the platform and the separator:
 
-`v1.10 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
+`v1.11 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
 
-Spanish keys work too: `v1.10 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
+Spanish keys work too: `v1.11 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
 
 New options are always added at the end of a block and existing numbers never change, so old recipes keep working.
 
@@ -163,6 +163,8 @@ New options are always added at the end of a block and existing numbers never ch
 | 27 | Emerald heroine (no cape) | Heroína esmeralda (sin capa) | original superhero costume, full-coverage emerald and silver bodysuit with sleek armored panels, stylized leaf emblem on the chest, silver gauntlets, knee-high silver boots, no cape |
 | 28 | Forest princess (short) | Princesa del bosque (corto) | original forest princess outfit, dress made of layered green leaves, vine-laced bodice, puffed leaf sleeves, ruffled knee-length leaf skirt, vine-wrapped heeled sandals, no wings |
 | 29 | Forest princess (gown) | Princesa del bosque (largo) | original forest princess gown made of layered green leaves, vine-laced bodice, puffed leaf sleeves, flowing full-length leaf skirt with tiny white blossoms, no wings |
+| 30 | Lily princess (short) | Princesa lirio (corto) | original flower princess dress made of layered white star-shaped lily petals with pale green tips, fitted petal bodice with fine golden stamen embroidery, soft chiffon underlayer, tiny crystal dewdrops, thin green vine belt, knee-length petal skirt, satin heeled sandals, no wings |
+| 31 | Lily princess (gown) | Princesa lirio (largo) | original flower princess gown made of cascading white star-shaped lily petals with pale green tips, fitted petal bodice with fine golden stamen embroidery, sheer chiffon sleeves, tiny crystal dewdrops, thin green vine belt, flowing full-length petal skirt with a short train, no wings |
 
 ## B6.1 · ACC / ACC — Accessories / Accesorios (choose several: `ACC1+3`; `ACC0` = none)
 | # | EN | ES | Prompt text |

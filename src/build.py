@@ -13,7 +13,7 @@ from pathlib import Path
 SRC = Path(__file__).resolve().parent
 ROOT = SRC.parent
 sys.path.insert(0, str(SRC))
-from data import BLOCKS, NEG, DEFAULT, LIB_VERSION, PLATFORMS, DEFAULT_PLATFORM, SEPARATORS, CONFLICTS
+from data import BLOCKS, NEG, DEFAULT, LIB_VERSION, PLATFORMS, DEFAULT_PLATFORM, SEPARATORS, CONFLICTS, PRESETS
 from i18n import T, REPO, URL
 import theme
 
@@ -82,6 +82,7 @@ def page(head_close, archive):
         f"const BLOCKS = {json.dumps(BLOCKS, ensure_ascii=False)};",
         f"const NEG = {json.dumps(NEG)};",
         f"const DEFAULT = {json.dumps(DEFAULT)};",
+        f"const PRESETS = {json.dumps(PRESETS, ensure_ascii=False)};",
         f"const LIB_VERSION = {json.dumps(LIB_VERSION)};",
         f"const ARCHIVE = {json.dumps(archive, ensure_ascii=False)};",
         f"const PLATFORMS = {json.dumps(PLATFORMS)};",
@@ -109,6 +110,7 @@ def page(head_close, archive):
       <p class="small help" data-i="help" data-html>{en["help"]}</p>
     </div>
     <div class="topbar">
+      <label class="small preset"><span data-i="preset">{en["preset"]}</span> <select id="preset"></select></label>
       <button class="btn" id="resetBtn" data-i="reset" title="">{en["reset"]}</button>
       <div class="lang" role="group" aria-label="Language">
         <button id="lang-en" aria-pressed="true">EN</button><button id="lang-es" aria-pressed="false">ES</button>

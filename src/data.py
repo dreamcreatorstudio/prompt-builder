@@ -169,6 +169,20 @@ BLOCKS = [
 NEG = "cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features"
 DEFAULT = {"B1":0,"B2":0,"B3":0,"B3.5":[1],"B3.3":1,"B3.1":[0],"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":21,"B6.1":[],"B7":0,"B7.1":0,"B8":0,"B11":5}  # Venice carnival in the city (chosen by Alex)
 
+# Presets: ready-made combinations (all 25-year-old, Slavic). Not part of the prompt library, so no version bump.
+PRESETS = [
+ ("Forest princess", "Princesa del bosque", "PHOTO1 GLOW2 AGE1 ETHN1 EXPR6 HAIR16 STYLE13 EYES7 SKIN2 BODY2 OUTFIT28 ACC0 CAM6 ANGLE1 LIGHT2 BG7 | perchance | one"),
+ ("Lily princess", "Princesa lirio", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR6 HAIR1 STYLE14 EYES8 SKIN1 BODY2 OUTFIT31 ACC12 CAM6 ANGLE2 LIGHT2 BG8 | perchance | one"),
+ ("Yoga catalog", "Catálogo de yoga", "PHOTO3 GLOW1 AGE1 ETHN1 EXPR4 HAIR6 STYLE9 EYES2 SKIN1 BODY2 OUTFIT5 ACC0 CAM1 ANGLE1 LIGHT1 BG1 | perchance | one"),
+ ("Beach sunset", "Playa al atardecer", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR2 HAIR1 STYLE5 EYES1 SKIN2 BODY1 OUTFIT3 ACC6 CAM4 ANGLE1 LIGHT2 BG4 | perchance | one"),
+ ("Paris street style", "Estilo urbano en París", "PHOTO2 GLOW1 AGE1 ETHN1 EXPR3 HAIR5 STYLE3 EYES4 SKIN1 BODY2 OUTFIT4 ACC7+8 CAM4 ANGLE9 LIGHT4 BG3 | perchance | one"),
+ ("Urban fitness", "Fitness urbano", "PHOTO1 GLOW3 AGE1 ETHN1 EXPR1 HAIR2 STYLE8 EYES1 SKIN1 BODY1 OUTFIT2 ACC3 CAM4 ANGLE2 LIGHT2 BG6 | perchance | one"),
+ ("Emerald heroine", "Heroína esmeralda", "PHOTO1 GLOW2 AGE1 ETHN1 EXPR1 HAIR7 STYLE8 EYES2 SKIN1 BODY1 OUTFIT27 ACC0 CAM6 ANGLE2 LIGHT2 BG6 | perchance | one"),
+ ("Flamenco night", "Noche flamenca", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR3 HAIR7 STYLE9 EYES3 SKIN3 BODY4 OUTFIT12 ACC2 CAM1 ANGLE1 LIGHT2 BG6 | perchance | one"),
+ ("Pastel dream", "Sueño pastel", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR5 HAIR9+12 STYLE4 EYES8 SKIN1 BODY2 OUTFIT23 ACC0 CAM1 ANGLE1 LIGHT1 BG2 | perchance | one"),
+ ("Studio portrait", "Retrato de estudio", "PHOTO1 GLOW1 AGE1 ETHN1 EXPR4 HAIR3 STYLE4 EYES2 SKIN2 BODY4 OUTFIT3 ACC8 CAM3 ANGLE1 LIGHT3 BG2 | perchance | one"),
+]
+
 # Library version: bump when any prompt text changes, so recipes record which texts they used.
 LIB_VERSION = "1.12"  # 1.12: delicate henna accessory (ACC12); 1.11: lily princess outfits 30–31; 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
 

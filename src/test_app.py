@@ -240,6 +240,20 @@ with sync_playwright() as p:
     pgC.fill("#recipeIn", "v1.12 | HAIR3"); pgC.click("#loadBtn")
     pgC.click('label[for="g-B3_1-2"]')
     check("hair keeps at least one color when the last is unticked", ev(pgC, 'S.sel["B3.1"]') == [2])
+    # presets: each loads cleanly, has no conflict notes, is 25 / Slavic, and the menu tracks it
+    n_presets = ev(pgC, "PRESETS.length")
+    check("there are 10 presets plus None", n_presets == 10 and pgC.locator("#preset option").count() == 11)
+    bad = []
+    for i in range(n_presets):
+        pgC.select_option("#preset", str(i))
+        notes = ev(pgC, "activeNotes().map(c => c.kind).filter(k => k !== 'out_of_frame')")
+        if pgC.is_visible("#loadErr") or notes or pgC.input_value("#preset") != str(i) or "AGE1 ETHN1 " not in pgC.inner_text("#recipe"):
+            bad.append((i, notes))
+    check("every preset loads with no errors or conflicts (crop notice allowed), at 25 and Slavic", not bad, bad)
+    pgC.click('label[for="g-B6-0"]')
+    check("changing a block sets the preset menu back to None", pgC.input_value("#preset") == "")
+    pgC.click("#resetBtn")
+    check("default base shows None", pgC.input_value("#preset") == "")
     pgC.fill("#recipeIn", "v1.6 | PHOTO1 GLOW1 AGE1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one"); pgC.click("#loadBtn")
     check("v1.6 recipe loads as current with heritage unspecified (same text)", "ETHN0" in pgC.inner_text("#recipe") and "heritage" not in ev(pgC, "promptText()"))
     check("Reset button is in the header, next to EN/ES", pgC.locator("header #resetBtn").count() == 1)

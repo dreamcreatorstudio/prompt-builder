@@ -172,8 +172,8 @@ function showErrors(list) {
   $("#loadErr").hidden = !list.length;
   $("#loadErr").innerHTML = list.length ? `<p class="small err" style="margin:0">${esc(L().errTitle)}</p><ul class="tips err">${list.map(e => `<li>${esc(e)}</li>`).join("")}</ul>` : "";
 }
-function loadRecipe() {
-  const r = parseRecipe($("#recipeIn").value);
+function loadRecipe(text = $("#recipeIn").value, okMsg = null) {
+  const r = parseRecipe(text);
   if (r.errors.length) return showErrors(r.errors);   // all-or-nothing: nothing is applied
   showErrors([]);
   if (r.plat) S.plat = r.plat;
@@ -191,7 +191,7 @@ function loadRecipe() {
   const skipped = [];
   for (const id in r.sel) { if (S.locked[id]) { if (!same(r.sel[id], S.sel[id])) skipped.push(id); } else S.sel[id] = r.sel[id]; }
   changed();
-  toast(L().loaded + (skipped.length ? " · " + fmt(L().loadSkipped, { list: skipped.join(", ") }) : ""), 5000);
+  toast((okMsg || L().loaded) + (skipped.length ? " · " + fmt(L().loadSkipped, { list: skipped.join(", ") }) : ""), 5000);
 }
 function migrate() {                                // same option numbers, current texts — may change the prompt
   const from = S.pin, missing = [];
@@ -268,6 +268,17 @@ function renderBlocks() {
   el.querySelectorAll("[data-var]").forEach(btn => btn.addEventListener("click", () => openVariants(btn.dataset.var, 0)));
   el.querySelectorAll("[data-opts]").forEach(btn => btn.addEventListener("click", () => copy(optionsText(btn.dataset.opts), L().optionsCopied)));
 }
+// Presets: ready-made recipes; the menu shows the one that matches the current choices, else "None".
+function presetMatch() {
+  if (S.pin) return "";
+  const i = PRESETS.findIndex(p => { const r = parseRecipe(p[2]); return !r.errors.length && Object.keys(r.sel).every(id => same(normFor(LIB_VERSION, { [id]: r.sel[id] })[id], normFor(LIB_VERSION, { [id]: S.sel[id] })[id])); });
+  return i < 0 ? "" : String(i);
+}
+function renderPresets() {
+  const el = $("#preset");
+  el.innerHTML = `<option value="">${esc(L().presetNone)}</option>` + PRESETS.map((p, i) => `<option value="${i}">${esc(p[LI()])}</option>`).join("");
+  el.value = presetMatch();
+}
 function renderPlat() {
   const P = L().plats[S.plat];
   $("#plat").value = S.plat; $("#sep").value = S.sep;
@@ -324,9 +335,9 @@ function variantAction(kind, id, i, k) {
 // ---------- central update ----------
 function changed() {
   if (VAR && VAR.ctx !== ctxKey(VAR.id)) { closeVariants(); toast(L().stale, 4000); }
-  renderNotice(); renderBlocks(); renderPlat(); renderOut(); if (VAR) renderVariants(); save();
+  renderNotice(); renderBlocks(); renderPlat(); renderPresets(); renderOut(); if (VAR) renderVariants(); save();
 }
-function setLang(l) { S.lang = l; store("pb-lang", l); applyLang(); renderNotice(); renderBlocks(); renderPlat(); renderOut(); if (VAR) renderVariants(); save(); }
+function setLang(l) { S.lang = l; store("pb-lang", l); applyLang(); renderNotice(); renderBlocks(); renderPlat(); renderPresets(); renderOut(); if (VAR) renderVariants(); save(); }
 
 // ---------- clipboard / toast ----------
 let toastTimer;
@@ -349,7 +360,11 @@ $("#copyPrompt").addEventListener("click", () => copy(promptText(), L().copied))
 $("#copyBlocks").addEventListener("click", () => copy(blocksText(), L().blocksCopied));
 $("#copyRecipe").addEventListener("click", () => copy(recipe(), L().recipeCopied));
 $("#copyNeg").addEventListener("click", () => copy(NEG, L().negCopied));
-$("#loadBtn").addEventListener("click", loadRecipe);
+$("#loadBtn").addEventListener("click", () => loadRecipe());
+$("#preset").addEventListener("change", e => {
+  const p = PRESETS[+e.target.value]; if (e.target.value === "" || !p) return;
+  closeVariants(); loadRecipe(p[2], fmt(L().presetApplied, { name: p[LI()] }));
+});
 $("#recipeIn").addEventListener("keydown", e => { if (e.key === "Enter") loadRecipe(); });
 $("#recipeIn").addEventListener("input", () => showErrors([]));
 $("#resetBtn").addEventListener("click", () => { S.sel = clone(DEFAULT); S.locked = {}; S.pin = null; S.pinSel = null; S.notice = null; S.plat = DEFAULT_PLATFORM; S.sep = PLATFORMS[DEFAULT_PLATFORM].sep; closeVariants(); showErrors([]); changed(); toast(L().resetDone); });
@@ -357,4 +372,4 @@ $("#closeVar").addEventListener("click", closeVariants);
 $("#varPrev").addEventListener("click", () => { VAR.offset = Math.max(0, VAR.offset - VAR_PAGE); renderVariants(); });
 $("#varNext").addEventListener("click", () => { VAR.offset += VAR_PAGE; renderVariants(); });
 
-restore(); applyLang(); renderNotice(); renderBlocks(); renderPlat(); renderOut();
+restore(); applyLang(); renderNotice(); renderBlocks(); renderPlat(); renderPresets(); renderOut();

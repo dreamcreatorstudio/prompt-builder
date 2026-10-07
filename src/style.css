@@ -68,3 +68,6 @@ footer a{color:var(--accent)}
 .kind-out_of_frame{color:var(--muted)}
 .kind-test{color:var(--warn)}
 .err{color:var(--danger)}
+
+.preset{display:inline-flex;align-items:center;gap:6px}
+.preset select{max-width:12rem}

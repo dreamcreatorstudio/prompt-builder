@@ -100,7 +100,7 @@ function parts(sel, plat, v = ver()) {
 function join(ps, sep, html, v = ver()) {
   const SP = ARCHIVE[v].separators[sep] || SEPARATORS[sep];
   const piece = p => html
-    ? (!SP.prefix ? `<span class="tag" aria-hidden="true">[${p.id}] </span>` : "") + `<span style="--c:var(${p.hue})">${esc(p.text)}</span>`
+    ? (!SP.prefix ? `<span class="tag" aria-hidden="true" data-b="[${p.id}] "></span>` : "") + `<span style="--c:var(${p.hue})">${esc(p.text)}</span>`
     : p.text;
   return ps.map(p => (SP.prefix ? `[${p.id}] ` : "") + piece(p)).join(SP.joiner);
 }

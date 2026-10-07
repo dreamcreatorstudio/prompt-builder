@@ -62,6 +62,7 @@ pre span{color:var(--c)}
 footer{color:var(--muted);font-size:13px}
 footer a{color:var(--accent)}
 .tag{color:var(--muted);user-select:none;-webkit-user-select:none;opacity:.8}
+.tag::before{content:attr(data-b)}  /* label drawn by CSS: shown on screen, never copied */
 .disclaimer{margin:4px 0 0;max-width:68ch;border-left:3px solid var(--line);padding-left:10px}
 .input{font-family:var(--mono);font-size:13px;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);flex:1;min-width:0}
 .input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
@@ -498,7 +499,7 @@ function parts(sel, plat, v = ver()) {
 function join(ps, sep, html, v = ver()) {
   const SP = ARCHIVE[v].separators[sep] || SEPARATORS[sep];
   const piece = p => html
-    ? (!SP.prefix ? `<span class="tag" aria-hidden="true">[${p.id}] </span>` : "") + `<span style="--c:var(${p.hue})">${esc(p.text)}</span>`
+    ? (!SP.prefix ? `<span class="tag" aria-hidden="true" data-b="[${p.id}] "></span>` : "") + `<span style="--c:var(${p.hue})">${esc(p.text)}</span>`
     : p.text;
   return ps.map(p => (SP.prefix ? `[${p.id}] ` : "") + piece(p)).join(SP.joiner);
 }

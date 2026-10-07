@@ -316,6 +316,7 @@ with sync_playwright() as p:
     check("Copy options doesn't change selections or locks", ev(pg, "JSON.stringify([S.sel, S.locked])") == before)
 
     # two copy modes
+    check("[B#] labels are on screen but not in the page text (manual copy stays clean)", "[B1]" not in pg.inner_text("#prompt") and pg.locator("#prompt .tag").count() > 0 and ev(pg, 'getComputedStyle(document.querySelector("#prompt .tag"), "::before").content').startswith('"[B'))
     check("'Copy with blocks' keeps [B#] labels", ev(pg, "blocksText()").startswith("[B1] ") and "[B11] " in ev(pg, "blocksText()"))
     check("'Copy with blocks' has the same text once labels are removed",
           __import__("re").sub(r"\[B[\d.]+\] ", "", ev(pg, "blocksText()")) == ev(pg, "promptText()"))

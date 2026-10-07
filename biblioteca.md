@@ -1,12 +1,12 @@
 # Block Library / Biblioteca de bloques
 
-Library version **v1.17** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
+Library version **v1.18** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
 Each block has a short key and numbered options. A **recipe** records the library version, one option per block, the platform and the separator:
 
-`v1.17 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
+`v1.18 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
 
-Spanish keys work too: `v1.17 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
+Spanish keys work too: `v1.18 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
 
 New options are always added at the end of a block and existing numbers never change, so old recipes keep working.
 
@@ -169,7 +169,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 30 | Lily princess (short) | Princesa lirio (corto) | original flower princess dress made of layered white star-shaped lily petals with pale green tips, fitted petal bodice with fine golden stamen embroidery, soft chiffon underlayer, tiny crystal dewdrops, thin green vine belt, short petal skirt ending well above the knee, satin heeled sandals, no wings |
 | 31 | Lily princess (gown) | Princesa lirio (largo) | original flower princess gown made of cascading white star-shaped lily petals with pale green tips, fitted petal bodice with fine golden stamen embroidery, sheer chiffon sleeves, tiny crystal dewdrops, thin green vine belt, flowing full-length petal skirt with a short train, no wings |
 | 32 | Midnight moth heroine | Heroína polilla nocturna | original superhero costume, glossy black finely pebbled textured fabric with subtle iridescent sheen, fine silver moth-wing vein patterns tracing the gloves, forearms and sides, feminine fitted cropped long-sleeve top ending just below the bust, high-waisted fitted trousers, long gloves, large metallic silver moth emblem across the chest, no mask |
-| 33 | Midnight moth (crop) | Polilla nocturna (top corto) | original superhero costume, glossy black finely pebbled textured fabric with subtle iridescent sheen, fine silver moth-wing vein patterns tracing the gloves, forearms and sides, feminine midriff-baring cropped long-sleeve top, toned midriff visible, fitted trousers sitting at the hips, long gloves, large metallic silver moth emblem across the chest |
+| 33 | Midnight moth (crop) | Polilla nocturna (top corto) | original superhero costume, glossy black finely pebbled textured fabric with subtle iridescent sheen, fine silver moth-wing vein patterns tracing the gloves, forearms and sides, sleek two-piece design, cropped long-sleeve top, matching fitted trousers, long gloves, large metallic silver moth emblem across the chest |
 
 ## B6.1 · ACC / ACC — Accessories / Accesorios (choose several: `ACC1+3`; `ACC0` = none)
 | # | EN | ES | Prompt text |
@@ -202,7 +202,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 8 | Sitting on the edge | Sentada en el borde | full body, sitting on the edge of a steel girder high above the city, one knee drawn up with her forearm resting on it, the other leg hanging over the edge, leaning back on one hand, head tilted, gazing down at the city |
 | 9 | Silk hammock | Hamaca de seda | full body, reclining comfortably in a hammock woven from shimmering silver moth silk, loose cocoon-like threads catching the light, strung between two stone pillars, one arm resting behind her head, one leg gently bent, relaxed and at ease |
 | 10 | Suspended in silk | Suspendida en seda | full body, suspended mid-air in a sweeping web of glowing silver moth silk strands stretched between the terrace columns, body in a dynamic diagonal line, one arm raised behind her head, the other hand gripping a silk strand, hair and loose silk threads streaming in the wind, silk strands crossing the foreground |
-| 11 | Lying on silk net | Recostada en red de seda | full body, lying back on a large taut net of thick glowing silver silk, the net clearly visible beneath and around her body and supporting her weight, back and legs resting on the woven strands, body in a relaxed diagonal line, one arm raised behind her head, the other hand resting on the net, one knee slightly bent, hair spilling across the net and lifted by the wind |
+| 11 | Lying on silk net | Recostada en red de seda | full body, reclining gracefully on a large taut net of thick glowing silver silk, the net clearly visible beneath and around her and supporting her weight, body in a relaxed diagonal line, one arm raised behind her head, the other hand resting on the net, one knee slightly bent, hair spilling across the net and lifted by the wind |
 
 ## B7.1 · ANGLE / ANG — Camera angle / Ángulo de cámara
 | # | EN | ES | Prompt text |
@@ -219,6 +219,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 10 | Knee level | Altura de rodilla | knee-level shot, camera low near the knees |
 | 11 | Aerial drone | Dron aéreo | aerial drone shot from high above |
 | 12 | POV | Punto de vista (POV) | first-person point of view shot |
+| 13 | High 3/4 tilt | 3/4 alto inclinado | dramatic high three-quarter angle, camera elevated and looking diagonally down at her, slight dynamic camera tilt, deep background with city lights bokeh |
 
 ## B8 · LIGHT / LUZ — Lighting / Luz
 | # | EN | ES | Prompt text |

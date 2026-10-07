@@ -146,9 +146,9 @@ BLOCKS = [
   ("Confident stance", "Postura segura", "full body shot, standing tall, confident regal posture, shoulders back, chin slightly raised, looking at camera"),
   ("On the girder", "En la viga", "full body, reclining on a steel girder high above the city, one arm raised behind her head, relaxed diagonal body line"),
   ("Sitting on the edge", "Sentada en el borde", "full body, sitting on the edge of a steel girder high above the city, one knee drawn up with her forearm resting on it, the other leg hanging over the edge, leaning back on one hand, head tilted, gazing down at the city"),
-  ("Silk hammock", "Hamaca de seda", "full body, reclining comfortably in a hammock woven from shimmering silver moth silk, loose cocoon-like threads catching the light, strung between two stone pillars, one arm resting behind her head, one leg gently bent, relaxed and at ease"),
-  ("Suspended in silk", "Suspendida en seda", "full body, suspended mid-air in a sweeping web of glowing silver moth silk strands stretched between the terrace columns, body in a dynamic diagonal line, one arm raised behind her head, the other hand gripping a silk strand, hair and loose silk threads streaming in the wind, silk strands crossing the foreground"),
-  ("Lying on silk net", "Recostada en red de seda", "full body, reclining gracefully on a large taut net of thick glowing silver silk, the net clearly visible beneath and around her and supporting her weight, body in a relaxed diagonal line, one arm raised behind her head, the other hand resting on the net, one knee slightly bent, hair spilling across the net and lifted by the wind"),
+  ("Silk hammock", "Hamaca de seda", "full body, reclining comfortably in a hammock woven only from thin shimmering silver threads, loose cocoon-like strands catching the light, strung between two stone pillars, one arm resting behind her head, one leg gently bent, relaxed and at ease"),
+  ("Suspended in silk", "Suspendida en seda", "full body, suspended mid-air in a sweeping web of thin glowing silver threads stretched between the terrace columns, body in a dynamic diagonal line, one arm raised behind her head, the other hand gripping a silk strand, hair and loose silk threads streaming in the wind, silk strands crossing the foreground"),
+  ("Lying on silk net", "Recostada en red de seda", "full body, reclining gracefully on a large taut radial net made only of thin glowing silver threads, the net clearly visible beneath and around her and supporting her weight, body in a relaxed diagonal line, one arm raised behind her head, the other hand resting on the net, one knee slightly bent, hair spilling across the net and lifted by the wind"),
   ("Full body (framing only)", "Cuerpo entero (solo encuadre)", "full body shot, head to toe framing"),
   ("Wide shot", "Plano general", "wide full body shot, figure smaller in the frame, surroundings emphasized")]),
  dict(id="B7.2", key=("POSE","POS"), name=("Pose","Postura"), hue="--h7", zero=True, opts=[
@@ -163,8 +163,8 @@ BLOCKS = [
  dict(id="B7.3", key=("PLACE","LUG"), name=("Place","Lugar"), hue="--h7", zero=True, opts=[
   ("None","Ninguno",""),
   ("Steel girder","Viga de acero","on a steel girder high above the city"),
-  ("Silk hammock","Hamaca de seda","in a hammock woven from shimmering silver moth silk, loose cocoon-like threads catching the light, strung between two stone pillars"),
-  ("Silk net","Red de seda","on a large taut net of thick glowing silver silk, the net clearly visible beneath and around her and supporting her weight"),
+  ("Silk hammock","Hamaca de seda","in a hammock woven only from thin shimmering silver threads, loose cocoon-like strands catching the light, strung between two stone pillars"),
+  ("Silk net","Red de seda","on a large taut radial net made only of thin glowing silver threads, the net clearly visible beneath and around her and supporting her weight"),
   ("Pyramid tower top","Cima de torre pirámide","on the very top of a glass pyramid-shaped skyscraper, the entire city spread out around and below her to the horizon"),
   ("Tower spire top","Cima de una torre","on the small platform at the very top of a tall tower spire, the entire city spread out around and below her to the horizon"),
   ("Rooftop ledge","Cornisa de azotea","on the stone ledge of a rooftop terrace, city skyline behind her")]),
@@ -200,7 +200,7 @@ BLOCKS = [
   ("City from above", "Ciudad desde arriba", "dramatic overhead view of a busy city street far below, yellow taxis, traffic, skyscrapers, shallow depth of field"),
   ("Night city from above", "Ciudad de noche desde arriba", "dizzying aerial view of a city at night far below, neon lights blurred into haze, streams of yellow taxis, towering skyscrapers on both sides"),
   ("Rooftop terrace skyline", "Terraza con vista", "elegant rooftop terrace with a stone balustrade and potted plants, wide city skyline across the background at dusk, warm city lights, shallow depth of field"),
-  ("Terrace silk net", "Terraza con red de seda", "rooftop terrace at dusk with a giant radial lattice net of thick glowing silver silk anchored between stone columns, evenly woven geometric mesh pattern, strands crossing the foreground, city skyline and warm lights in the background"),
+  ("Terrace silk net", "Terraza con red de seda", "rooftop terrace at dusk with a giant radial net made only of thin glowing silver threads, like a luminous web, anchored between stone columns, evenly woven geometric mesh pattern, strands crossing the foreground, city skyline and warm lights in the background"),
   ("Open sky", "Cielo abierto", "clear blue sky, bright daylight, distant horizon")]),
 ]
 NEG = "cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features"
@@ -225,7 +225,7 @@ PRESETS = [
 ]
 
 # Library version: bump when any prompt text changes, so recipes record which texts they used.
-LIB_VERSION = "1.19"  # 1.19: POSE and PLACE blocks, framing-only CAM 12–13, open sky; 1.18: clearer two-piece moth suit and reclining net pose, high 3/4 tilt angle; 1.17: lying-on-silk-net pose, terrace silk-net background; 1.16: moth crop suit, moth-wing mask, suspended-in-silk pose, dramatic rim light; 1.15: silk hammock pose, rooftop terrace skyline; 1.14: shorter short dresses, textured moth suit, dreamy expression, edge pose, night city; 1.13: cinematic photo, windblown hair, midnight moth heroine, girder pose, city from above; 1.12: delicate henna accessory (ACC12); 1.11: lily princess outfits 30–31; 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
+LIB_VERSION = "1.20"  # 1.20: silk nets/hammock described as glowing threads (Venice drew satin fabric); 1.19: POSE and PLACE blocks, framing-only CAM 12–13, open sky; 1.18: clearer two-piece moth suit and reclining net pose, high 3/4 tilt angle; 1.17: lying-on-silk-net pose, terrace silk-net background; 1.16: moth crop suit, moth-wing mask, suspended-in-silk pose, dramatic rim light; 1.15: silk hammock pose, rooftop terrace skyline; 1.14: shorter short dresses, textured moth suit, dreamy expression, edge pose, night city; 1.13: cinematic photo, windblown hair, midnight moth heroine, girder pose, city from above; 1.12: delicate henna accessory (ACC12); 1.11: lily princess outfits 30–31; 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
 
 PLATFORMS = {  # separator default + transforms applied to the prompt text
     "venice":    {"label": "Venice AI",    "sep": "nl"},

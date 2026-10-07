@@ -1,12 +1,12 @@
 # Block Library / Biblioteca de bloques
 
-Library version **v1.15** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
+Library version **v1.16** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
 Each block has a short key and numbered options. A **recipe** records the library version, one option per block, the platform and the separator:
 
-`v1.15 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
+`v1.16 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
 
-Spanish keys work too: `v1.15 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
+Spanish keys work too: `v1.16 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
 
 New options are always added at the end of a block and existing numbers never change, so old recipes keep working.
 
@@ -169,6 +169,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 30 | Lily princess (short) | Princesa lirio (corto) | original flower princess dress made of layered white star-shaped lily petals with pale green tips, fitted petal bodice with fine golden stamen embroidery, soft chiffon underlayer, tiny crystal dewdrops, thin green vine belt, short petal skirt ending well above the knee, satin heeled sandals, no wings |
 | 31 | Lily princess (gown) | Princesa lirio (largo) | original flower princess gown made of cascading white star-shaped lily petals with pale green tips, fitted petal bodice with fine golden stamen embroidery, sheer chiffon sleeves, tiny crystal dewdrops, thin green vine belt, flowing full-length petal skirt with a short train, no wings |
 | 32 | Midnight moth heroine | Heroína polilla nocturna | original superhero costume, glossy black finely pebbled textured fabric with subtle iridescent sheen, fine silver moth-wing vein patterns tracing the gloves, forearms and sides, feminine fitted cropped long-sleeve top ending just below the bust, high-waisted fitted trousers, long gloves, large metallic silver moth emblem across the chest, no mask |
+| 33 | Midnight moth (crop) | Polilla nocturna (top corto) | original superhero costume, glossy black finely pebbled textured fabric with subtle iridescent sheen, fine silver moth-wing vein patterns tracing the gloves, forearms and sides, feminine midriff-baring cropped long-sleeve top, toned midriff visible, fitted trousers sitting at the hips, long gloves, large metallic silver moth emblem across the chest |
 
 ## B6.1 · ACC / ACC — Accessories / Accesorios (choose several: `ACC1+3`; `ACC0` = none)
 | # | EN | ES | Prompt text |
@@ -186,6 +187,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 10 | Tote bag | Bolso tote | canvas tote bag on the shoulder |
 | 11 | Yoga mat | Esterilla de yoga | rolled yoga mat under one arm |
 | 12 | Delicate henna | Henna delicada | delicate golden-brown henna design on the backs of the hands and fingers, fine floral and vine lines, subtle and elegant |
+| 13 | Moth-wing mask | Antifaz ala de polilla | sleek silver moth-wing shaped eye mask |
 
 ## B7 · CAM / CAM — Framing & pose / Encuadre y pose
 | # | EN | ES | Prompt text |
@@ -199,6 +201,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 7 | On the girder | En la viga | full body, reclining on a steel girder high above the city, one arm raised behind her head, relaxed diagonal body line |
 | 8 | Sitting on the edge | Sentada en el borde | full body, sitting on the edge of a steel girder high above the city, one knee drawn up with her forearm resting on it, the other leg hanging over the edge, leaning back on one hand, head tilted, gazing down at the city |
 | 9 | Silk hammock | Hamaca de seda | full body, reclining comfortably in a hammock woven from shimmering silver moth silk, loose cocoon-like threads catching the light, strung between two stone pillars, one arm resting behind her head, one leg gently bent, relaxed and at ease |
+| 10 | Suspended in silk | Suspendida en seda | full body, suspended mid-air in a sweeping web of glowing silver moth silk strands stretched between the terrace columns, body in a dynamic diagonal line, one arm raised behind her head, the other hand gripping a silk strand, hair and loose silk threads streaming in the wind, silk strands crossing the foreground |
 
 ## B7.1 · ANGLE / ANG — Camera angle / Ángulo de cámara
 | # | EN | ES | Prompt text |
@@ -223,6 +226,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 2 | Golden hour | Hora dorada | warm golden hour sunlight, soft rim light |
 | 3 | Window | Ventana | soft natural window light from the side |
 | 4 | Overcast | Nublado | bright overcast daylight, soft shadowless light |
+| 5 | Dramatic rim light | Contraluz dramático | dramatic cinematic backlight at dusk, glowing rim light outlining her silhouette and hair, high contrast, warm city lights bokeh |
 
 ## B11 · BG / FON — Background / Fondo
 | # | EN | ES | Prompt text |

@@ -124,7 +124,8 @@ BLOCKS = [
   ("Forest princess (gown)", "Princesa del bosque (largo)", "original forest princess gown made of layered green leaves, vine-laced bodice, puffed leaf sleeves, flowing full-length leaf skirt with tiny white blossoms, no wings"),
   ("Lily princess (short)", "Princesa lirio (corto)", "original flower princess dress made of layered white star-shaped lily petals with pale green tips, fitted petal bodice with fine golden stamen embroidery, soft chiffon underlayer, tiny crystal dewdrops, thin green vine belt, short petal skirt ending well above the knee, satin heeled sandals, no wings"),
   ("Lily princess (gown)", "Princesa lirio (largo)", "original flower princess gown made of cascading white star-shaped lily petals with pale green tips, fitted petal bodice with fine golden stamen embroidery, sheer chiffon sleeves, tiny crystal dewdrops, thin green vine belt, flowing full-length petal skirt with a short train, no wings"),
-  ("Midnight moth heroine", "Heroína polilla nocturna", "original superhero costume, glossy black finely pebbled textured fabric with subtle iridescent sheen, fine silver moth-wing vein patterns tracing the gloves, forearms and sides, feminine fitted cropped long-sleeve top ending just below the bust, high-waisted fitted trousers, long gloves, large metallic silver moth emblem across the chest, no mask")]),
+  ("Midnight moth heroine", "Heroína polilla nocturna", "original superhero costume, glossy black finely pebbled textured fabric with subtle iridescent sheen, fine silver moth-wing vein patterns tracing the gloves, forearms and sides, feminine fitted cropped long-sleeve top ending just below the bust, high-waisted fitted trousers, long gloves, large metallic silver moth emblem across the chest, no mask"),
+  ("Midnight moth (crop)", "Polilla nocturna (top corto)", "original superhero costume, glossy black finely pebbled textured fabric with subtle iridescent sheen, fine silver moth-wing vein patterns tracing the gloves, forearms and sides, feminine midriff-baring cropped long-sleeve top, toned midriff visible, fitted trousers sitting at the hips, long gloves, large metallic silver moth emblem across the chest")]),
  dict(id="B6.1", key=("ACC","ACC"), name=("Accessories","Accesorios"), hue="--h6", zero=True, multi=True, opts=[
   ("None","Ninguno",""),("Emerald necklace","Collar esmeralda","emerald pendant necklace on a fine gold chain"),("Gold hoops","Aros dorados","small gold hoop earrings"),("Sports watch","Reloj deportivo","minimalist sports watch"),("Cap","Gorra","beige baseball cap"),
   ("Sunglasses","Gafas de sol","oversized tortoiseshell sunglasses"),
@@ -134,7 +135,8 @@ BLOCKS = [
   ("Gold bracelets","Pulseras doradas","stack of thin gold bracelets"),
   ("Tote bag","Bolso tote","canvas tote bag on the shoulder"),
   ("Yoga mat","Esterilla de yoga","rolled yoga mat under one arm"),
-  ("Delicate henna","Henna delicada","delicate golden-brown henna design on the backs of the hands and fingers, fine floral and vine lines, subtle and elegant")]),
+  ("Delicate henna","Henna delicada","delicate golden-brown henna design on the backs of the hands and fingers, fine floral and vine lines, subtle and elegant"),
+  ("Moth-wing mask", "Antifaz ala de polilla", "sleek silver moth-wing shaped eye mask")]),
  dict(id="B7", key=("CAM","CAM"), name=("Framing & pose","Encuadre y pose"), hue="--h7", opts=[
   ("Full body 3/4","Cuerpo entero 3/4","full body shot, head to toe framing, standing relaxed, three-quarter turn, looking at camera"),
   ("Half body","Medio cuerpo","medium shot from the waist up, looking at camera"),
@@ -144,7 +146,8 @@ BLOCKS = [
   ("Confident stance", "Postura segura", "full body shot, standing tall, confident regal posture, shoulders back, chin slightly raised, looking at camera"),
   ("On the girder", "En la viga", "full body, reclining on a steel girder high above the city, one arm raised behind her head, relaxed diagonal body line"),
   ("Sitting on the edge", "Sentada en el borde", "full body, sitting on the edge of a steel girder high above the city, one knee drawn up with her forearm resting on it, the other leg hanging over the edge, leaning back on one hand, head tilted, gazing down at the city"),
-  ("Silk hammock", "Hamaca de seda", "full body, reclining comfortably in a hammock woven from shimmering silver moth silk, loose cocoon-like threads catching the light, strung between two stone pillars, one arm resting behind her head, one leg gently bent, relaxed and at ease")]),
+  ("Silk hammock", "Hamaca de seda", "full body, reclining comfortably in a hammock woven from shimmering silver moth silk, loose cocoon-like threads catching the light, strung between two stone pillars, one arm resting behind her head, one leg gently bent, relaxed and at ease"),
+  ("Suspended in silk", "Suspendida en seda", "full body, suspended mid-air in a sweeping web of glowing silver moth silk strands stretched between the terrace columns, body in a dynamic diagonal line, one arm raised behind her head, the other hand gripping a silk strand, hair and loose silk threads streaming in the wind, silk strands crossing the foreground")]),
  dict(id="B7.1", key=("ANGLE","ANG"), name=("Camera angle","Ángulo de cámara"), hue="--h7", opts=[
   ("Eye-level","A la altura de los ojos","eye-level shot, neutral natural perspective"),
   ("Low angle","Contrapicado","low angle shot looking up at the subject, powerful heroic perspective"),
@@ -162,7 +165,8 @@ BLOCKS = [
   ("Soft studio","Estudio suave","soft even studio lighting, large softbox, gentle shadows"),
   ("Golden hour","Hora dorada","warm golden hour sunlight, soft rim light"),
   ("Window","Ventana","soft natural window light from the side"),
-  ("Overcast","Nublado","bright overcast daylight, soft shadowless light")]),
+  ("Overcast","Nublado","bright overcast daylight, soft shadowless light"),
+  ("Dramatic rim light", "Contraluz dramático", "dramatic cinematic backlight at dusk, glowing rim light outlining her silhouette and hair, high contrast, warm city lights bokeh")]),
  dict(id="B11", key=("BG","FON"), name=("Background","Fondo"), hue="--h4", opts=[
   ("White void","Void blanco","seamless pure white background, infinite white studio void, soft contact shadow on the floor"),
   ("Neutral grey","Gris neutro","seamless light grey studio backdrop"),
@@ -192,12 +196,12 @@ PRESETS = [
  ("Pastel dream", "Sueño pastel", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR5 HAIR9+12 STYLE4 EYES8 SKIN1 BODY2 OUTFIT23 ACC0 CAM1 ANGLE1 LIGHT1 BG2 | perchance | one"),
  ("Midnight moth", "Polilla nocturna", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR4 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT32 ACC0 CAM7 ANGLE3 LIGHT4 BG9 | venice | nl"),
  ("The Silver Weaver", "La Tejedora de Plata", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR7 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT32 ACC0 CAM8 ANGLE3 LIGHT4 BG10 | venice | nl"),
- ("Moth silk terrace", "Terraza de seda", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR7 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT32 ACC0 CAM9 ANGLE1 LIGHT2 BG11 | venice | nl"),
+ ("Moth silk terrace", "Terraza de seda", "PHOTO4 GLOW2 AGE1 ETHN1 EXPR7 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT33 ACC13 CAM10 ANGLE2 LIGHT5 BG11 | venice | nl"),
  ("Studio portrait", "Retrato de estudio", "PHOTO1 GLOW1 AGE1 ETHN1 EXPR4 HAIR3 STYLE4 EYES2 SKIN2 BODY4 OUTFIT3 ACC8 CAM3 ANGLE1 LIGHT3 BG2 | perchance | one"),
 ]
 
 # Library version: bump when any prompt text changes, so recipes record which texts they used.
-LIB_VERSION = "1.15"  # 1.15: silk hammock pose, rooftop terrace skyline; 1.14: shorter short dresses, textured moth suit, dreamy expression, edge pose, night city; 1.13: cinematic photo, windblown hair, midnight moth heroine, girder pose, city from above; 1.12: delicate henna accessory (ACC12); 1.11: lily princess outfits 30–31; 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
+LIB_VERSION = "1.16"  # 1.16: moth crop suit, moth-wing mask, suspended-in-silk pose, dramatic rim light; 1.15: silk hammock pose, rooftop terrace skyline; 1.14: shorter short dresses, textured moth suit, dreamy expression, edge pose, night city; 1.13: cinematic photo, windblown hair, midnight moth heroine, girder pose, city from above; 1.12: delicate henna accessory (ACC12); 1.11: lily princess outfits 30–31; 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
 
 PLATFORMS = {  # separator default + transforms applied to the prompt text
     "venice":    {"label": "Venice AI",    "sep": "nl"},

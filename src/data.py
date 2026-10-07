@@ -40,7 +40,8 @@ BLOCKS = [
   ("Elegant","Elegante","calm self-assured gaze"),
   ("Serene","Serena","serene warm expression"),
   ("Playful","Divertida","playful laughing expression"),
-  ("Sweet & confident", "Dulce y segura", "sweet gentle expression, calm self-assured gaze, soft smile")]),
+  ("Sweet & confident", "Dulce y segura", "sweet gentle expression, calm self-assured gaze, soft smile"),
+  ("Dreamy & friendly", "Soñadora y amable", "dreamy contemplative expression, soft friendly smile, warm approachable look, calm and self-assured")]),
  dict(id="B3.1", key=("HAIR","CAB"), name=("Hair color","Color de cabello"), hue="--h3", multi=True,
       mix={"strip": " (dyed )?hair.*$", "tpl": "multi-tone hair blending {}"}, opts=[
   ("Honey blonde","Rubia miel","honey-blonde hair"),
@@ -119,11 +120,11 @@ BLOCKS = [
   ("Farm-town hero","Heroína de pueblo","small-town farm outfit, forest green flannel shirt, worn denim jacket, straight jeans, leather work boots"),
   ("Emerald heroine (cape)","Heroína esmeralda (capa)","original superhero costume, full-coverage emerald and silver bodysuit, short silver cape, stylized leaf emblem on the chest, knee-high silver boots"),
   ("Emerald heroine (no cape)","Heroína esmeralda (sin capa)","original superhero costume, full-coverage emerald and silver bodysuit with sleek armored panels, stylized leaf emblem on the chest, silver gauntlets, knee-high silver boots, no cape"),
-  ("Forest princess (short)", "Princesa del bosque (corto)", "original forest princess outfit, dress made of layered green leaves, vine-laced bodice, puffed leaf sleeves, ruffled knee-length leaf skirt, vine-wrapped heeled sandals, no wings"),
+  ("Forest princess (short)", "Princesa del bosque (corto)", "original forest princess outfit, dress made of layered green leaves, vine-laced bodice, puffed leaf sleeves, short ruffled leaf skirt ending above the knee, vine-wrapped heeled sandals, no wings"),
   ("Forest princess (gown)", "Princesa del bosque (largo)", "original forest princess gown made of layered green leaves, vine-laced bodice, puffed leaf sleeves, flowing full-length leaf skirt with tiny white blossoms, no wings"),
-  ("Lily princess (short)", "Princesa lirio (corto)", "original flower princess dress made of layered white star-shaped lily petals with pale green tips, fitted petal bodice with fine golden stamen embroidery, soft chiffon underlayer, tiny crystal dewdrops, thin green vine belt, knee-length petal skirt, satin heeled sandals, no wings"),
+  ("Lily princess (short)", "Princesa lirio (corto)", "original flower princess dress made of layered white star-shaped lily petals with pale green tips, fitted petal bodice with fine golden stamen embroidery, soft chiffon underlayer, tiny crystal dewdrops, thin green vine belt, short petal skirt ending well above the knee, satin heeled sandals, no wings"),
   ("Lily princess (gown)", "Princesa lirio (largo)", "original flower princess gown made of cascading white star-shaped lily petals with pale green tips, fitted petal bodice with fine golden stamen embroidery, sheer chiffon sleeves, tiny crystal dewdrops, thin green vine belt, flowing full-length petal skirt with a short train, no wings"),
-  ("Midnight moth heroine", "Heroína polilla nocturna", "original superhero costume, glossy black finely pebbled textured fabric, cropped long-sleeve top, high-waisted fitted trousers, long gloves, large metallic silver moth emblem across the chest, no mask")]),
+  ("Midnight moth heroine", "Heroína polilla nocturna", "original superhero costume, glossy black finely pebbled textured fabric with subtle iridescent sheen, fine silver moth-wing vein patterns tracing the gloves, forearms and sides, feminine fitted cropped long-sleeve top ending just below the bust, high-waisted fitted trousers, long gloves, large metallic silver moth emblem across the chest, no mask")]),
  dict(id="B6.1", key=("ACC","ACC"), name=("Accessories","Accesorios"), hue="--h6", zero=True, multi=True, opts=[
   ("None","Ninguno",""),("Emerald necklace","Collar esmeralda","emerald pendant necklace on a fine gold chain"),("Gold hoops","Aros dorados","small gold hoop earrings"),("Sports watch","Reloj deportivo","minimalist sports watch"),("Cap","Gorra","beige baseball cap"),
   ("Sunglasses","Gafas de sol","oversized tortoiseshell sunglasses"),
@@ -141,7 +142,8 @@ BLOCKS = [
   ("Walking","Caminando","full body shot, walking toward camera, natural mid-stride motion"),
   ("Seated","Sentada","full body shot, sitting casually on a low wooden stool, relaxed posture"),
   ("Confident stance", "Postura segura", "full body shot, standing tall, confident regal posture, shoulders back, chin slightly raised, looking at camera"),
-  ("On the girder", "En la viga", "full body, reclining on a steel girder high above the city, one arm raised behind her head, relaxed diagonal body line")]),
+  ("On the girder", "En la viga", "full body, reclining on a steel girder high above the city, one arm raised behind her head, relaxed diagonal body line"),
+  ("Sitting on the edge", "Sentada en el borde", "full body, sitting on the edge of a steel girder high above the city, one knee drawn up with her forearm resting on it, the other leg hanging over the edge, leaning back on one hand, head tilted, gazing down at the city")]),
  dict(id="B7.1", key=("ANGLE","ANG"), name=("Camera angle","Ángulo de cámara"), hue="--h7", opts=[
   ("Eye-level","A la altura de los ojos","eye-level shot, neutral natural perspective"),
   ("Low angle","Contrapicado","low angle shot looking up at the subject, powerful heroic perspective"),
@@ -169,7 +171,8 @@ BLOCKS = [
   ("City street","Calle urbana","sunny city street, modern storefronts, soft background blur"),
   ("Palace garden", "Palacio jardín", "sunlit marble palace conservatory, white columns and arches, climbing roses, polished marble floor, scattered softly glowing blue petals"),
   ("Cloud terrace", "Terraza en las nubes", "ivy-covered stone arcade on a palace terrace above the clouds, bright sky"),
-  ("City from above", "Ciudad desde arriba", "dramatic overhead view of a busy city street far below, yellow taxis, traffic, skyscrapers, shallow depth of field")]),
+  ("City from above", "Ciudad desde arriba", "dramatic overhead view of a busy city street far below, yellow taxis, traffic, skyscrapers, shallow depth of field"),
+  ("Night city from above", "Ciudad de noche desde arriba", "dizzying aerial view of a city at night far below, neon lights blurred into haze, streams of yellow taxis, towering skyscrapers on both sides")]),
 ]
 NEG = "cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features"
 DEFAULT = {"B1":0,"B2":0,"B3":0,"B3.5":[1],"B3.3":1,"B3.1":[0],"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":21,"B6.1":[],"B7":0,"B7.1":0,"B8":0,"B11":5}  # Venice carnival in the city (chosen by Alex)
@@ -186,11 +189,12 @@ PRESETS = [
  ("Flamenco night", "Noche flamenca", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR3 HAIR7 STYLE9 EYES3 SKIN3 BODY4 OUTFIT12 ACC2 CAM1 ANGLE1 LIGHT2 BG6 | perchance | one"),
  ("Pastel dream", "Sueño pastel", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR5 HAIR9+12 STYLE4 EYES8 SKIN1 BODY2 OUTFIT23 ACC0 CAM1 ANGLE1 LIGHT1 BG2 | perchance | one"),
  ("Midnight moth", "Polilla nocturna", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR4 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT32 ACC0 CAM7 ANGLE3 LIGHT4 BG9 | venice | nl"),
+ ("The Silver Weaver", "La Tejedora de Plata", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR7 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT32 ACC0 CAM8 ANGLE3 LIGHT4 BG10 | venice | nl"),
  ("Studio portrait", "Retrato de estudio", "PHOTO1 GLOW1 AGE1 ETHN1 EXPR4 HAIR3 STYLE4 EYES2 SKIN2 BODY4 OUTFIT3 ACC8 CAM3 ANGLE1 LIGHT3 BG2 | perchance | one"),
 ]
 
 # Library version: bump when any prompt text changes, so recipes record which texts they used.
-LIB_VERSION = "1.13"  # 1.13: cinematic photo, windblown hair, midnight moth heroine, girder pose, city from above; 1.12: delicate henna accessory (ACC12); 1.11: lily princess outfits 30–31; 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
+LIB_VERSION = "1.14"  # 1.14: shorter short dresses, textured moth suit, dreamy expression, edge pose, night city; 1.13: cinematic photo, windblown hair, midnight moth heroine, girder pose, city from above; 1.12: delicate henna accessory (ACC12); 1.11: lily princess outfits 30–31; 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
 
 PLATFORMS = {  # separator default + transforms applied to the prompt text
     "venice":    {"label": "Venice AI",    "sep": "nl"},

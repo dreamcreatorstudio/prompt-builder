@@ -1,12 +1,12 @@
 # Block Library / Biblioteca de bloques
 
-Library version **v1.13** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
+Library version **v1.14** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
 Each block has a short key and numbered options. A **recipe** records the library version, one option per block, the platform and the separator:
 
-`v1.13 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
+`v1.14 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
 
-Spanish keys work too: `v1.13 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
+Spanish keys work too: `v1.14 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
 
 New options are always added at the end of a block and existing numbers never change, so old recipes keep working.
 
@@ -64,6 +64,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 4 | Serene | Serena | serene warm expression |
 | 5 | Playful | Divertida | playful laughing expression |
 | 6 | Sweet & confident | Dulce y segura | sweet gentle expression, calm self-assured gaze, soft smile |
+| 7 | Dreamy & friendly | Soñadora y amable | dreamy contemplative expression, soft friendly smile, warm approachable look, calm and self-assured |
 
 ## B3.1 · HAIR / CAB — Hair color / Color de cabello (mix several: `HAIR2+4`)
 | # | EN | ES | Prompt text |
@@ -163,11 +164,11 @@ New options are always added at the end of a block and existing numbers never ch
 | 25 | Farm-town hero | Heroína de pueblo | small-town farm outfit, forest green flannel shirt, worn denim jacket, straight jeans, leather work boots |
 | 26 | Emerald heroine (cape) | Heroína esmeralda (capa) | original superhero costume, full-coverage emerald and silver bodysuit, short silver cape, stylized leaf emblem on the chest, knee-high silver boots |
 | 27 | Emerald heroine (no cape) | Heroína esmeralda (sin capa) | original superhero costume, full-coverage emerald and silver bodysuit with sleek armored panels, stylized leaf emblem on the chest, silver gauntlets, knee-high silver boots, no cape |
-| 28 | Forest princess (short) | Princesa del bosque (corto) | original forest princess outfit, dress made of layered green leaves, vine-laced bodice, puffed leaf sleeves, ruffled knee-length leaf skirt, vine-wrapped heeled sandals, no wings |
+| 28 | Forest princess (short) | Princesa del bosque (corto) | original forest princess outfit, dress made of layered green leaves, vine-laced bodice, puffed leaf sleeves, short ruffled leaf skirt ending above the knee, vine-wrapped heeled sandals, no wings |
 | 29 | Forest princess (gown) | Princesa del bosque (largo) | original forest princess gown made of layered green leaves, vine-laced bodice, puffed leaf sleeves, flowing full-length leaf skirt with tiny white blossoms, no wings |
-| 30 | Lily princess (short) | Princesa lirio (corto) | original flower princess dress made of layered white star-shaped lily petals with pale green tips, fitted petal bodice with fine golden stamen embroidery, soft chiffon underlayer, tiny crystal dewdrops, thin green vine belt, knee-length petal skirt, satin heeled sandals, no wings |
+| 30 | Lily princess (short) | Princesa lirio (corto) | original flower princess dress made of layered white star-shaped lily petals with pale green tips, fitted petal bodice with fine golden stamen embroidery, soft chiffon underlayer, tiny crystal dewdrops, thin green vine belt, short petal skirt ending well above the knee, satin heeled sandals, no wings |
 | 31 | Lily princess (gown) | Princesa lirio (largo) | original flower princess gown made of cascading white star-shaped lily petals with pale green tips, fitted petal bodice with fine golden stamen embroidery, sheer chiffon sleeves, tiny crystal dewdrops, thin green vine belt, flowing full-length petal skirt with a short train, no wings |
-| 32 | Midnight moth heroine | Heroína polilla nocturna | original superhero costume, glossy black finely pebbled textured fabric, cropped long-sleeve top, high-waisted fitted trousers, long gloves, large metallic silver moth emblem across the chest, no mask |
+| 32 | Midnight moth heroine | Heroína polilla nocturna | original superhero costume, glossy black finely pebbled textured fabric with subtle iridescent sheen, fine silver moth-wing vein patterns tracing the gloves, forearms and sides, feminine fitted cropped long-sleeve top ending just below the bust, high-waisted fitted trousers, long gloves, large metallic silver moth emblem across the chest, no mask |
 
 ## B6.1 · ACC / ACC — Accessories / Accesorios (choose several: `ACC1+3`; `ACC0` = none)
 | # | EN | ES | Prompt text |
@@ -196,6 +197,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 5 | Seated | Sentada | full body shot, sitting casually on a low wooden stool, relaxed posture |
 | 6 | Confident stance | Postura segura | full body shot, standing tall, confident regal posture, shoulders back, chin slightly raised, looking at camera |
 | 7 | On the girder | En la viga | full body, reclining on a steel girder high above the city, one arm raised behind her head, relaxed diagonal body line |
+| 8 | Sitting on the edge | Sentada en el borde | full body, sitting on the edge of a steel girder high above the city, one knee drawn up with her forearm resting on it, the other leg hanging over the edge, leaning back on one hand, head tilted, gazing down at the city |
 
 ## B7.1 · ANGLE / ANG — Camera angle / Ángulo de cámara
 | # | EN | ES | Prompt text |
@@ -233,6 +235,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 7 | Palace garden | Palacio jardín | sunlit marble palace conservatory, white columns and arches, climbing roses, polished marble floor, scattered softly glowing blue petals |
 | 8 | Cloud terrace | Terraza en las nubes | ivy-covered stone arcade on a palace terrace above the clouds, bright sky |
 | 9 | City from above | Ciudad desde arriba | dramatic overhead view of a busy city street far below, yellow taxis, traffic, skyscrapers, shallow depth of field |
+| 10 | Night city from above | Ciudad de noche desde arriba | dizzying aerial view of a city at night far below, neon lights blurred into haze, streams of yellow taxis, towering skyscrapers on both sides |
 
 ## B0 · NEG — Negative prompt
 ```

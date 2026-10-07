@@ -1,6 +1,6 @@
 # Prompt Builder
 
-Build image prompts from **blocks** and copy a ready-to-use prompt. Pick one numbered option per block: `PHOTO` photo engine · `GLOW` skin glow · `AGE` model age · `ETHN` heritage · `EXPR` expression · `HAIR` hair color · `STYLE` hairstyle · `EYES` eyes · `SKIN` skin tone · `BODY` body · `OUTFIT` outfit · `ACC` accessories · `MASK` face covering · `CAM` framing & pose · `POSE` pose · `PLACE` place · `ANGLE` camera angle · `LIGHT` lighting · `BG` background.
+Build image prompts from **blocks** and copy a ready-to-use prompt. Pick one numbered option per block: `PHOTO` photo engine · `GLOW` skin glow · `AGE` model age · `ETHN` heritage · `EXPR` expression · `HAIR` hair color · `STYLE` hairstyle · `EYES` eyes · `SKIN` skin tone · `BODY` body · `OUTFIT` outfit · `ACC` accessories · `MASK` face covering · `CAM` framing & pose · `POSE` pose · `PLACE` place · `HANDS` hands · `ANGLE` camera angle · `LIGHT` lighting · `BG` background.
 
 **Use it here:** https://dreamcreatorstudio.github.io/prompt-builder/
 
@@ -13,7 +13,7 @@ Build image prompts from **blocks** and copy a ready-to-use prompt. Pick one num
 - **Copy for generating** (clean prompt) or **Copy with blocks** (keeps `[B#]` labels, for saving or asking for changes).
 - To compare fairly, keep the same model, format and settings, and the same seed when available. Recipes are starting points; "tested" is reserved for combinations with recorded results and the platform/model used.
 - **Recipes** record library version, options, platform and separator:
-  `v1.21 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 MASK0 CAM1 POSE0 PLACE0 ANGLE1 LIGHT1 BG6 | perchance | one`
+  `v1.22 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 MASK0 CAM1 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT1 BG6 | perchance | one`
 - Paste a recipe to load it. Invalid recipes are rejected as a whole with a list of errors; partial recipes are fine.
 - Recipes and saved sessions from an older library version are shown with that version's exact texts (read-only) until you choose to migrate. Migrating keeps the option numbers but uses current texts, so the prompt may change.
 - Notes on combinations, grouped as incompatible, out of frame or needs testing (never changed silently).

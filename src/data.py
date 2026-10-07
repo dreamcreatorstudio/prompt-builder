@@ -171,7 +171,16 @@ BLOCKS = [
   ("Kneeling","De rodillas","kneeling on one knee, upright torso"),
   ("Walking","Caminando","walking forward, natural mid-stride"),
   ("Suspended diagonal","Suspendida en diagonal","suspended in a dynamic diagonal line, one hand gripping a strand, hair streaming in the wind"),
-  ("Arms raised","Brazos en alto","standing with both arms raised triumphantly toward the sky")]),
+  ("Arms raised","Brazos en alto","standing with both arms raised triumphantly toward the sky"),
+  ("Leaning on a wall","Apoyada en la pared","leaning casually with one shoulder against a wall, relaxed"),
+  ("Lying on her side","De lado, sobre el codo","lying on her side, propped up on one elbow, relaxed"),
+  ("Cross-legged","Piernas cruzadas","sitting cross-legged, upright and relaxed"),
+  ("Over the shoulder","Mirando por encima del hombro","standing turned away, looking back over her shoulder"),
+  ("Twirling","Girando","caught mid-twirl, hair and clothing flowing with the motion"),
+  ("Hero crouch","Agachada heroica","crouching low in a ready stance, one hand touching the ground"),
+  ("Yoga lotus","Yoga: loto","seated in lotus pose, spine tall"),
+  ("Yoga tree","Yoga: árbol","standing in tree pose, balanced on one leg"),
+  ("Yoga warrior II","Yoga: guerrero II","in warrior II yoga pose, arms extended, strong stance")]),
  dict(id="B7.3", key=("PLACE","LUG"), name=("Place","Lugar"), hue="--h7", zero=True, opts=[
   ("None","Ninguno",""),
   ("Steel girder","Viga de acero","on a steel girder high above the city"),
@@ -180,6 +189,20 @@ BLOCKS = [
   ("Pyramid tower top","Cima de torre pirámide","on the very top of a glass pyramid-shaped skyscraper, the entire city spread out around and below her to the horizon"),
   ("Tower spire top","Cima de una torre","on the small platform at the very top of a tall tower spire, the entire city spread out around and below her to the horizon"),
   ("Rooftop ledge","Cornisa de azotea","on the stone ledge of a rooftop terrace, city skyline behind her")]),
+ dict(id="B7.4", key=("HANDS","MAN"), name=("Hands","Manos"), hue="--h7", zero=True, opts=[
+  ("Natural","Naturales",""),
+  ("Hands on hips","Manos en la cintura","hands on hips"),
+  ("Arms crossed","Brazos cruzados","arms loosely crossed"),
+  ("Hand in hair","Mano en el pelo","one hand running through her hair"),
+  ("Hand on chin","Mano en el mentón","one hand resting lightly under her chin"),
+  ("Hands clasped","Manos juntas al frente","hands gently clasped in front of her"),
+  ("Holding a flower","Sosteniendo una flor","holding a single white flower in one hand"),
+  ("Reaching out","Mano hacia la cámara","one hand reaching softly toward the camera"),
+  ("Hands in pockets","Manos en los bolsillos","hands tucked into her pockets"),
+  ("Hands at heart","Manos al pecho (namasté)","palms pressed together at her heart"),
+  ("Light in palm","Luz en la palma","a small glowing light floating above her open palm"),
+  ("Arm behind head","Brazo detrás de la cabeza","one arm raised and resting behind her head"),
+  ("Touching the mask","Tocando la máscara","fingertips lightly touching the edge of her mask")]),
  dict(id="B7.1", key=("ANGLE","ANG"), name=("Camera angle","Ángulo de cámara"), hue="--h7", opts=[
   ("Eye-level","A la altura de los ojos","eye-level shot, neutral natural perspective"),
   ("Low angle","Contrapicado","low angle shot looking up at the subject, powerful heroic perspective"),
@@ -216,28 +239,28 @@ BLOCKS = [
   ("Open sky", "Cielo abierto", "clear blue sky, bright daylight, distant horizon")]),
 ]
 NEG = "cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features"
-DEFAULT = {"B1":0,"B2":0,"B3":0,"B3.5":[1],"B3.3":1,"B3.1":[0],"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":21,"B6.1":[],"B6.2":0,"B7":0,"B7.2":0,"B7.3":0,"B7.1":0,"B8":0,"B11":5}  # Venice carnival in the city (chosen by Alex)
+DEFAULT = {"B1":0,"B2":0,"B3":0,"B3.5":[1],"B3.3":1,"B3.1":[0],"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":21,"B6.1":[],"B6.2":0,"B7":0,"B7.2":0,"B7.3":0,"B7.4":0,"B7.1":0,"B8":0,"B11":5}  # Venice carnival in the city (chosen by Alex)
 
 # Presets: ready-made combinations (all 25-year-old, Slavic). Not part of the prompt library, so no version bump.
 PRESETS = [
- ("Forest princess", "Princesa del bosque", "PHOTO1 GLOW2 AGE1 ETHN1 EXPR6 HAIR16 STYLE13 EYES7 SKIN2 BODY2 OUTFIT28 ACC0 MASK0 CAM6 POSE0 PLACE0 ANGLE1 LIGHT2 BG7 | perchance | one"),
- ("Lily princess", "Princesa lirio", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR6 HAIR1 STYLE14 EYES8 SKIN1 BODY2 OUTFIT31 ACC12 MASK0 CAM6 POSE0 PLACE0 ANGLE2 LIGHT2 BG8 | perchance | one"),
- ("Yoga catalog", "Catálogo de yoga", "PHOTO3 GLOW1 AGE1 ETHN1 EXPR4 HAIR6 STYLE9 EYES2 SKIN1 BODY2 OUTFIT5 ACC0 MASK0 CAM1 POSE0 PLACE0 ANGLE1 LIGHT1 BG1 | perchance | one"),
- ("Beach sunset", "Playa al atardecer", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR2 HAIR1 STYLE5 EYES1 SKIN2 BODY1 OUTFIT3 ACC6 MASK0 CAM4 POSE0 PLACE0 ANGLE1 LIGHT2 BG4 | perchance | one"),
- ("Paris street style", "Estilo urbano en París", "PHOTO2 GLOW1 AGE1 ETHN1 EXPR3 HAIR5 STYLE3 EYES4 SKIN1 BODY2 OUTFIT4 ACC7+8 MASK0 CAM4 POSE0 PLACE0 ANGLE9 LIGHT4 BG3 | perchance | one"),
- ("Urban fitness", "Fitness urbano", "PHOTO1 GLOW3 AGE1 ETHN1 EXPR1 HAIR2 STYLE8 EYES1 SKIN1 BODY1 OUTFIT2 ACC3 MASK0 CAM4 POSE0 PLACE0 ANGLE2 LIGHT2 BG6 | perchance | one"),
- ("Emerald heroine", "Heroína esmeralda", "PHOTO1 GLOW2 AGE1 ETHN1 EXPR1 HAIR7 STYLE8 EYES2 SKIN1 BODY1 OUTFIT27 ACC0 MASK0 CAM6 POSE0 PLACE0 ANGLE2 LIGHT2 BG6 | perchance | one"),
- ("Flamenco night", "Noche flamenca", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR3 HAIR7 STYLE9 EYES3 SKIN3 BODY4 OUTFIT12 ACC2 MASK0 CAM1 POSE0 PLACE0 ANGLE1 LIGHT2 BG6 | perchance | one"),
- ("Pastel dream", "Sueño pastel", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR5 HAIR9+12 STYLE4 EYES8 SKIN1 BODY2 OUTFIT23 ACC0 MASK0 CAM1 POSE0 PLACE0 ANGLE1 LIGHT1 BG2 | perchance | one"),
- ("Midnight moth", "Polilla nocturna", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR4 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT32 ACC0 MASK0 CAM7 POSE0 PLACE0 ANGLE3 LIGHT4 BG9 | venice | nl"),
- ("The Silver Weaver", "La Tejedora de Plata", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR7 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT32 ACC0 MASK0 CAM8 POSE0 PLACE0 ANGLE3 LIGHT4 BG10 | venice | nl"),
- ("Moth silk terrace", "Terraza de seda", "PHOTO4 GLOW2 AGE1 ETHN1 EXPR7 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT33 ACC0 MASK1 CAM12 POSE3 PLACE3 ANGLE13 LIGHT5 BG12 | venice | nl"),
- ("Top of the city", "En la cima de la ciudad", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR1 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT33 ACC0 MASK1 CAM13 POSE7 PLACE5 ANGLE1 LIGHT2 BG13 | venice | nl"),
- ("Studio portrait", "Retrato de estudio", "PHOTO1 GLOW1 AGE1 ETHN1 EXPR4 HAIR3 STYLE4 EYES2 SKIN2 BODY4 OUTFIT3 ACC8 MASK0 CAM3 POSE0 PLACE0 ANGLE1 LIGHT3 BG2 | perchance | one"),
+ ("Forest princess", "Princesa del bosque", "PHOTO1 GLOW2 AGE1 ETHN1 EXPR6 HAIR16 STYLE13 EYES7 SKIN2 BODY2 OUTFIT28 ACC0 MASK0 CAM6 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT2 BG7 | perchance | one"),
+ ("Lily princess", "Princesa lirio", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR6 HAIR1 STYLE14 EYES8 SKIN1 BODY2 OUTFIT31 ACC12 MASK0 CAM6 POSE0 PLACE0 HANDS0 ANGLE2 LIGHT2 BG8 | perchance | one"),
+ ("Yoga catalog", "Catálogo de yoga", "PHOTO3 GLOW1 AGE1 ETHN1 EXPR4 HAIR6 STYLE9 EYES2 SKIN1 BODY2 OUTFIT5 ACC0 MASK0 CAM1 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT1 BG1 | perchance | one"),
+ ("Beach sunset", "Playa al atardecer", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR2 HAIR1 STYLE5 EYES1 SKIN2 BODY1 OUTFIT3 ACC6 MASK0 CAM4 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT2 BG4 | perchance | one"),
+ ("Paris street style", "Estilo urbano en París", "PHOTO2 GLOW1 AGE1 ETHN1 EXPR3 HAIR5 STYLE3 EYES4 SKIN1 BODY2 OUTFIT4 ACC7+8 MASK0 CAM4 POSE0 PLACE0 HANDS0 ANGLE9 LIGHT4 BG3 | perchance | one"),
+ ("Urban fitness", "Fitness urbano", "PHOTO1 GLOW3 AGE1 ETHN1 EXPR1 HAIR2 STYLE8 EYES1 SKIN1 BODY1 OUTFIT2 ACC3 MASK0 CAM4 POSE0 PLACE0 HANDS0 ANGLE2 LIGHT2 BG6 | perchance | one"),
+ ("Emerald heroine", "Heroína esmeralda", "PHOTO1 GLOW2 AGE1 ETHN1 EXPR1 HAIR7 STYLE8 EYES2 SKIN1 BODY1 OUTFIT27 ACC0 MASK0 CAM6 POSE0 PLACE0 HANDS0 ANGLE2 LIGHT2 BG6 | perchance | one"),
+ ("Flamenco night", "Noche flamenca", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR3 HAIR7 STYLE9 EYES3 SKIN3 BODY4 OUTFIT12 ACC2 MASK0 CAM1 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT2 BG6 | perchance | one"),
+ ("Pastel dream", "Sueño pastel", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR5 HAIR9+12 STYLE4 EYES8 SKIN1 BODY2 OUTFIT23 ACC0 MASK0 CAM1 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT1 BG2 | perchance | one"),
+ ("Midnight moth", "Polilla nocturna", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR4 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT32 ACC0 MASK0 CAM7 POSE0 PLACE0 HANDS0 ANGLE3 LIGHT4 BG9 | venice | nl"),
+ ("The Silver Weaver", "La Tejedora de Plata", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR7 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT32 ACC0 MASK0 CAM8 POSE0 PLACE0 HANDS0 ANGLE3 LIGHT4 BG10 | venice | nl"),
+ ("Moth silk terrace", "Terraza de seda", "PHOTO4 GLOW2 AGE1 ETHN1 EXPR7 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT33 ACC0 MASK1 CAM12 POSE3 PLACE3 HANDS0 ANGLE13 LIGHT5 BG12 | venice | nl"),
+ ("Top of the city", "En la cima de la ciudad", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR1 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT33 ACC0 MASK1 CAM13 POSE7 PLACE5 HANDS0 ANGLE1 LIGHT2 BG13 | venice | nl"),
+ ("Studio portrait", "Retrato de estudio", "PHOTO1 GLOW1 AGE1 ETHN1 EXPR4 HAIR3 STYLE4 EYES2 SKIN2 BODY4 OUTFIT3 ACC8 MASK0 CAM3 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT3 BG2 | perchance | one"),
 ]
 
 # Library version: bump when any prompt text changes, so recipes record which texts they used.
-LIB_VERSION = "1.21"  # 1.21: Face covering block (MASK), moth mask with visible eyes; 1.20: silk nets/hammock described as glowing threads (Venice drew satin fabric); 1.19: POSE and PLACE blocks, framing-only CAM 12–13, open sky; 1.18: clearer two-piece moth suit and reclining net pose, high 3/4 tilt angle; 1.17: lying-on-silk-net pose, terrace silk-net background; 1.16: moth crop suit, moth-wing mask, suspended-in-silk pose, dramatic rim light; 1.15: silk hammock pose, rooftop terrace skyline; 1.14: shorter short dresses, textured moth suit, dreamy expression, edge pose, night city; 1.13: cinematic photo, windblown hair, midnight moth heroine, girder pose, city from above; 1.12: delicate henna accessory (ACC12); 1.11: lily princess outfits 30–31; 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
+LIB_VERSION = "1.22"  # 1.22: 9 more poses (incl. yoga) and a Hands block; 1.21: Face covering block (MASK), moth mask with visible eyes; 1.20: silk nets/hammock described as glowing threads (Venice drew satin fabric); 1.19: POSE and PLACE blocks, framing-only CAM 12–13, open sky; 1.18: clearer two-piece moth suit and reclining net pose, high 3/4 tilt angle; 1.17: lying-on-silk-net pose, terrace silk-net background; 1.16: moth crop suit, moth-wing mask, suspended-in-silk pose, dramatic rim light; 1.15: silk hammock pose, rooftop terrace skyline; 1.14: shorter short dresses, textured moth suit, dreamy expression, edge pose, night city; 1.13: cinematic photo, windblown hair, midnight moth heroine, girder pose, city from above; 1.12: delicate henna accessory (ACC12); 1.11: lily princess outfits 30–31; 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
 
 PLATFORMS = {  # separator default + transforms applied to the prompt text
     "venice":    {"label": "Venice AI",    "sep": "nl"},
@@ -260,6 +283,12 @@ SEPARATORS = {
 #   test         : may work, but depends on the model — try it with a fixed seed
 # A rule matches when block a is one of a_opts and (if given) block b is one of b_opts. Indexes are 0-based.
 CONFLICTS = [
+    dict(kind="test", a="B7.4", a_opts=list(range(1, 13)), b="B7.2", b_opts=[3, 6, 7, 13, 16],
+         en="This POSE already places the arms or hands; a HANDS choice may clash with it.",
+         es="Esta POSTURA ya define brazos o manos; una opción de MANOS puede chocar."),
+    dict(kind="test", a="B7.4", a_opts=[12], b="B6.2", b_opts=[0],
+         en="HANDS 12 touches the mask, but no MASK is chosen.",
+         es="MANOS 12 toca la máscara, pero no hay MÁSCARA elegida."),
     dict(kind="incompatible", a="B6.2", a_opts=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], b="B6.1", b_opts=[13],
          en="Two masks: the moth-wing mask in ACC and a face covering in MASK. Keep only one.",
          es="Dos máscaras: el antifaz de polilla en ACC y una máscara en MÁSCARA. Deja solo una."),

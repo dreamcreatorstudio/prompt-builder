@@ -1,12 +1,12 @@
 # Block Library / Biblioteca de bloques
 
-Library version **v1.21** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
+Library version **v1.22** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
 Each block has a short key and numbered options. A **recipe** records the library version, one option per block, the platform and the separator:
 
-`v1.21 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 MASK0 CAM1 POSE0 PLACE0 ANGLE1 LIGHT1 BG6 | perchance | one`
+`v1.22 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 MASK0 CAM1 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT1 BG6 | perchance | one`
 
-Spanish keys work too: `v1.21 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 MAS0 CAM1 POS0 LUG0 ANG1 LUZ1 FON6 | perchance | one`
+Spanish keys work too: `v1.22 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 MAS0 CAM1 POS0 LUG0 MAN0 ANG1 LUZ1 FON6 | perchance | one`
 
 New options are always added at the end of a block and existing numbers never change, so old recipes keep working.
 
@@ -232,6 +232,15 @@ New options are always added at the end of a block and existing numbers never ch
 | 5 | Walking | Caminando | walking forward, natural mid-stride |
 | 6 | Suspended diagonal | Suspendida en diagonal | suspended in a dynamic diagonal line, one hand gripping a strand, hair streaming in the wind |
 | 7 | Arms raised | Brazos en alto | standing with both arms raised triumphantly toward the sky |
+| 8 | Leaning on a wall | Apoyada en la pared | leaning casually with one shoulder against a wall, relaxed |
+| 9 | Lying on her side | De lado, sobre el codo | lying on her side, propped up on one elbow, relaxed |
+| 10 | Cross-legged | Piernas cruzadas | sitting cross-legged, upright and relaxed |
+| 11 | Over the shoulder | Mirando por encima del hombro | standing turned away, looking back over her shoulder |
+| 12 | Twirling | Girando | caught mid-twirl, hair and clothing flowing with the motion |
+| 13 | Hero crouch | Agachada heroica | crouching low in a ready stance, one hand touching the ground |
+| 14 | Yoga lotus | Yoga: loto | seated in lotus pose, spine tall |
+| 15 | Yoga tree | Yoga: árbol | standing in tree pose, balanced on one leg |
+| 16 | Yoga warrior II | Yoga: guerrero II | in warrior II yoga pose, arms extended, strong stance |
 
 ## B7.3 · PLACE / LUG — Place / Lugar
 | # | EN | ES | Prompt text |
@@ -243,6 +252,23 @@ New options are always added at the end of a block and existing numbers never ch
 | 4 | Pyramid tower top | Cima de torre pirámide | on the very top of a glass pyramid-shaped skyscraper, the entire city spread out around and below her to the horizon |
 | 5 | Tower spire top | Cima de una torre | on the small platform at the very top of a tall tower spire, the entire city spread out around and below her to the horizon |
 | 6 | Rooftop ledge | Cornisa de azotea | on the stone ledge of a rooftop terrace, city skyline behind her |
+
+## B7.4 · HANDS / MAN — Hands / Manos
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 0 | Natural | Naturales | (none) |
+| 1 | Hands on hips | Manos en la cintura | hands on hips |
+| 2 | Arms crossed | Brazos cruzados | arms loosely crossed |
+| 3 | Hand in hair | Mano en el pelo | one hand running through her hair |
+| 4 | Hand on chin | Mano en el mentón | one hand resting lightly under her chin |
+| 5 | Hands clasped | Manos juntas al frente | hands gently clasped in front of her |
+| 6 | Holding a flower | Sosteniendo una flor | holding a single white flower in one hand |
+| 7 | Reaching out | Mano hacia la cámara | one hand reaching softly toward the camera |
+| 8 | Hands in pockets | Manos en los bolsillos | hands tucked into her pockets |
+| 9 | Hands at heart | Manos al pecho (namasté) | palms pressed together at her heart |
+| 10 | Light in palm | Luz en la palma | a small glowing light floating above her open palm |
+| 11 | Arm behind head | Brazo detrás de la cabeza | one arm raised and resting behind her head |
+| 12 | Touching the mask | Tocando la máscara | fingertips lightly touching the edge of her mask |
 
 ## B7.1 · ANGLE / ANG — Camera angle / Ángulo de cámara
 | # | EN | ES | Prompt text |
@@ -305,6 +331,8 @@ Shown as notes, grouped by kind; the tool never changes your choices. / Se muest
 - Half-body and portrait framings crop the lower body: shorts, footwear and leg details from OUTFIT or BODY won't show.
 
 **Needs testing / Requiere pruebas**
+- This POSE already places the arms or hands; a HANDS choice may clash with it.
+- HANDS 12 touches the mask, but no MASK is chosen.
 - The Venice carnival outfit already includes a mask; a second one may clash.
 - This CAM option already includes a pose. With POSE, use a framing-only CAM: 2, 3, 12 or 13.
 - This CAM option already includes a pose or place. With PLACE, use a framing-only CAM: 2, 3, 12 or 13.

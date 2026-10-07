@@ -73,15 +73,15 @@ with sync_playwright() as p:
     check("Use keeps the panel open and valid", pg.is_visible("#varPanel"))
 
     # 3. real count + paging
-    pg.click('[data-var="B1"]')
+    pg.click('[data-var="B2"]')
     t = pg.inner_text("#varTitle")
-    check("PHOTO shows 2 alternatives, not 3", pg.locator("#variants .variant").count() == 2 and "of 2" in t, t)
+    check("GLOW shows 2 alternatives, not 3", pg.locator("#variants .variant").count() == 2 and "of 2" in t, t)
     check("no paging when everything fits", not pg.is_visible("#varNav"))
     pg.click('[data-var="B6"]')
-    check("OUTFIT shows 30 alternatives", "of 30" in pg.inner_text("#varTitle"))
+    check("OUTFIT shows 31 alternatives", "of 31" in pg.inner_text("#varTitle"))
     pg.click("#varNext"); pg.click("#varNext")
-    check("paging reaches later options", "7–9 of 30" in pg.inner_text("#varTitle"), pg.inner_text("#varTitle"))
-    check("Variants button shows real count", "(2)" in pg.inner_text('[data-var="B1"]'))
+    check("paging reaches later options", "7–9 of 31" in pg.inner_text("#varTitle"), pg.inner_text("#varTitle"))
+    check("Variants button shows real count", "(2)" in pg.inner_text('[data-var="B2"]'))
 
     # EN/ES must not alter the prompt
     pg.click("#closeVar")
@@ -101,7 +101,7 @@ with sync_playwright() as p:
 
     # recipe round-trip
     rec = pg.inner_text("#recipe"); prompt = ev(pg, "promptText()")
-    check("recipe records version, platform and separator", rec.startswith("v1.12 |") and "| seaart | break" in rec, rec)
+    check("recipe records version, platform and separator", rec.startswith("v1.13 |") and "| seaart | break" in rec, rec)
     pg.click("#resetBtn")
     pg.fill("#recipeIn", rec); pg.click("#loadBtn")
     check("pasting the recipe restores the exact prompt", ev(pg, "promptText()") == prompt)
@@ -224,25 +224,25 @@ with sync_playwright() as p:
     pgC.click('label[for="g-B6-0"]'); pgC.click("#resetBtn")
     check("Reset returns to the default base", base in pgC.inner_text("#recipe"))
     check("default prompt includes Slavic heritage after the age", "a 25-year-old woman, adult facial features, Slavic heritage" in ev(pgC, "promptText()"))
-    pgC.fill("#recipeIn", "v1.12 | ETHN0"); pgC.click("#loadBtn")
+    pgC.fill("#recipeIn", "v1.13 | ETHN0"); pgC.click("#loadBtn")
     check("ETHN0 leaves heritage out of the prompt", "heritage" not in ev(pgC, "promptText()") and "adult facial features, " in ev(pgC, "promptText()"))
-    pgC.fill("#recipeIn", "v1.12 | ETHN2"); pgC.click("#loadBtn")
+    pgC.fill("#recipeIn", "v1.13 | ETHN2"); pgC.click("#loadBtn")
     check("ETHN2 adds Nordic heritage", "Nordic Scandinavian heritage" in ev(pgC, "promptText()"))
-    pgC.fill("#recipeIn", "v1.12 | ETHN16"); pgC.click("#loadBtn")
+    pgC.fill("#recipeIn", "v1.13 | ETHN16"); pgC.click("#loadBtn")
     check("ETHN16 is out of range", pgC.is_visible("#loadErr"))
-    pgC.fill("#recipeIn", "v1.12 | ETHN14+15 HAIR3+10"); pgC.click("#loadBtn")
+    pgC.fill("#recipeIn", "v1.13 | ETHN14+15 HAIR3+10"); pgC.click("#loadBtn")
     pr = ev(pgC, "promptText()")
     check("two heritages mix into one phrase", "mixed Greek and Native American First Nations heritage" in pr, pr)
     check("two hair colors mix into one phrase", "multi-tone hair blending copper-red and vivid electric-blue" in pr, pr)
     check("mixed recipe round-trips", "ETHN14+15" in pgC.inner_text("#recipe") and "HAIR3+10" in pgC.inner_text("#recipe"))
-    pgC.fill("#recipeIn", "v1.12 | ETHN0+14"); pgC.click("#loadBtn")
+    pgC.fill("#recipeIn", "v1.13 | ETHN0+14"); pgC.click("#loadBtn")
     check("ETHN0 can't be mixed", pgC.is_visible("#loadErr"))
-    pgC.fill("#recipeIn", "v1.12 | HAIR3"); pgC.click("#loadBtn")
+    pgC.fill("#recipeIn", "v1.13 | HAIR3"); pgC.click("#loadBtn")
     pgC.click('label[for="g-B3_1-2"]')
     check("hair keeps at least one color when the last is unticked", ev(pgC, 'S.sel["B3.1"]') == [2])
     # presets: each loads cleanly, has no conflict notes, is 25 / Slavic, and the menu tracks it
     n_presets = ev(pgC, "PRESETS.length")
-    check("there are 10 presets plus None", n_presets == 10 and pgC.locator("#preset option").count() == 11)
+    check("there are 11 presets plus None", n_presets == 11 and pgC.locator("#preset option").count() == 12)
     bad = []
     for i in range(n_presets):
         pgC.select_option("#preset", str(i))
@@ -306,7 +306,7 @@ with sync_playwright() as p:
     # copy options of one block
     txt = ev(pg, 'optionsText("B6")')
     check("Copy options: header with ID, EN/ES keys and names", txt.startswith("B6 · OUTFIT / VES — Outfit / Vestuario\n\n1. Denim + white crop / Denim + crop blanco"), txt[:80])
-    check("Copy options: all 31 outfits, 22 is Venice carnival, last is the lily princess gown", "\n22. Venice carnival / Carnaval de Venecia\n" in txt and txt.rstrip().endswith("31. Lily princess (gown) / Princesa lirio (largo)") and txt.count("\n") == 32)
+    check("Copy options: all 32 outfits, 22 is Venice carnival, last is the midnight moth heroine", "\n22. Venice carnival / Carnaval de Venecia\n" in txt and txt.rstrip().endswith("32. Midnight moth heroine / Heroína polilla nocturna") and txt.count("\n") == 33)
     check("Copy options: ACC keeps 0", "\n0. None / Ninguno" in ev(pg, 'optionsText("B6.1")'))
     check("Copy options: no button labels inside", "Lock" not in txt and "Variants" not in txt)
     before = ev(pg, "JSON.stringify([S.sel, S.locked])")

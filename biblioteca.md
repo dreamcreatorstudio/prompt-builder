@@ -1,12 +1,12 @@
 # Block Library / Biblioteca de bloques
 
-Library version **v1.12** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
+Library version **v1.13** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
 Each block has a short key and numbered options. A **recipe** records the library version, one option per block, the platform and the separator:
 
-`v1.12 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
+`v1.13 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
 
-Spanish keys work too: `v1.12 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
+Spanish keys work too: `v1.13 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
 
 New options are always added at the end of a block and existing numbers never change, so old recipes keep working.
 
@@ -16,6 +16,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 1 | Realistic DSLR | Realista DSLR | RAW photo, photorealistic, real photograph, Canon EOS R5, 85mm lens, f/2.0, shallow depth of field, natural film grain, sharp focus, 8k uhd |
 | 2 | Fashion editorial | Editorial de moda | high-end fashion editorial photograph, medium format camera, 80mm lens, f/4, crisp detail, magazine quality, photorealistic |
 | 3 | Studio catalog | Catálogo de estudio | clean commercial catalog photograph, 50mm lens, f/8, everything in sharp focus, even exposure, photorealistic |
+| 4 | Cinematic ultra-real | Cine ultra-real | high-end photorealistic fashion photography, Canon EOS R5, 85mm lens, Kodak Portra 400 film aesthetic, subtle film grain, visible skin pores, individual eyelashes and hair strands, cinematic composition |
 
 ## B2 · GLOW / BRI — Skin glow / Brillo de piel
 | # | EN | ES | Prompt text |
@@ -101,6 +102,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 12 | Short bob | Bob corto | short bob cut |
 | 13 | Vine-strand waves | Ondas con enredaderas | long loose softly tousled hair with trailing thin vines and tiny white blossoms hanging like strands, small green leaves tucked in |
 | 14 | Straight vine strands | Lisa con enredaderas | long straight loose hair with trailing thin vines and tiny white blossoms hanging like strands, small green leaves tucked in |
+| 15 | Long windblown | Larga al viento | long flowing windblown hair, individual strands catching the light |
 
 ## B3.2 · EYES / OJO — Eyes / Ojos
 | # | EN | ES | Prompt text |
@@ -165,6 +167,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 29 | Forest princess (gown) | Princesa del bosque (largo) | original forest princess gown made of layered green leaves, vine-laced bodice, puffed leaf sleeves, flowing full-length leaf skirt with tiny white blossoms, no wings |
 | 30 | Lily princess (short) | Princesa lirio (corto) | original flower princess dress made of layered white star-shaped lily petals with pale green tips, fitted petal bodice with fine golden stamen embroidery, soft chiffon underlayer, tiny crystal dewdrops, thin green vine belt, knee-length petal skirt, satin heeled sandals, no wings |
 | 31 | Lily princess (gown) | Princesa lirio (largo) | original flower princess gown made of cascading white star-shaped lily petals with pale green tips, fitted petal bodice with fine golden stamen embroidery, sheer chiffon sleeves, tiny crystal dewdrops, thin green vine belt, flowing full-length petal skirt with a short train, no wings |
+| 32 | Midnight moth heroine | Heroína polilla nocturna | original superhero costume, glossy black finely pebbled textured fabric, cropped long-sleeve top, high-waisted fitted trousers, long gloves, large metallic silver moth emblem across the chest, no mask |
 
 ## B6.1 · ACC / ACC — Accessories / Accesorios (choose several: `ACC1+3`; `ACC0` = none)
 | # | EN | ES | Prompt text |
@@ -192,6 +195,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 4 | Walking | Caminando | full body shot, walking toward camera, natural mid-stride motion |
 | 5 | Seated | Sentada | full body shot, sitting casually on a low wooden stool, relaxed posture |
 | 6 | Confident stance | Postura segura | full body shot, standing tall, confident regal posture, shoulders back, chin slightly raised, looking at camera |
+| 7 | On the girder | En la viga | full body, reclining on a steel girder high above the city, one arm raised behind her head, relaxed diagonal body line |
 
 ## B7.1 · ANGLE / ANG — Camera angle / Ángulo de cámara
 | # | EN | ES | Prompt text |
@@ -228,6 +232,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 6 | City street | Calle urbana | sunny city street, modern storefronts, soft background blur |
 | 7 | Palace garden | Palacio jardín | sunlit marble palace conservatory, white columns and arches, climbing roses, polished marble floor, scattered softly glowing blue petals |
 | 8 | Cloud terrace | Terraza en las nubes | ivy-covered stone arcade on a palace terrace above the clouds, bright sky |
+| 9 | City from above | Ciudad desde arriba | dramatic overhead view of a busy city street far below, yellow taxis, traffic, skyscrapers, shallow depth of field |
 
 ## B0 · NEG — Negative prompt
 ```

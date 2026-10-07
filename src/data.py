@@ -15,7 +15,8 @@ BLOCKS = [
   ("40","40 años","a 40-year-old woman, mature adult features"),
   ("45","45 años","a 45-year-old woman, graceful mature features"),
   ("50","50 años","a 50-year-old woman, graceful mature features, subtle laugh lines")]),
- dict(id="B3.5", key=("ETHN","ETN"), name=("Heritage","Origen"), hue="--h3", zero=True, opts=[
+ dict(id="B3.5", key=("ETHN","ETN"), name=("Heritage","Origen"), hue="--h3", zero=True, multi=True,
+      mix={"strip": " heritage$", "tpl": "mixed {} heritage"}, opts=[
   ("Unspecified","Sin especificar",""),
   ("Slavic","Eslava","Slavic heritage"),
   ("Nordic","Nórdica","Nordic Scandinavian heritage"),
@@ -39,7 +40,8 @@ BLOCKS = [
   ("Serene","Serena","serene warm expression"),
   ("Playful","Divertida","playful laughing expression"),
   ("Sweet & confident", "Dulce y segura", "sweet gentle expression, calm self-assured gaze, soft smile")]),
- dict(id="B3.1", key=("HAIR","CAB"), name=("Hair color","Color de cabello"), hue="--h3", opts=[
+ dict(id="B3.1", key=("HAIR","CAB"), name=("Hair color","Color de cabello"), hue="--h3", multi=True,
+      mix={"strip": " (dyed )?hair.*$", "tpl": "multi-tone hair blending {}"}, opts=[
   ("Honey blonde","Rubia miel","honey-blonde hair"),
   ("Platinum blonde","Rubia platino","platinum blonde hair"),
   ("Redhead","Pelirroja","copper-red hair"),
@@ -162,10 +164,10 @@ BLOCKS = [
   ("Cloud terrace", "Terraza en las nubes", "ivy-covered stone arcade on a palace terrace above the clouds, bright sky")]),
 ]
 NEG = "cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features"
-DEFAULT = {"B1":0,"B2":0,"B3":0,"B3.5":1,"B3.3":1,"B3.1":0,"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":21,"B6.1":[],"B7":0,"B7.1":0,"B8":0,"B11":5}  # Venice carnival in the city (chosen by Alex)
+DEFAULT = {"B1":0,"B2":0,"B3":0,"B3.5":[1],"B3.3":1,"B3.1":[0],"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":21,"B6.1":[],"B7":0,"B7.1":0,"B8":0,"B11":5}  # Venice carnival in the city (chosen by Alex)
 
 # Library version: bump when any prompt text changes, so recipes record which texts they used.
-LIB_VERSION = "1.9"   # 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
+LIB_VERSION = "1.10"  # 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
 
 PLATFORMS = {  # separator default + transforms applied to the prompt text
     "venice":    {"label": "Venice AI",    "sep": "nl"},

@@ -1,12 +1,12 @@
 # Block Library / Biblioteca de bloques
 
-Library version **v1.9** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
+Library version **v1.10** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
 Each block has a short key and numbered options. A **recipe** records the library version, one option per block, the platform and the separator:
 
-`v1.9 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
+`v1.10 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
 
-Spanish keys work too: `v1.9 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
+Spanish keys work too: `v1.10 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
 
 New options are always added at the end of a block and existing numbers never change, so old recipes keep working.
 
@@ -34,7 +34,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 5 | 45 | 45 años | a 45-year-old woman, graceful mature features |
 | 6 | 50 | 50 años | a 50-year-old woman, graceful mature features, subtle laugh lines |
 
-## B3.5 · ETHN / ETN — Heritage / Origen
+## B3.5 · ETHN / ETN — Heritage / Origen (mix several: `ETHN1+3`)
 | # | EN | ES | Prompt text |
 |---|---|---|---|
 | 0 | Unspecified | Sin especificar | (none) |
@@ -64,7 +64,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 5 | Playful | Divertida | playful laughing expression |
 | 6 | Sweet & confident | Dulce y segura | sweet gentle expression, calm self-assured gaze, soft smile |
 
-## B3.1 · HAIR / CAB — Hair color / Color de cabello
+## B3.1 · HAIR / CAB — Hair color / Color de cabello (mix several: `HAIR2+4`)
 | # | EN | ES | Prompt text |
 |---|---|---|---|
 | 1 | Honey blonde | Rubia miel | honey-blonde hair |

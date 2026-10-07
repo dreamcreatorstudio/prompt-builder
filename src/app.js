@@ -16,7 +16,7 @@ function normFor(v, sel) {
   for (const b of ARCHIVE[v].blocks) {
     if (!(b.id in sel)) continue;
     const x = sel[b.id];
-    if (b.multi) out[b.id] = [...new Set(vals(x).filter(i => i !== 0))].sort((p, q) => p - q);
+    if (b.multi) out[b.id] = [...new Set(vals(x).filter(i => !b.zero || i !== 0))].sort((p, q) => p - q);
     else out[b.id] = Array.isArray(x) ? (x.length ? x[0] : 0) : x;
   }
   return out;
@@ -88,7 +88,10 @@ const curSel = () => S.pin ? S.pinSel : S.sel;
 function parts(sel, plat, v = ver()) {
   const P = ARCHIVE[v].platforms[plat] || PLATFORMS[plat];
   return ARCHIVE[v].blocks.map(b => {
-    let t = vals(sel[b.id]).map(i => b.texts[i]).filter(Boolean).join(", ");
+    const picks = vals(sel[b.id]).map(i => b.texts[i]).filter(Boolean);
+    let t = picks.length > 1 && b.mix
+      ? b.mix.tpl.replace("{}", picks.map(x => x.replace(new RegExp(b.mix.strip), "")).slice(0, -1).join(", ") + " and " + picks[picks.length - 1].replace(new RegExp(b.mix.strip), ""))
+      : picks.join(", ");
     if (t && P.drop) t = t.split(", ").filter(x => !P.drop.includes(x)).join(", ");
     if (t && P.weights && P.weights.includes(b.id)) t = `(${t}:1.2)`;
     return { id: b.id, hue: (BY_ID[b.id] || {}).hue || "--muted", text: t };
@@ -154,8 +157,8 @@ function parseRecipe(txt) {
     const bad = nums.find(n => !/^\d+$/.test(n) || +n < lo || +n > hi);
     if (bad !== undefined) { r.errors.push(fmt(L().errRange, { k: m[1], n: bad, a: lo, b: hi })); continue; }
     const idx = nums.map(n => b.zero ? +n : +n - 1);
-    if (b.multi && idx.length > 1 && idx.includes(0)) { r.errors.push(fmt(L().errZeroMix, { k: m[1] })); continue; }
-    const val = b.multi ? [...new Set(idx.filter(i => i !== 0))].sort((p, q) => p - q) : idx[0];
+    if (b.multi && b.zero && idx.length > 1 && idx.includes(0)) { r.errors.push(fmt(L().errZeroMix, { k: m[1] })); continue; }
+    const val = b.multi ? [...new Set(idx.filter(i => !b.zero || i !== 0))].sort((p, q) => p - q) : idx[0];
     if (b.id in seen && !same(seen[b.id].val, val)) { r.errors.push(fmt(L().errDup, { id: b.id, x: seen[b.id].tok, y: tok })); continue; }
     seen[b.id] = { val, tok }; r.sel[b.id] = val;
   }
@@ -232,7 +235,7 @@ function renderBlocks() {
   for (const b of BLOCKS) {
     const lk = !!S.locked[b.id], off = lk || frozen, gid = "g-" + b.id.replace(".", "_");
     const isDefault = same(S.sel[b.id], DEFAULT[b.id]);
-    const picked = i => b.multi ? (i === 0 ? !vals(S.sel[b.id]).length : vals(S.sel[b.id]).includes(i)) : S.sel[b.id] === i;
+    const picked = i => b.multi ? (i === 0 && b.zero ? !vals(S.sel[b.id]).length : vals(S.sel[b.id]).includes(i)) : S.sel[b.id] === i;
     const sec = document.createElement("div");
     sec.className = "block"; sec.style.setProperty("--hue", `var(${b.hue})`);
     sec.innerHTML = `<div class="bhead"><span class="bid">${b.id} · ${b.key[li]}</span><span class="bname">${esc(b.name[li])}</span>
@@ -240,7 +243,7 @@ function renderBlocks() {
       <button class="btn" data-lock="${b.id}" aria-pressed="${lk}" ${frozen ? "disabled" : ""} title="${L().lockTitle}">${lk ? L().locked : L().lock}</button>
       <button class="btn" data-var="${b.id}" ${off || b.multi ? "disabled" : ""} title="${b.multi ? L().noVarMulti : lk ? L().lockedNoVar : L().varTitle}">${L().variants}${b.multi ? "" : ` (${b.opts.length - 1})`}</button>
       <button class="btn" data-opts="${b.id}">${L().copyOptions}</button></span></div>
-      ${b.multi ? `<p class="small" style="margin:0">${esc(L().multiNote)}</p>` : ""}
+      ${b.multi ? `<p class="small" style="margin:0">${esc(b.mix ? L().mixNote + (b.zero ? " " + L().mixNone : "") : L().multiNote)}</p>` : ""}
       <div class="opts" role="${b.multi ? "group" : "radiogroup"}" aria-label="${esc(b.name[li])}">${b.opts.map((o, i) => `<span class="opt"><input type="${b.multi ? "checkbox" : "radio"}" name="${gid}" id="${gid}-${i}" value="${i}" ${picked(i) && !frozen ? "checked" : ""} ${off ? "disabled" : ""}><label for="${gid}-${i}"><b>${num(b, i)}</b>${esc(o[li])}</label></span>`).join("")}</div>`;
     el.appendChild(sec);
   }
@@ -249,7 +252,9 @@ function renderBlocks() {
     if (S.locked[id] || S.pin) return;
     if (b.multi) {
       const cur = vals(S.sel[id]);
-      S.sel[id] = i === 0 ? [] : (cur.includes(i) ? cur.filter(x => x !== i) : [...cur, i].sort((p, q) => p - q));
+      const next = i === 0 && b.zero ? [] : (cur.includes(i) ? cur.filter(x => x !== i) : [...cur, i].sort((p, q) => p - q));
+      if (!next.length && !b.zero) return changed();   // a block without "none" keeps at least one pick
+      S.sel[id] = next;
     } else S.sel[id] = i;
     changed();
   }));

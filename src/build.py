@@ -1,3 +1,4 @@
+import re
 """Build every published file from one source.
 
     python3 src/build.py            -> index.html, biblioteca.md, README.md (repo root)
@@ -21,7 +22,7 @@ ARCHIVE_DIR = SRC / "archive"
 def snapshot():
     """Everything that decides the prompt text for a recipe: block texts, defaults used to complete
     partial recipes, platform formatting rules and separators."""
-    return {"blocks": [{"id": b["id"], "key": list(b["key"]), "zero": bool(b.get("zero")), **({"multi": True} if b.get("multi") else {}), "texts": [o[2] for o in b["opts"]]} for b in BLOCKS],
+    return {"blocks": [{"id": b["id"], "key": list(b["key"]), "zero": bool(b.get("zero")), **({"multi": True} if b.get("multi") else {}), **({"mix": b["mix"]} if b.get("mix") else {}), "texts": [o[2] for o in b["opts"]]} for b in BLOCKS],
             "defaults": DEFAULT, "default_platform": DEFAULT_PLATFORM, "platforms": PLATFORMS, "separators": SEPARATORS}
 
 def load_archive():
@@ -44,6 +45,13 @@ def token(b, v):
         return "+".join(str(n(b, i)) for i in v) if v else "0"
     return str(n(b, v))
 
+def mixed(b, texts):
+    """Several picks in a mixing block become one phrase (e.g. "mixed Greek and Latina heritage")."""
+    if len(texts) > 1 and b.get("mix"):
+        names = [re.sub(b["mix"]["strip"], "", t) for t in texts]
+        return b["mix"]["tpl"].replace("{}", ", ".join(names[:-1]) + " and " + names[-1])
+    return ", ".join(texts)
+
 def default_recipe(li=0):
     return f"v{LIB_VERSION} | " + " ".join(b["key"][li] + token(b, DEFAULT[b["id"]]) for b in BLOCKS) + f" | {DEFAULT_PLATFORM} | {PLATFORMS[DEFAULT_PLATFORM]['sep']}"
 
@@ -51,7 +59,7 @@ def default_prompt():
     P = PLATFORMS[DEFAULT_PLATFORM]; out = []
     for b in BLOCKS:
         v = DEFAULT[b["id"]]
-        t = ", ".join(b["opts"][i][2] for i in (v if isinstance(v, list) else [v]) if b["opts"][i][2])
+        t = mixed(b, [b["opts"][i][2] for i in (v if isinstance(v, list) else [v]) if b["opts"][i][2]])
         if not t: continue
         if P.get("drop"): t = ", ".join(x for x in t.split(", ") if x not in P["drop"])
         out.append(t)
@@ -193,7 +201,7 @@ def library_md():
          "Spanish keys work too: " + f"`{default_recipe(1)}`", "",
          "New options are always added at the end of a block and existing numbers never change, so old recipes keep working.", ""]
     for b in BLOCKS:
-        L.append(f"## {b['id']} · {b['key'][0]} / {b['key'][1]} — {b['name'][0]} / {b['name'][1]}" + (" (choose several: `ACC1+3`; `ACC0` = none)" if b.get("multi") else ""))
+        L.append(f"## {b['id']} · {b['key'][0]} / {b['key'][1]} — {b['name'][0]} / {b['name'][1]}" + ((f" (mix several: `{b['key'][0]}{n(b,1)}+{n(b,3)}`)" if b.get("mix") else " (choose several: `ACC1+3`; `ACC0` = none)") if b.get("multi") else ""))
         L.append("| # | EN | ES | Prompt text |\n|---|---|---|---|")
         L += [f"| {n(b,i)} | {en} | {es} | {t or '(none)'} |" for i, (en, es, t) in enumerate(b['opts'])]
         L.append("")

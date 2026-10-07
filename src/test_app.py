@@ -101,13 +101,13 @@ with sync_playwright() as p:
 
     # recipe round-trip
     rec = pg.inner_text("#recipe"); prompt = ev(pg, "promptText()")
-    check("recipe records version, platform and separator", rec.startswith("v1.9 |") and "| seaart | break" in rec, rec)
+    check("recipe records version, platform and separator", rec.startswith("v1.10 |") and "| seaart | break" in rec, rec)
     pg.click("#resetBtn")
     pg.fill("#recipeIn", rec); pg.click("#loadBtn")
     check("pasting the recipe restores the exact prompt", ev(pg, "promptText()") == prompt)
     # Spanish keys and partial recipes
     pg.fill("#recipeIn", "CAB2 PEI5 FON3"); pg.click("#loadBtn")
-    check("Spanish keys load", ev(pg, 'S.sel["B3.1"]') == 1 and ev(pg, 'S.sel["B3.4"]') == 4 and ev(pg, 'S.sel["B11"]') == 2)
+    check("Spanish keys load", ev(pg, 'S.sel["B3.1"]') == [1] and ev(pg, 'S.sel["B3.4"]') == 4 and ev(pg, 'S.sel["B11"]') == 2)
     # recipe respects locks
     pg.click('[data-lock="B3"]'); cur = ev(pg, 'S.sel["B3"]')
     pg.fill("#recipeIn", "AGE6"); pg.click("#loadBtn")
@@ -168,7 +168,7 @@ with sync_playwright() as p:
     check("…and the recipe writes ACC1+3", "ACC1+3" in pg.inner_text("#recipe"))
     unchanged, err = attempt("ACC0+2")
     check("ACC0 can't be combined", unchanged and "0" in err, err)
-    unchanged, err = attempt("HAIR1+2")
+    unchanged, err = attempt("EYES1+2")
     check("single-choice blocks reject +", unchanged and "only one" in err, err)
     unchanged, err = attempt("ACC1+12")
     check("multi rejects an out-of-range part", unchanged and "12" in err, err)
@@ -212,7 +212,7 @@ with sync_playwright() as p:
     # versions whose prompt is identical today are used directly; partial ones complete with THEIR defaults
     pgB, _ = fresh(b)
     pgB.fill("#recipeIn", "v1.2 | HAIR1"); pgB.click("#loadBtn")
-    check("v1.2 partial recipe completes with v1.2 defaults (PHOTO2, OUTFIT4)", pgB.evaluate('S.sel["B1"]') == 1 and pgB.evaluate('S.sel["B6"]') == 3 and pgB.evaluate('S.sel["B3.1"]') == 0)
+    check("v1.2 partial recipe completes with v1.2 defaults (PHOTO2, OUTFIT4)", pgB.evaluate('S.sel["B1"]') == 1 and pgB.evaluate('S.sel["B6"]') == 3 and pgB.evaluate('S.sel["B3.1"]') == [0])
     check("…and works normally because its text is identical today", pgB.evaluate("S.pin") is None)
     p2 = session_page('{v:"1.2", sel:{"B1":1,"B2":1,"B3":0,"B3.3":2,"B3.1":5,"B3.4":8,"B3.2":1,"B4":0,"B5":1,"B6":3,"B6.1":2,"B7":0,"B7.1":8,"B8":0,"B11":0}, plat:"perchance", sep:"one"}')
     check("saved v1.2 session is kept as the user left it", p2.evaluate('S.sel["B6"]') == 3 and p2.evaluate('S.sel["B7.1"]') == 8 and p2.evaluate("S.pin") is None and not p2.is_visible("#notice"))
@@ -224,12 +224,22 @@ with sync_playwright() as p:
     pgC.click('label[for="g-B6-0"]'); pgC.click("#resetBtn")
     check("Reset returns to the default base", base in pgC.inner_text("#recipe"))
     check("default prompt includes Slavic heritage after the age", "a 25-year-old woman, adult facial features, Slavic heritage" in ev(pgC, "promptText()"))
-    pgC.fill("#recipeIn", "v1.9 | ETHN0"); pgC.click("#loadBtn")
+    pgC.fill("#recipeIn", "v1.10 | ETHN0"); pgC.click("#loadBtn")
     check("ETHN0 leaves heritage out of the prompt", "heritage" not in ev(pgC, "promptText()") and "adult facial features, " in ev(pgC, "promptText()"))
-    pgC.fill("#recipeIn", "v1.9 | ETHN2"); pgC.click("#loadBtn")
+    pgC.fill("#recipeIn", "v1.10 | ETHN2"); pgC.click("#loadBtn")
     check("ETHN2 adds Nordic heritage", "Nordic Scandinavian heritage" in ev(pgC, "promptText()"))
-    pgC.fill("#recipeIn", "v1.9 | ETHN16"); pgC.click("#loadBtn")
+    pgC.fill("#recipeIn", "v1.10 | ETHN16"); pgC.click("#loadBtn")
     check("ETHN16 is out of range", pgC.is_visible("#loadErr"))
+    pgC.fill("#recipeIn", "v1.10 | ETHN14+15 HAIR3+10"); pgC.click("#loadBtn")
+    pr = ev(pgC, "promptText()")
+    check("two heritages mix into one phrase", "mixed Greek and Native American First Nations heritage" in pr, pr)
+    check("two hair colors mix into one phrase", "multi-tone hair blending copper-red and vivid electric-blue" in pr, pr)
+    check("mixed recipe round-trips", "ETHN14+15" in pgC.inner_text("#recipe") and "HAIR3+10" in pgC.inner_text("#recipe"))
+    pgC.fill("#recipeIn", "v1.10 | ETHN0+14"); pgC.click("#loadBtn")
+    check("ETHN0 can't be mixed", pgC.is_visible("#loadErr"))
+    pgC.fill("#recipeIn", "v1.10 | HAIR3"); pgC.click("#loadBtn")
+    pgC.click('label[for="g-B3_1-2"]')
+    check("hair keeps at least one color when the last is unticked", ev(pgC, 'S.sel["B3.1"]') == [2])
     pgC.fill("#recipeIn", "v1.6 | PHOTO1 GLOW1 AGE1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one"); pgC.click("#loadBtn")
     check("v1.6 recipe loads as current with heritage unspecified (same text)", "ETHN0" in pgC.inner_text("#recipe") and "heritage" not in ev(pgC, "promptText()"))
     check("Reset button is in the header, next to EN/ES", pgC.locator("header #resetBtn").count() == 1)
@@ -256,7 +266,7 @@ with sync_playwright() as p:
     pg2.goto("https://pb.test/"); pg2.click(radio("B3.1", 2)); pg2.select_option("#plat", "venice"); pg2.select_option("#sep", "tag"); pg2.click("#lang-es")
     pg2.reload()
     check("session restores selections, platform, separator and language",
-          pg2.evaluate('S.sel["B3.1"]') == 2 and pg2.input_value("#plat") == "venice" and pg2.input_value("#sep") == "tag" and pg2.inner_text("h1") == "Mezclador de Prompts")
+          pg2.evaluate('S.sel["B3.1"]') == [0, 2] and pg2.input_value("#plat") == "venice" and pg2.input_value("#sep") == "tag" and pg2.inner_text("h1") == "Mezclador de Prompts")
 
     # multi-select in the page: toggle on, toggle off, None clears
     pg.click("#resetBtn")

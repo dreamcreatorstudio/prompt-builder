@@ -78,9 +78,9 @@ with sync_playwright() as p:
     check("PHOTO shows 2 alternatives, not 3", pg.locator("#variants .variant").count() == 2 and "of 2" in t, t)
     check("no paging when everything fits", not pg.is_visible("#varNav"))
     pg.click('[data-var="B6"]')
-    check("OUTFIT shows 26 alternatives", "of 26" in pg.inner_text("#varTitle"))
+    check("OUTFIT shows 28 alternatives", "of 28" in pg.inner_text("#varTitle"))
     pg.click("#varNext"); pg.click("#varNext")
-    check("paging reaches later options", "7–9 of 26" in pg.inner_text("#varTitle"), pg.inner_text("#varTitle"))
+    check("paging reaches later options", "7–9 of 28" in pg.inner_text("#varTitle"), pg.inner_text("#varTitle"))
     check("Variants button shows real count", "(2)" in pg.inner_text('[data-var="B1"]'))
 
     # EN/ES must not alter the prompt
@@ -101,7 +101,7 @@ with sync_playwright() as p:
 
     # recipe round-trip
     rec = pg.inner_text("#recipe"); prompt = ev(pg, "promptText()")
-    check("recipe records version, platform and separator", rec.startswith("v1.8 |") and "| seaart | break" in rec, rec)
+    check("recipe records version, platform and separator", rec.startswith("v1.9 |") and "| seaart | break" in rec, rec)
     pg.click("#resetBtn")
     pg.fill("#recipeIn", rec); pg.click("#loadBtn")
     check("pasting the recipe restores the exact prompt", ev(pg, "promptText()") == prompt)
@@ -120,7 +120,7 @@ with sync_playwright() as p:
         pg.fill("#recipeIn", txt); pg.click("#loadBtn")
         return before == ev(pg, "JSON.stringify(S.sel)"), pg.inner_text("#loadErr") if pg.is_visible("#loadErr") else ""
     unchanged, err = attempt("AGE2 HAIR99")
-    check("out-of-range option rejects the whole recipe (AGE not applied)", unchanged and "HAIR99" in err and "1–15" in err, err)
+    check("out-of-range option rejects the whole recipe (AGE not applied)", unchanged and "HAIR99" in err and "1–16" in err, err)
     unchanged, err = attempt("HAIR6 CAB7")
     check("same block twice (EN/ES) with different values is rejected", unchanged and "B3.1" in err, err)
     unchanged, err = attempt("HAIR6 CAB6 BG2")
@@ -224,11 +224,11 @@ with sync_playwright() as p:
     pgC.click('label[for="g-B6-0"]'); pgC.click("#resetBtn")
     check("Reset returns to the default base", base in pgC.inner_text("#recipe"))
     check("default prompt includes Slavic heritage after the age", "a 25-year-old woman, adult facial features, Slavic heritage" in ev(pgC, "promptText()"))
-    pgC.fill("#recipeIn", "v1.8 | ETHN0"); pgC.click("#loadBtn")
+    pgC.fill("#recipeIn", "v1.9 | ETHN0"); pgC.click("#loadBtn")
     check("ETHN0 leaves heritage out of the prompt", "heritage" not in ev(pgC, "promptText()") and "adult facial features, " in ev(pgC, "promptText()"))
-    pgC.fill("#recipeIn", "v1.8 | ETHN2"); pgC.click("#loadBtn")
+    pgC.fill("#recipeIn", "v1.9 | ETHN2"); pgC.click("#loadBtn")
     check("ETHN2 adds Nordic heritage", "Nordic Scandinavian heritage" in ev(pgC, "promptText()"))
-    pgC.fill("#recipeIn", "v1.8 | ETHN16"); pgC.click("#loadBtn")
+    pgC.fill("#recipeIn", "v1.9 | ETHN16"); pgC.click("#loadBtn")
     check("ETHN16 is out of range", pgC.is_visible("#loadErr"))
     pgC.fill("#recipeIn", "v1.6 | PHOTO1 GLOW1 AGE1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one"); pgC.click("#loadBtn")
     check("v1.6 recipe loads as current with heritage unspecified (same text)", "ETHN0" in pgC.inner_text("#recipe") and "heritage" not in ev(pgC, "promptText()"))
@@ -282,7 +282,7 @@ with sync_playwright() as p:
     # copy options of one block
     txt = ev(pg, 'optionsText("B6")')
     check("Copy options: header with ID, EN/ES keys and names", txt.startswith("B6 · OUTFIT / VES — Outfit / Vestuario\n\n1. Denim + white crop / Denim + crop blanco"), txt[:80])
-    check("Copy options: all 27 outfits, 22 is Venice carnival, last is the capeless heroine", "\n22. Venice carnival / Carnaval de Venecia\n" in txt and txt.rstrip().endswith("27. Emerald heroine (no cape) / Heroína esmeralda (sin capa)") and txt.count("\n") == 28)
+    check("Copy options: all 29 outfits, 22 is Venice carnival, last is the forest princess gown", "\n22. Venice carnival / Carnaval de Venecia\n" in txt and txt.rstrip().endswith("29. Forest princess (gown) / Princesa del bosque (largo)") and txt.count("\n") == 30)
     check("Copy options: ACC keeps 0", "\n0. None / Ninguno" in ev(pg, 'optionsText("B6.1")'))
     check("Copy options: no button labels inside", "Lock" not in txt and "Variants" not in txt)
     before = ev(pg, "JSON.stringify([S.sel, S.locked])")

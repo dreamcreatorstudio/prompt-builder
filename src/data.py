@@ -37,7 +37,8 @@ BLOCKS = [
   ("Cheerful","Alegre","bright friendly smile"),
   ("Elegant","Elegante","calm self-assured gaze"),
   ("Serene","Serena","serene warm expression"),
-  ("Playful","Divertida","playful laughing expression")]),
+  ("Playful","Divertida","playful laughing expression"),
+  ("Sweet & confident", "Dulce y segura", "sweet gentle expression, calm self-assured gaze, soft smile")]),
  dict(id="B3.1", key=("HAIR","CAB"), name=("Hair color","Color de cabello"), hue="--h3", opts=[
   ("Honey blonde","Rubia miel","honey-blonde hair"),
   ("Platinum blonde","Rubia platino","platinum blonde hair"),
@@ -53,7 +54,8 @@ BLOCKS = [
   ("Lavender","Lavanda","lavender purple dyed hair"),
   ("Mint green","Verde menta","mint green dyed hair"),
   ("Blue-violet ombré","Degradado azul-violeta","blue to violet ombré dyed hair"),
-  ("Rainbow","Multicolor arcoíris","rainbow multicolor dyed hair in pastel streaks")]),
+  ("Rainbow","Multicolor arcoíris","rainbow multicolor dyed hair in pastel streaks"),
+  ("Copper chestnut", "Castaño cobrizo", "chestnut-brown hair with copper and caramel highlights")]),
  dict(id="B3.4", key=("STYLE","PEI"), name=("Hairstyle","Peinado"), hue="--h3", opts=[
   ("Sleek straight","Liso perfecto","sleek straight hair"),
   ("Straight","Liso natural","straight hair"),
@@ -66,9 +68,14 @@ BLOCKS = [
   ("Neat bun","Moño pulido","neat hair bun"),
   ("Messy bun","Moño suelto","loose messy bun with face-framing strands"),
   ("Pixie cut","Corte pixie","pixie cut"),
-  ("Short bob","Bob corto","short bob cut")]),
+  ("Short bob","Bob corto","short bob cut"),
+  ("Vine-strand waves", "Ondas con enredaderas", "long loose softly tousled hair with trailing thin vines and tiny white blossoms hanging like strands, small green leaves tucked in"),
+  ("Straight vine strands", "Lisa con enredaderas", "long straight loose hair with trailing thin vines and tiny white blossoms hanging like strands, small green leaves tucked in")]),
  dict(id="B3.2", key=("EYES","OJO"), name=("Eyes","Ojos"), hue="--h3", opts=[
-  ("Blue","Azules","clear blue eyes"),("Green","Verdes","green eyes"),("Brown","Marrones","warm brown eyes"),("Hazel","Avellana","hazel eyes"),("Grey","Grises","grey eyes")]),
+  ("Blue","Azules","clear blue eyes"),("Green","Verdes","green eyes"),("Brown","Marrones","warm brown eyes"),("Hazel","Avellana","hazel eyes"),("Grey","Grises","grey eyes"),
+  ("Amber gold", "Ámbar dorado", "luminous amber-gold eyes"),
+  ("Magic green", "Verde mágico", "glowing vivid emerald-green eyes with a subtle magical light"),
+  ("Vivid sapphire", "Zafiro intenso", "luminous vivid sapphire-blue eyes")]),
  dict(id="B4", key=("SKIN","PIEL"), name=("Skin tone","Piel y tono"), hue="--h4", opts=[
   ("Porcelain","Porcelana","fair porcelain skin with warm pink undertones, natural skin texture, visible pores"),
   ("Fair, freckles","Clara con pecas","fair skin with light freckles across the nose and cheeks, natural skin texture"),
@@ -107,7 +114,9 @@ BLOCKS = [
   ("70s mystery sleuth","Detective años 70","1970s amateur detective outfit, mustard corduroy jacket, teal turtleneck, brown bell-bottom trousers, platform boots, flashlight in hand"),
   ("Farm-town hero","Heroína de pueblo","small-town farm outfit, forest green flannel shirt, worn denim jacket, straight jeans, leather work boots"),
   ("Emerald heroine (cape)","Heroína esmeralda (capa)","original superhero costume, full-coverage emerald and silver bodysuit, short silver cape, stylized leaf emblem on the chest, knee-high silver boots"),
-  ("Emerald heroine (no cape)","Heroína esmeralda (sin capa)","original superhero costume, full-coverage emerald and silver bodysuit with sleek armored panels, stylized leaf emblem on the chest, silver gauntlets, knee-high silver boots, no cape")]),
+  ("Emerald heroine (no cape)","Heroína esmeralda (sin capa)","original superhero costume, full-coverage emerald and silver bodysuit with sleek armored panels, stylized leaf emblem on the chest, silver gauntlets, knee-high silver boots, no cape"),
+  ("Forest princess (short)", "Princesa del bosque (corto)", "original forest princess outfit, dress made of layered green leaves, vine-laced bodice, puffed leaf sleeves, ruffled knee-length leaf skirt, vine-wrapped heeled sandals, no wings"),
+  ("Forest princess (gown)", "Princesa del bosque (largo)", "original forest princess gown made of layered green leaves, vine-laced bodice, puffed leaf sleeves, flowing full-length leaf skirt with tiny white blossoms, no wings")]),
  dict(id="B6.1", key=("ACC","ACC"), name=("Accessories","Accesorios"), hue="--h6", zero=True, multi=True, opts=[
   ("None","Ninguno",""),("Emerald necklace","Collar esmeralda","emerald pendant necklace on a fine gold chain"),("Gold hoops","Aros dorados","small gold hoop earrings"),("Sports watch","Reloj deportivo","minimalist sports watch"),("Cap","Gorra","beige baseball cap"),
   ("Sunglasses","Gafas de sol","oversized tortoiseshell sunglasses"),
@@ -122,7 +131,8 @@ BLOCKS = [
   ("Half body","Medio cuerpo","medium shot from the waist up, looking at camera"),
   ("Portrait","Retrato","close-up portrait, head and shoulders"),
   ("Walking","Caminando","full body shot, walking toward camera, natural mid-stride motion"),
-  ("Seated","Sentada","full body shot, sitting casually on a low wooden stool, relaxed posture")]),
+  ("Seated","Sentada","full body shot, sitting casually on a low wooden stool, relaxed posture"),
+  ("Confident stance", "Postura segura", "full body shot, standing tall, confident regal posture, shoulders back, chin slightly raised, looking at camera")]),
  dict(id="B7.1", key=("ANGLE","ANG"), name=("Camera angle","Ángulo de cámara"), hue="--h7", opts=[
   ("Eye-level","A la altura de los ojos","eye-level shot, neutral natural perspective"),
   ("Low angle","Contrapicado","low angle shot looking up at the subject, powerful heroic perspective"),
@@ -147,13 +157,15 @@ BLOCKS = [
   ("Paris","París","Paris cityscape with the Eiffel Tower in the background, creamy bokeh"),
   ("Beach","Playa","tropical beach at sunset, palm trees, soft ocean bokeh"),
   ("Yoga studio","Sala de yoga","bright yoga studio, light wooden floor, large windows, green plants"),
-  ("City street","Calle urbana","sunny city street, modern storefronts, soft background blur")]),
+  ("City street","Calle urbana","sunny city street, modern storefronts, soft background blur"),
+  ("Palace garden", "Palacio jardín", "sunlit marble palace conservatory, white columns and arches, climbing roses, polished marble floor, scattered softly glowing blue petals"),
+  ("Cloud terrace", "Terraza en las nubes", "ivy-covered stone arcade on a palace terrace above the clouds, bright sky")]),
 ]
 NEG = "cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features"
 DEFAULT = {"B1":0,"B2":0,"B3":0,"B3.5":1,"B3.3":1,"B3.1":0,"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":21,"B6.1":[],"B7":0,"B7.1":0,"B8":0,"B11":5}  # Venice carnival in the city (chosen by Alex)
 
 # Library version: bump when any prompt text changes, so recipes record which texts they used.
-LIB_VERSION = "1.8"   # 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
+LIB_VERSION = "1.9"   # 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
 
 PLATFORMS = {  # separator default + transforms applied to the prompt text
     "venice":    {"label": "Venice AI",    "sep": "nl"},

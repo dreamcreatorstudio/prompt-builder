@@ -147,7 +147,8 @@ BLOCKS = [
   ("On the girder", "En la viga", "full body, reclining on a steel girder high above the city, one arm raised behind her head, relaxed diagonal body line"),
   ("Sitting on the edge", "Sentada en el borde", "full body, sitting on the edge of a steel girder high above the city, one knee drawn up with her forearm resting on it, the other leg hanging over the edge, leaning back on one hand, head tilted, gazing down at the city"),
   ("Silk hammock", "Hamaca de seda", "full body, reclining comfortably in a hammock woven from shimmering silver moth silk, loose cocoon-like threads catching the light, strung between two stone pillars, one arm resting behind her head, one leg gently bent, relaxed and at ease"),
-  ("Suspended in silk", "Suspendida en seda", "full body, suspended mid-air in a sweeping web of glowing silver moth silk strands stretched between the terrace columns, body in a dynamic diagonal line, one arm raised behind her head, the other hand gripping a silk strand, hair and loose silk threads streaming in the wind, silk strands crossing the foreground")]),
+  ("Suspended in silk", "Suspendida en seda", "full body, suspended mid-air in a sweeping web of glowing silver moth silk strands stretched between the terrace columns, body in a dynamic diagonal line, one arm raised behind her head, the other hand gripping a silk strand, hair and loose silk threads streaming in the wind, silk strands crossing the foreground"),
+  ("Lying on silk net", "Recostada en red de seda", "full body, lying back on a large taut net of thick glowing silver silk, the net clearly visible beneath and around her body and supporting her weight, back and legs resting on the woven strands, body in a relaxed diagonal line, one arm raised behind her head, the other hand resting on the net, one knee slightly bent, hair spilling across the net and lifted by the wind")]),
  dict(id="B7.1", key=("ANGLE","ANG"), name=("Camera angle","Ángulo de cámara"), hue="--h7", opts=[
   ("Eye-level","A la altura de los ojos","eye-level shot, neutral natural perspective"),
   ("Low angle","Contrapicado","low angle shot looking up at the subject, powerful heroic perspective"),
@@ -178,7 +179,8 @@ BLOCKS = [
   ("Cloud terrace", "Terraza en las nubes", "ivy-covered stone arcade on a palace terrace above the clouds, bright sky"),
   ("City from above", "Ciudad desde arriba", "dramatic overhead view of a busy city street far below, yellow taxis, traffic, skyscrapers, shallow depth of field"),
   ("Night city from above", "Ciudad de noche desde arriba", "dizzying aerial view of a city at night far below, neon lights blurred into haze, streams of yellow taxis, towering skyscrapers on both sides"),
-  ("Rooftop terrace skyline", "Terraza con vista", "elegant rooftop terrace with a stone balustrade and potted plants, wide city skyline across the background at dusk, warm city lights, shallow depth of field")]),
+  ("Rooftop terrace skyline", "Terraza con vista", "elegant rooftop terrace with a stone balustrade and potted plants, wide city skyline across the background at dusk, warm city lights, shallow depth of field"),
+  ("Terrace silk net", "Terraza con red de seda", "rooftop terrace at dusk with a giant radial lattice net of thick glowing silver silk anchored between stone columns, evenly woven geometric mesh pattern, strands crossing the foreground, city skyline and warm lights in the background")]),
 ]
 NEG = "cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features"
 DEFAULT = {"B1":0,"B2":0,"B3":0,"B3.5":[1],"B3.3":1,"B3.1":[0],"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":21,"B6.1":[],"B7":0,"B7.1":0,"B8":0,"B11":5}  # Venice carnival in the city (chosen by Alex)
@@ -196,12 +198,12 @@ PRESETS = [
  ("Pastel dream", "Sueño pastel", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR5 HAIR9+12 STYLE4 EYES8 SKIN1 BODY2 OUTFIT23 ACC0 CAM1 ANGLE1 LIGHT1 BG2 | perchance | one"),
  ("Midnight moth", "Polilla nocturna", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR4 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT32 ACC0 CAM7 ANGLE3 LIGHT4 BG9 | venice | nl"),
  ("The Silver Weaver", "La Tejedora de Plata", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR7 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT32 ACC0 CAM8 ANGLE3 LIGHT4 BG10 | venice | nl"),
- ("Moth silk terrace", "Terraza de seda", "PHOTO4 GLOW2 AGE1 ETHN1 EXPR7 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT33 ACC13 CAM10 ANGLE2 LIGHT5 BG11 | venice | nl"),
+ ("Moth silk terrace", "Terraza de seda", "PHOTO4 GLOW2 AGE1 ETHN1 EXPR7 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT33 ACC13 CAM11 ANGLE3 LIGHT5 BG12 | venice | nl"),
  ("Studio portrait", "Retrato de estudio", "PHOTO1 GLOW1 AGE1 ETHN1 EXPR4 HAIR3 STYLE4 EYES2 SKIN2 BODY4 OUTFIT3 ACC8 CAM3 ANGLE1 LIGHT3 BG2 | perchance | one"),
 ]
 
 # Library version: bump when any prompt text changes, so recipes record which texts they used.
-LIB_VERSION = "1.16"  # 1.16: moth crop suit, moth-wing mask, suspended-in-silk pose, dramatic rim light; 1.15: silk hammock pose, rooftop terrace skyline; 1.14: shorter short dresses, textured moth suit, dreamy expression, edge pose, night city; 1.13: cinematic photo, windblown hair, midnight moth heroine, girder pose, city from above; 1.12: delicate henna accessory (ACC12); 1.11: lily princess outfits 30–31; 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
+LIB_VERSION = "1.17"  # 1.17: lying-on-silk-net pose, terrace silk-net background; 1.16: moth crop suit, moth-wing mask, suspended-in-silk pose, dramatic rim light; 1.15: silk hammock pose, rooftop terrace skyline; 1.14: shorter short dresses, textured moth suit, dreamy expression, edge pose, night city; 1.13: cinematic photo, windblown hair, midnight moth heroine, girder pose, city from above; 1.12: delicate henna accessory (ACC12); 1.11: lily princess outfits 30–31; 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
 
 PLATFORMS = {  # separator default + transforms applied to the prompt text
     "venice":    {"label": "Venice AI",    "sep": "nl"},

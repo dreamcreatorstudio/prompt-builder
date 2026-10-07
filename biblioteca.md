@@ -1,12 +1,12 @@
 # Block Library / Biblioteca de bloques
 
-Library version **v1.16** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
+Library version **v1.17** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
 Each block has a short key and numbered options. A **recipe** records the library version, one option per block, the platform and the separator:
 
-`v1.16 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
+`v1.17 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
 
-Spanish keys work too: `v1.16 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
+Spanish keys work too: `v1.17 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
 
 New options are always added at the end of a block and existing numbers never change, so old recipes keep working.
 
@@ -202,6 +202,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 8 | Sitting on the edge | Sentada en el borde | full body, sitting on the edge of a steel girder high above the city, one knee drawn up with her forearm resting on it, the other leg hanging over the edge, leaning back on one hand, head tilted, gazing down at the city |
 | 9 | Silk hammock | Hamaca de seda | full body, reclining comfortably in a hammock woven from shimmering silver moth silk, loose cocoon-like threads catching the light, strung between two stone pillars, one arm resting behind her head, one leg gently bent, relaxed and at ease |
 | 10 | Suspended in silk | Suspendida en seda | full body, suspended mid-air in a sweeping web of glowing silver moth silk strands stretched between the terrace columns, body in a dynamic diagonal line, one arm raised behind her head, the other hand gripping a silk strand, hair and loose silk threads streaming in the wind, silk strands crossing the foreground |
+| 11 | Lying on silk net | Recostada en red de seda | full body, lying back on a large taut net of thick glowing silver silk, the net clearly visible beneath and around her body and supporting her weight, back and legs resting on the woven strands, body in a relaxed diagonal line, one arm raised behind her head, the other hand resting on the net, one knee slightly bent, hair spilling across the net and lifted by the wind |
 
 ## B7.1 · ANGLE / ANG — Camera angle / Ángulo de cámara
 | # | EN | ES | Prompt text |
@@ -242,6 +243,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 9 | City from above | Ciudad desde arriba | dramatic overhead view of a busy city street far below, yellow taxis, traffic, skyscrapers, shallow depth of field |
 | 10 | Night city from above | Ciudad de noche desde arriba | dizzying aerial view of a city at night far below, neon lights blurred into haze, streams of yellow taxis, towering skyscrapers on both sides |
 | 11 | Rooftop terrace skyline | Terraza con vista | elegant rooftop terrace with a stone balustrade and potted plants, wide city skyline across the background at dusk, warm city lights, shallow depth of field |
+| 12 | Terrace silk net | Terraza con red de seda | rooftop terrace at dusk with a giant radial lattice net of thick glowing silver silk anchored between stone columns, evenly woven geometric mesh pattern, strands crossing the foreground, city skyline and warm lights in the background |
 
 ## B0 · NEG — Negative prompt
 ```

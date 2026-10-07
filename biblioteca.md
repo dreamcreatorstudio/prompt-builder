@@ -1,12 +1,12 @@
 # Block Library / Biblioteca de bloques
 
-Library version **v1.20** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
+Library version **v1.21** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
 Each block has a short key and numbered options. A **recipe** records the library version, one option per block, the platform and the separator:
 
-`v1.20 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 POSE0 PLACE0 ANGLE1 LIGHT1 BG6 | perchance | one`
+`v1.21 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 MASK0 CAM1 POSE0 PLACE0 ANGLE1 LIGHT1 BG6 | perchance | one`
 
-Spanish keys work too: `v1.20 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 POS0 LUG0 ANG1 LUZ1 FON6 | perchance | one`
+Spanish keys work too: `v1.21 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 MAS0 CAM1 POS0 LUG0 ANG1 LUZ1 FON6 | perchance | one`
 
 New options are always added at the end of a block and existing numbers never change, so old recipes keep working.
 
@@ -187,7 +187,22 @@ New options are always added at the end of a block and existing numbers never ch
 | 10 | Tote bag | Bolso tote | canvas tote bag on the shoulder |
 | 11 | Yoga mat | Esterilla de yoga | rolled yoga mat under one arm |
 | 12 | Delicate henna | Henna delicada | delicate golden-brown henna design on the backs of the hands and fingers, fine floral and vine lines, subtle and elegant |
-| 13 | Moth-wing mask | Antifaz ala de polilla | sleek silver moth-wing shaped eye mask |
+| 13 | Moth-wing mask | Antifaz ala de polilla | sleek silver moth-wing shaped eye mask with open eye holes, eyes clearly visible |
+
+## B6.2 · MASK / MAS — Face covering / Máscara
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 0 | None | Ninguna | (none) |
+| 1 | Moth-wing eye mask | Antifaz ala de polilla | sleek silver moth-wing shaped eye mask with open eye holes, eyes clearly visible |
+| 2 | Venetian lace mask | Antifaz de encaje | delicate black lace eye mask with open eye holes, eyes clearly visible |
+| 3 | Gold filigree half-mask | Media máscara filigrana | ornate gold filigree half-mask covering the upper face, open eye holes, eyes clearly visible |
+| 4 | Feathered masquerade | Antifaz con plumas | masquerade eye mask with soft feathers and small crystals, open eye holes, eyes clearly visible |
+| 5 | Lily petal mask | Antifaz de pétalos | eye mask made of small white lily petals with pale green tips, open eye holes, eyes clearly visible |
+| 6 | Crystal eye mask | Antifaz de cristales | eye mask covered in tiny clear crystals that catch the light, open eye holes, eyes clearly visible |
+| 7 | Sheer face veil | Velo sobre el rostro | sheer delicate tulle veil falling over the face from a small headpiece, face softly visible through it |
+| 8 | Lower-face veil | Velo bajo los ojos | sheer chiffon veil covering the nose and mouth, held by a thin chain, eyes uncovered |
+| 9 | Desert scarf wrap | Pañuelo del desierto | light linen scarf wrapped over the head and lower face, eyes uncovered |
+| 10 | Futuristic visor | Visor futurista | sleek translucent iridescent visor across the eyes, futuristic design |
 
 ## B7 · CAM / CAM — Framing & pose / Encuadre y pose
 | # | EN | ES | Prompt text |
@@ -281,6 +296,7 @@ cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra finge
 Shown as notes, grouped by kind; the tool never changes your choices. / Se muestran como notas por tipo; la herramienta nunca cambia tu elección.
 
 **Incompatible**
+- Two masks: the moth-wing mask in ACC and a face covering in MASK. Keep only one.
 - Cap and straw hat together: pick one headwear.
 - This outfit already includes headwear (tricorn, cowboy hat, bowler hat or feathered headpiece); a cap or straw hat will clash.
 - ANGLE 8 (profile) vs. this framing, which asks for a three-quarter turn or looking at the camera.
@@ -289,6 +305,7 @@ Shown as notes, grouped by kind; the tool never changes your choices. / Se muest
 - Half-body and portrait framings crop the lower body: shorts, footwear and leg details from OUTFIT or BODY won't show.
 
 **Needs testing / Requiere pruebas**
+- The Venice carnival outfit already includes a mask; a second one may clash.
 - This CAM option already includes a pose. With POSE, use a framing-only CAM: 2, 3, 12 or 13.
 - This CAM option already includes a pose or place. With PLACE, use a framing-only CAM: 2, 3, 12 or 13.
 - Top-down or worm's-eye with a head-and-shoulders portrait can give unusual crops. Test with a fixed seed.

@@ -110,6 +110,7 @@ def page(head_close, archive):
       <p class="small help" data-i="help" data-html>{en["help"]}</p>
     </div>
     <div class="topbar">
+      <span class="small libver" id="libVer">Library v{LIB_VERSION}</span>
       <label class="small preset"><span data-i="preset">{en["preset"]}</span> <select id="preset"></select></label>
       <button class="btn" id="resetBtn" data-i="reset" title="">{en["reset"]}</button>
       <div class="lang" role="group" aria-label="Language">

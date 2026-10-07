@@ -72,3 +72,4 @@ footer a{color:var(--accent)}
 
 .preset{display:inline-flex;align-items:center;gap:6px}
 .preset select{max-width:12rem}
+.libver{color:var(--muted);white-space:nowrap}

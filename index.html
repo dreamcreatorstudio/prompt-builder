@@ -82,6 +82,7 @@ footer a{color:var(--accent)}
 
 .preset{display:inline-flex;align-items:center;gap:6px}
 .preset select{max-width:12rem}
+.libver{color:var(--muted);white-space:nowrap}
 </style>
 </head><body>
 <div class="wrap">
@@ -93,6 +94,7 @@ footer a{color:var(--accent)}
       <p class="small help" data-i="help" data-html><b>To compare:</b> keep the same model, format and settings, and use the same seed when available. <b>Lock</b> keeps a block's choice in this tool; it doesn't make the generator keep the same face or body. Recipes are starting points — we call one <i>tested</i> only when it has recorded results with the platform and model used.</p>
     </div>
     <div class="topbar">
+      <span class="small libver" id="libVer">Library v1.19</span>
       <label class="small preset"><span data-i="preset">Preset</span> <select id="preset"></select></label>
       <button class="btn" id="resetBtn" data-i="reset" title="">↺ Reset to default</button>
       <div class="lang" role="group" aria-label="Language">

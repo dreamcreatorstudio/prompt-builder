@@ -249,6 +249,7 @@ with sync_playwright() as p:
     check("Spanish keys LUG / POS load", ev(pgC, 'S.sel["B7.3"]') == 5 and ev(pgC, 'S.sel["B7.2"]') == 7)
     # presets: each loads cleanly, has no conflict notes, is 25 / Slavic, and the menu tracks it
     n_presets = ev(pgC, "PRESETS.length")
+    check("library version is shown at the top next to Preset", pgC.inner_text("#libVer") == "Library v" + ev(pgC, "LIB_VERSION"))
     check("there are 14 presets plus None", n_presets == 14 and pgC.locator("#preset option").count() == 15)
     bad = []
     for i in range(n_presets):

@@ -1,12 +1,12 @@
 # Block Library / Biblioteca de bloques
 
-Library version **v1.18** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
+Library version **v1.19** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
 Each block has a short key and numbered options. A **recipe** records the library version, one option per block, the platform and the separator:
 
-`v1.18 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one`
+`v1.19 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 POSE0 PLACE0 ANGLE1 LIGHT1 BG6 | perchance | one`
 
-Spanish keys work too: `v1.18 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 ANG1 LUZ1 FON6 | perchance | one`
+Spanish keys work too: `v1.19 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 CAM1 POS0 LUG0 ANG1 LUZ1 FON6 | perchance | one`
 
 New options are always added at the end of a block and existing numbers never change, so old recipes keep working.
 
@@ -203,6 +203,31 @@ New options are always added at the end of a block and existing numbers never ch
 | 9 | Silk hammock | Hamaca de seda | full body, reclining comfortably in a hammock woven from shimmering silver moth silk, loose cocoon-like threads catching the light, strung between two stone pillars, one arm resting behind her head, one leg gently bent, relaxed and at ease |
 | 10 | Suspended in silk | Suspendida en seda | full body, suspended mid-air in a sweeping web of glowing silver moth silk strands stretched between the terrace columns, body in a dynamic diagonal line, one arm raised behind her head, the other hand gripping a silk strand, hair and loose silk threads streaming in the wind, silk strands crossing the foreground |
 | 11 | Lying on silk net | Recostada en red de seda | full body, reclining gracefully on a large taut net of thick glowing silver silk, the net clearly visible beneath and around her and supporting her weight, body in a relaxed diagonal line, one arm raised behind her head, the other hand resting on the net, one knee slightly bent, hair spilling across the net and lifted by the wind |
+| 12 | Full body (framing only) | Cuerpo entero (solo encuadre) | full body shot, head to toe framing |
+| 13 | Wide shot | Plano general | wide full body shot, figure smaller in the frame, surroundings emphasized |
+
+## B7.2 · POSE / POS — Pose / Postura
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 0 | From framing | Según encuadre | (none) |
+| 1 | Standing tall | De pie, segura | standing tall, confident posture, shoulders back |
+| 2 | Sitting | Sentada | sitting gracefully, relaxed posture |
+| 3 | Reclining | Recostada | reclining gracefully, one arm resting behind her head, one knee gently bent |
+| 4 | Kneeling | De rodillas | kneeling on one knee, upright torso |
+| 5 | Walking | Caminando | walking forward, natural mid-stride |
+| 6 | Suspended diagonal | Suspendida en diagonal | suspended in a dynamic diagonal line, one hand gripping a strand, hair streaming in the wind |
+| 7 | Arms raised | Brazos en alto | standing with both arms raised triumphantly toward the sky |
+
+## B7.3 · PLACE / LUG — Place / Lugar
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 0 | None | Ninguno | (none) |
+| 1 | Steel girder | Viga de acero | on a steel girder high above the city |
+| 2 | Silk hammock | Hamaca de seda | in a hammock woven from shimmering silver moth silk, loose cocoon-like threads catching the light, strung between two stone pillars |
+| 3 | Silk net | Red de seda | on a large taut net of thick glowing silver silk, the net clearly visible beneath and around her and supporting her weight |
+| 4 | Pyramid tower top | Cima de torre pirámide | on the very top of a glass pyramid-shaped skyscraper, the entire city spread out around and below her to the horizon |
+| 5 | Tower spire top | Cima de una torre | on the small platform at the very top of a tall tower spire, the entire city spread out around and below her to the horizon |
+| 6 | Rooftop ledge | Cornisa de azotea | on the stone ledge of a rooftop terrace, city skyline behind her |
 
 ## B7.1 · ANGLE / ANG — Camera angle / Ángulo de cámara
 | # | EN | ES | Prompt text |
@@ -245,6 +270,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 10 | Night city from above | Ciudad de noche desde arriba | dizzying aerial view of a city at night far below, neon lights blurred into haze, streams of yellow taxis, towering skyscrapers on both sides |
 | 11 | Rooftop terrace skyline | Terraza con vista | elegant rooftop terrace with a stone balustrade and potted plants, wide city skyline across the background at dusk, warm city lights, shallow depth of field |
 | 12 | Terrace silk net | Terraza con red de seda | rooftop terrace at dusk with a giant radial lattice net of thick glowing silver silk anchored between stone columns, evenly woven geometric mesh pattern, strands crossing the foreground, city skyline and warm lights in the background |
+| 13 | Open sky | Cielo abierto | clear blue sky, bright daylight, distant horizon |
 
 ## B0 · NEG — Negative prompt
 ```
@@ -263,6 +289,8 @@ Shown as notes, grouped by kind; the tool never changes your choices. / Se muest
 - Half-body and portrait framings crop the lower body: shorts, footwear and leg details from OUTFIT or BODY won't show.
 
 **Needs testing / Requiere pruebas**
+- This CAM option already includes a pose. With POSE, use a framing-only CAM: 2, 3, 12 or 13.
+- This CAM option already includes a pose or place. With PLACE, use a framing-only CAM: 2, 3, 12 or 13.
 - Top-down or worm's-eye with a head-and-shoulders portrait can give unusual crops. Test with a fixed seed.
 - An aerial drone shot over a studio backdrop is unusual; models may add a landscape. Test it.
 - POV plus 'looking at camera' may read as a selfie. Test it.

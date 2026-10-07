@@ -101,7 +101,7 @@ with sync_playwright() as p:
 
     # recipe round-trip
     rec = pg.inner_text("#recipe"); prompt = ev(pg, "promptText()")
-    check("recipe records version, platform and separator", rec.startswith("v1.18 |") and "| seaart | break" in rec, rec)
+    check("recipe records version, platform and separator", rec.startswith("v1.19 |") and "| seaart | break" in rec, rec)
     pg.click("#resetBtn")
     pg.fill("#recipeIn", rec); pg.click("#loadBtn")
     check("pasting the recipe restores the exact prompt", ev(pg, "promptText()") == prompt)
@@ -219,30 +219,37 @@ with sync_playwright() as p:
 
     # new base: fresh session and Reset use the yoga catalog defaults, with no notes
     pgC, _ = fresh(b)
-    base = "PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6"
+    base = "PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 POSE0 PLACE0 ANGLE1 LIGHT1 BG6"
     check("new session starts with the default base", base in pgC.inner_text("#recipe") and not pgC.is_visible("#warnPanel"))
     pgC.click('label[for="g-B6-0"]'); pgC.click("#resetBtn")
     check("Reset returns to the default base", base in pgC.inner_text("#recipe"))
     check("default prompt includes Slavic heritage after the age", "a 25-year-old woman, adult facial features, Slavic heritage" in ev(pgC, "promptText()"))
-    pgC.fill("#recipeIn", "v1.18 | ETHN0"); pgC.click("#loadBtn")
+    pgC.fill("#recipeIn", "v1.19 | ETHN0"); pgC.click("#loadBtn")
     check("ETHN0 leaves heritage out of the prompt", "heritage" not in ev(pgC, "promptText()") and "adult facial features, " in ev(pgC, "promptText()"))
-    pgC.fill("#recipeIn", "v1.18 | ETHN2"); pgC.click("#loadBtn")
+    pgC.fill("#recipeIn", "v1.19 | ETHN2"); pgC.click("#loadBtn")
     check("ETHN2 adds Nordic heritage", "Nordic Scandinavian heritage" in ev(pgC, "promptText()"))
-    pgC.fill("#recipeIn", "v1.18 | ETHN16"); pgC.click("#loadBtn")
+    pgC.fill("#recipeIn", "v1.19 | ETHN16"); pgC.click("#loadBtn")
     check("ETHN16 is out of range", pgC.is_visible("#loadErr"))
-    pgC.fill("#recipeIn", "v1.18 | ETHN14+15 HAIR3+10"); pgC.click("#loadBtn")
+    pgC.fill("#recipeIn", "v1.19 | ETHN14+15 HAIR3+10"); pgC.click("#loadBtn")
     pr = ev(pgC, "promptText()")
     check("two heritages mix into one phrase", "mixed Greek and Native American First Nations heritage" in pr, pr)
     check("two hair colors mix into one phrase", "multi-tone hair blending copper-red and vivid electric-blue" in pr, pr)
     check("mixed recipe round-trips", "ETHN14+15" in pgC.inner_text("#recipe") and "HAIR3+10" in pgC.inner_text("#recipe"))
-    pgC.fill("#recipeIn", "v1.18 | ETHN0+14"); pgC.click("#loadBtn")
+    pgC.fill("#recipeIn", "v1.19 | ETHN0+14"); pgC.click("#loadBtn")
     check("ETHN0 can't be mixed", pgC.is_visible("#loadErr"))
-    pgC.fill("#recipeIn", "v1.18 | HAIR3"); pgC.click("#loadBtn")
+    pgC.fill("#recipeIn", "v1.19 | HAIR3"); pgC.click("#loadBtn")
     pgC.click('label[for="g-B3_1-2"]')
     check("hair keeps at least one color when the last is unticked", ev(pgC, 'S.sel["B3.1"]') == [2])
+    pgC.fill("#recipeIn", "v1.19 | CAM12 POSE2 PLACE3"); pgC.click("#loadBtn")
+    pr = ev(pgC, "promptText()")
+    check("POSE + PLACE combine (sitting on the silk net)", "full body shot, head to toe framing" in pr and "sitting gracefully" in pr and "taut net of thick glowing silver silk" in pr, pr)
+    pgC.fill("#recipeIn", "v1.19 | CAM1 POSE2"); pgC.click("#loadBtn")
+    check("a CAM option with a built-in pose plus POSE shows a note", ev(pgC, "activeNotes().length") > 0)
+    pgC.fill("#recipeIn", "LUG5 POS7"); pgC.click("#loadBtn")
+    check("Spanish keys LUG / POS load", ev(pgC, 'S.sel["B7.3"]') == 5 and ev(pgC, 'S.sel["B7.2"]') == 7)
     # presets: each loads cleanly, has no conflict notes, is 25 / Slavic, and the menu tracks it
     n_presets = ev(pgC, "PRESETS.length")
-    check("there are 13 presets plus None", n_presets == 13 and pgC.locator("#preset option").count() == 14)
+    check("there are 14 presets plus None", n_presets == 14 and pgC.locator("#preset option").count() == 15)
     bad = []
     for i in range(n_presets):
         pgC.select_option("#preset", str(i))

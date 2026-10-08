@@ -111,7 +111,6 @@ def page(head_close, archive):
     </div>
     <div class="topbar">
       <span class="small libver" id="libVer">Library v{LIB_VERSION}</span>
-      <label class="small preset"><span data-i="preset">{en["preset"]}</span> <select id="preset"></select></label>
       <button class="btn" id="resetBtn" data-i="reset" title="">{en["reset"]}</button>
       <div class="lang" role="group" aria-label="Language">
         <button id="lang-en" aria-pressed="true">EN</button><button id="lang-es" aria-pressed="false">ES</button>
@@ -120,6 +119,11 @@ def page(head_close, archive):
   </header>
 
   <div class="panel notice" id="notice" role="status" hidden></div>
+
+  <section class="panel presets" id="presetPanel" aria-labelledby="presetTitle">
+    <div class="row"><h2 id="presetTitle" data-i="preset">{en["preset"]}</h2><span class="small" data-i="presetHint">{en["presetHint"]}</span></div>
+    <div class="chips" id="presetChips" role="group" aria-labelledby="presetTitle"></div>
+  </section>
 
   <div class="grid">
     <section class="blocks" id="blocks" aria-label="Blocks"></section>

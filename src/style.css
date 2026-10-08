@@ -73,3 +73,7 @@ footer a{color:var(--accent)}
 .preset{display:inline-flex;align-items:center;gap:6px}
 .preset select{max-width:12rem}
 .libver{color:var(--muted);white-space:nowrap}
+.presets .chips{display:flex;flex-wrap:wrap;gap:6px}
+.presets .btn[data-preset=""]:disabled{opacity:1;cursor:default;font-weight:500}
+.presets .btn[data-preset=""][aria-pressed="false"]{color:var(--muted)}
+.presets .row{flex-wrap:wrap;gap:4px 10px}

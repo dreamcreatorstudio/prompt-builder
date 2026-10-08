@@ -275,9 +275,10 @@ function presetMatch() {
   return i < 0 ? "" : String(i);
 }
 function renderPresets() {
-  const el = $("#preset");
-  el.innerHTML = `<option value="">${esc(L().presetNone)}</option>` + PRESETS.map((p, i) => `<option value="${i}">${esc(p[LI()])}</option>`).join("");
-  el.value = presetMatch();
+  const cur = presetMatch();
+  $("#presetChips").innerHTML =
+    `<button class="btn" type="button" data-preset="" aria-pressed="${cur === ""}" disabled>${esc(L().presetNone)}</button>` +
+    PRESETS.map((p, i) => `<button class="btn" type="button" data-preset="${i}" aria-pressed="${cur === String(i)}">${esc(p[LI()])}</button>`).join("");
 }
 function renderPlat() {
   const P = L().plats[S.plat];
@@ -361,8 +362,9 @@ $("#copyBlocks").addEventListener("click", () => copy(blocksText(), L().blocksCo
 $("#copyRecipe").addEventListener("click", () => copy(recipe(), L().recipeCopied));
 $("#copyNeg").addEventListener("click", () => copy(NEG, L().negCopied));
 $("#loadBtn").addEventListener("click", () => loadRecipe());
-$("#preset").addEventListener("change", e => {
-  const p = PRESETS[+e.target.value]; if (e.target.value === "" || !p) return;
+$("#presetChips").addEventListener("click", e => {
+  const b = e.target.closest("[data-preset]"); if (!b || b.dataset.preset === "") return;
+  const p = PRESETS[+b.dataset.preset]; if (!p) return;
   closeVariants(); loadRecipe(p[2], fmt(L().presetApplied, { name: p[LI()] }));
 });
 $("#recipeIn").addEventListener("keydown", e => { if (e.key === "Enter") loadRecipe(); });

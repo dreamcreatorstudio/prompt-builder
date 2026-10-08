@@ -258,18 +258,18 @@ with sync_playwright() as p:
     # presets: each loads cleanly, has no conflict notes, is 25 / Slavic, and the menu tracks it
     n_presets = ev(pgC, "PRESETS.length")
     check("library version is shown at the top next to Preset", pgC.inner_text("#libVer") == "Library v" + ev(pgC, "LIB_VERSION"))
-    check("there are 18 presets plus None", n_presets == 18 and pgC.locator("#preset option").count() == 19)
+    check("there are 18 presets plus None", n_presets == 18 and pgC.locator("#presetChips button").count() == 19)
     bad = []
     for i in range(n_presets):
-        pgC.select_option("#preset", str(i))
+        pgC.click(f'#presetChips [data-preset="{i}"]')
         notes = ev(pgC, "activeNotes().map(c => c.kind).filter(k => k !== 'out_of_frame')")
-        if pgC.is_visible("#loadErr") or notes or pgC.input_value("#preset") != str(i) or "AGE1 ETHN1 " not in pgC.inner_text("#recipe"):
+        if pgC.is_visible("#loadErr") or notes or ev(pgC, 'document.querySelector("#presetChips [aria-pressed=true]").dataset.preset') != str(i) or "AGE1 ETHN1 " not in pgC.inner_text("#recipe"):
             bad.append((i, notes))
     check("every preset loads with no errors or conflicts (crop notice allowed), at 25 and Slavic", not bad, bad)
     pgC.click('label[for="g-B6-0"]')
-    check("changing a block sets the preset menu back to None", pgC.input_value("#preset") == "")
+    check("changing a block sets the preset menu back to None", ev(pgC, 'document.querySelector("#presetChips [aria-pressed=true]").dataset.preset') == "")
     pgC.click("#resetBtn")
-    check("default base shows None", pgC.input_value("#preset") == "")
+    check("default base shows None", ev(pgC, 'document.querySelector("#presetChips [aria-pressed=true]").dataset.preset') == "")
     pgC.fill("#recipeIn", "v1.6 | PHOTO1 GLOW1 AGE1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 CAM1 ANGLE1 LIGHT1 BG6 | perchance | one"); pgC.click("#loadBtn")
     check("v1.6 recipe loads as current with heritage unspecified (same text)", "ETHN0" in pgC.inner_text("#recipe") and "heritage" not in ev(pgC, "promptText()"))
     check("Reset button is in the header, next to EN/ES", pgC.locator("header #resetBtn").count() == 1)

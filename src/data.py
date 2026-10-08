@@ -126,7 +126,9 @@ BLOCKS = [
   ("Lily princess (gown)", "Princesa lirio (largo)", "original flower princess gown made of cascading white star-shaped lily petals with pale green tips, fitted petal bodice with fine golden stamen embroidery, sheer chiffon sleeves, tiny crystal dewdrops, thin green vine belt, flowing full-length petal skirt with a short train, no wings"),
   ("Midnight moth heroine", "Heroína polilla nocturna", "original superhero costume, glossy black finely pebbled textured fabric with subtle iridescent sheen, fine silver moth-wing vein patterns tracing the gloves, forearms and sides, feminine fitted cropped long-sleeve top ending just below the bust, high-waisted fitted trousers, long gloves, large metallic silver moth emblem across the chest, no mask"),
   ("Midnight moth (crop)", "Polilla nocturna (top corto)", "original superhero costume, glossy black finely pebbled textured fabric with subtle iridescent sheen, fine silver moth-wing vein patterns tracing the gloves, forearms and sides, sleek two-piece design, cropped long-sleeve top, matching fitted trousers, long gloves, large metallic silver moth emblem across the chest"),
-  ("Butterfly pea princess (short)", "Princesa flor de guisante (corto)", "original flower princess dress made of layered vivid indigo-blue butterfly pea flower petals with soft white centers and fine darker veins, fitted petal bodice, small green vine leaves at the waist, soft chiffon underlayer, tiny crystal dewdrops, short petal skirt ending well above the knee, satin heeled sandals, no wings")]),
+  ("Butterfly pea princess (short)", "Princesa flor de guisante (corto)", "original flower princess dress made of layered vivid indigo-blue butterfly pea flower petals with soft white centers and fine darker veins, fitted petal bodice, small green vine leaves at the waist, soft chiffon underlayer, tiny crystal dewdrops, short petal skirt ending well above the knee, satin heeled sandals, no wings"),
+  ("Office professional", "Profesional de oficina", "tailored charcoal blazer over a crisp white silk blouse, high-waisted tailored trousers, pointed-toe pumps, polished professional look"),
+  ("Teacher", "Profesora", "soft cream cardigan over a pale blue blouse, pleated navy midi skirt, low block heels, warm approachable look")]),
  dict(id="B6.1", key=("ACC","ACC"), name=("Accessories","Accesorios"), hue="--h6", zero=True, multi=True, opts=[
   ("None","Ninguno",""),("Emerald necklace","Collar esmeralda","emerald pendant necklace on a fine gold chain"),("Gold hoops","Aros dorados","small gold hoop earrings"),("Sports watch","Reloj deportivo","minimalist sports watch"),("Cap","Gorra","beige baseball cap"),
   ("Sunglasses","Gafas de sol","oversized tortoiseshell sunglasses"),
@@ -205,7 +207,8 @@ BLOCKS = [
   ("Hands at heart","Manos al pecho (namasté)","palms pressed together at her heart"),
   ("Light in palm","Luz en la palma","a small glowing light floating above her open palm"),
   ("Arm behind head","Brazo detrás de la cabeza","one arm raised and resting behind her head"),
-  ("Touching the mask","Tocando la máscara","fingertips lightly touching the edge of her mask")]),
+  ("Touching the mask","Tocando la máscara","fingertips lightly touching the edge of her mask"),
+  ("Holding a book", "Sosteniendo un libro", "holding an open book against her chest")]),
  dict(id="B7.1", key=("ANGLE","ANG"), name=("Camera angle","Ángulo de cámara"), hue="--h7", opts=[
   ("Eye-level","A la altura de los ojos","eye-level shot, neutral natural perspective"),
   ("Low angle","Contrapicado","low angle shot looking up at the subject, powerful heroic perspective"),
@@ -239,7 +242,9 @@ BLOCKS = [
   ("Night city from above", "Ciudad de noche desde arriba", "dizzying aerial view of a city at night far below, neon lights blurred into haze, streams of yellow taxis, towering skyscrapers on both sides"),
   ("Rooftop terrace skyline", "Terraza con vista", "elegant rooftop terrace with a stone balustrade and potted plants, wide city skyline across the background at dusk, warm city lights, shallow depth of field"),
   ("Terrace silk net", "Terraza con red de seda", "rooftop terrace at dusk with a giant radial net made only of thin glowing silver threads, like a luminous web, anchored between stone columns, evenly woven geometric mesh pattern, strands crossing the foreground, city skyline and warm lights in the background"),
-  ("Open sky", "Cielo abierto", "clear blue sky, bright daylight, distant horizon")]),
+  ("Open sky", "Cielo abierto", "clear blue sky, bright daylight, distant horizon"),
+  ("Classroom", "Salón de clases", "bright modern classroom, wooden desks, chalkboard with neat writing, large windows with soft daylight, shallow depth of field"),
+  ("Modern office", "Oficina moderna", "modern office with glass walls, minimalist desk, city view through the windows, soft daylight, shallow depth of field")]),
 ]
 NEG = "cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features"
 DEFAULT = {"B1":0,"B2":0,"B3":0,"B3.5":[1],"B3.3":1,"B3.1":[0],"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":21,"B6.1":[],"B6.2":0,"B7":0,"B7.2":0,"B7.3":0,"B7.4":0,"B7.1":0,"B8":0,"B11":5}  # Venice carnival in the city (chosen by Alex)
@@ -259,11 +264,13 @@ PRESETS = [
  ("The Silver Weaver", "La Tejedora de Plata", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR7 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT32 ACC0 MASK0 CAM8 POSE0 PLACE0 HANDS0 ANGLE3 LIGHT4 BG10 | venice | nl"),
  ("Moth silk terrace", "Terraza de seda", "PHOTO4 GLOW2 AGE1 ETHN1 EXPR7 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT33 ACC0 MASK1 CAM12 POSE3 PLACE3 HANDS0 ANGLE13 LIGHT5 BG12 | venice | nl"),
  ("Top of the city", "En la cima de la ciudad", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR1 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT33 ACC0 MASK1 CAM13 POSE7 PLACE5 HANDS0 ANGLE1 LIGHT2 BG13 | venice | nl"),
+ ("Professor", "Profesora", "PHOTO2 GLOW1 AGE1 ETHN1 EXPR1 HAIR5 STYLE9 EYES4 SKIN1 BODY4 OUTFIT36 ACC8+14 MASK0 CAM12 POSE1 PLACE0 HANDS13 ANGLE1 LIGHT3 BG14 | perchance | one"),
+ ("Executive", "Ejecutiva", "PHOTO2 GLOW1 AGE1 ETHN1 EXPR3 HAIR7 STYLE1 EYES2 SKIN1 BODY2 OUTFIT35 ACC2+15 MASK0 CAM12 POSE1 PLACE0 HANDS2 ANGLE1 LIGHT3 BG15 | perchance | one"),
  ("Studio portrait", "Retrato de estudio", "PHOTO1 GLOW1 AGE1 ETHN1 EXPR4 HAIR3 STYLE4 EYES2 SKIN2 BODY4 OUTFIT3 ACC8 MASK0 CAM3 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT3 BG2 | perchance | one"),
 ]
 
 # Library version: bump when any prompt text changes, so recipes record which texts they used.
-LIB_VERSION = "1.24"  # 1.24: clear gold-frame glasses (ACC14, ACC15); 1.23: butterfly pea princess dress (OUTFIT34); 1.22: 9 more poses (incl. yoga) and a Hands block; 1.21: Face covering block (MASK), moth mask with visible eyes; 1.20: silk nets/hammock described as glowing threads (Venice drew satin fabric); 1.19: POSE and PLACE blocks, framing-only CAM 12–13, open sky; 1.18: clearer two-piece moth suit and reclining net pose, high 3/4 tilt angle; 1.17: lying-on-silk-net pose, terrace silk-net background; 1.16: moth crop suit, moth-wing mask, suspended-in-silk pose, dramatic rim light; 1.15: silk hammock pose, rooftop terrace skyline; 1.14: shorter short dresses, textured moth suit, dreamy expression, edge pose, night city; 1.13: cinematic photo, windblown hair, midnight moth heroine, girder pose, city from above; 1.12: delicate henna accessory (ACC12); 1.11: lily princess outfits 30–31; 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
+LIB_VERSION = "1.25"  # 1.25: office and teacher outfits, classroom and office backgrounds, holding a book; 1.24: clear gold-frame glasses (ACC14, ACC15); 1.23: butterfly pea princess dress (OUTFIT34); 1.22: 9 more poses (incl. yoga) and a Hands block; 1.21: Face covering block (MASK), moth mask with visible eyes; 1.20: silk nets/hammock described as glowing threads (Venice drew satin fabric); 1.19: POSE and PLACE blocks, framing-only CAM 12–13, open sky; 1.18: clearer two-piece moth suit and reclining net pose, high 3/4 tilt angle; 1.17: lying-on-silk-net pose, terrace silk-net background; 1.16: moth crop suit, moth-wing mask, suspended-in-silk pose, dramatic rim light; 1.15: silk hammock pose, rooftop terrace skyline; 1.14: shorter short dresses, textured moth suit, dreamy expression, edge pose, night city; 1.13: cinematic photo, windblown hair, midnight moth heroine, girder pose, city from above; 1.12: delicate henna accessory (ACC12); 1.11: lily princess outfits 30–31; 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
 
 PLATFORMS = {  # separator default + transforms applied to the prompt text
     "venice":    {"label": "Venice AI",    "sep": "nl"},
@@ -286,6 +293,12 @@ SEPARATORS = {
 #   test         : may work, but depends on the model — try it with a fixed seed
 # A rule matches when block a is one of a_opts and (if given) block b is one of b_opts. Indexes are 0-based.
 CONFLICTS = [
+    dict(kind="test", a="B6.1", a_opts=[5], b="B11", b_opts=[4, 13, 14],
+         en="Sunglasses indoors (yoga studio, classroom, office): clear glasses (ACC14, ACC15) usually fit better.",
+         es="Gafas de sol en interior (sala de yoga, salón, oficina): los lentes transparentes (ACC14, ACC15) suelen quedar mejor."),
+    dict(kind="test", a="B6.1", a_opts=[14, 15], b="B11", b_opts=[3],
+         en="Clear glasses at the beach: sunglasses (ACC5) usually fit better.",
+         es="Lentes transparentes en la playa: las gafas de sol (ACC5) suelen quedar mejor."),
     dict(kind="incompatible", a="B6.1", a_opts=[14, 15], b="B6.1", b_opts=[5],
          en="Clear glasses and sunglasses at the same time: keep only one.",
          es="Lentes transparentes y gafas de sol a la vez: deja solo uno."),

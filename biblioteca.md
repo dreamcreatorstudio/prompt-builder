@@ -1,12 +1,12 @@
 # Block Library / Biblioteca de bloques
 
-Library version **v1.24** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
+Library version **v1.25** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
 Each block has a short key and numbered options. A **recipe** records the library version, one option per block, the platform and the separator:
 
-`v1.24 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 MASK0 CAM1 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT1 BG6 | perchance | one`
+`v1.25 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 MASK0 CAM1 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT1 BG6 | perchance | one`
 
-Spanish keys work too: `v1.24 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 MAS0 CAM1 POS0 LUG0 MAN0 ANG1 LUZ1 FON6 | perchance | one`
+Spanish keys work too: `v1.25 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 MAS0 CAM1 POS0 LUG0 MAN0 ANG1 LUZ1 FON6 | perchance | one`
 
 New options are always added at the end of a block and existing numbers never change, so old recipes keep working.
 
@@ -171,6 +171,8 @@ New options are always added at the end of a block and existing numbers never ch
 | 32 | Midnight moth heroine | Heroína polilla nocturna | original superhero costume, glossy black finely pebbled textured fabric with subtle iridescent sheen, fine silver moth-wing vein patterns tracing the gloves, forearms and sides, feminine fitted cropped long-sleeve top ending just below the bust, high-waisted fitted trousers, long gloves, large metallic silver moth emblem across the chest, no mask |
 | 33 | Midnight moth (crop) | Polilla nocturna (top corto) | original superhero costume, glossy black finely pebbled textured fabric with subtle iridescent sheen, fine silver moth-wing vein patterns tracing the gloves, forearms and sides, sleek two-piece design, cropped long-sleeve top, matching fitted trousers, long gloves, large metallic silver moth emblem across the chest |
 | 34 | Butterfly pea princess (short) | Princesa flor de guisante (corto) | original flower princess dress made of layered vivid indigo-blue butterfly pea flower petals with soft white centers and fine darker veins, fitted petal bodice, small green vine leaves at the waist, soft chiffon underlayer, tiny crystal dewdrops, short petal skirt ending well above the knee, satin heeled sandals, no wings |
+| 35 | Office professional | Profesional de oficina | tailored charcoal blazer over a crisp white silk blouse, high-waisted tailored trousers, pointed-toe pumps, polished professional look |
+| 36 | Teacher | Profesora | soft cream cardigan over a pale blue blouse, pleated navy midi skirt, low block heels, warm approachable look |
 
 ## B6.1 · ACC / ACC — Accessories / Accesorios (choose several: `ACC1+3`; `ACC0` = none)
 | # | EN | ES | Prompt text |
@@ -272,6 +274,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 10 | Light in palm | Luz en la palma | a small glowing light floating above her open palm |
 | 11 | Arm behind head | Brazo detrás de la cabeza | one arm raised and resting behind her head |
 | 12 | Touching the mask | Tocando la máscara | fingertips lightly touching the edge of her mask |
+| 13 | Holding a book | Sosteniendo un libro | holding an open book against her chest |
 
 ## B7.1 · ANGLE / ANG — Camera angle / Ángulo de cámara
 | # | EN | ES | Prompt text |
@@ -315,6 +318,8 @@ New options are always added at the end of a block and existing numbers never ch
 | 11 | Rooftop terrace skyline | Terraza con vista | elegant rooftop terrace with a stone balustrade and potted plants, wide city skyline across the background at dusk, warm city lights, shallow depth of field |
 | 12 | Terrace silk net | Terraza con red de seda | rooftop terrace at dusk with a giant radial net made only of thin glowing silver threads, like a luminous web, anchored between stone columns, evenly woven geometric mesh pattern, strands crossing the foreground, city skyline and warm lights in the background |
 | 13 | Open sky | Cielo abierto | clear blue sky, bright daylight, distant horizon |
+| 14 | Classroom | Salón de clases | bright modern classroom, wooden desks, chalkboard with neat writing, large windows with soft daylight, shallow depth of field |
+| 15 | Modern office | Oficina moderna | modern office with glass walls, minimalist desk, city view through the windows, soft daylight, shallow depth of field |
 
 ## B0 · NEG — Negative prompt
 ```
@@ -335,6 +340,8 @@ Shown as notes, grouped by kind; the tool never changes your choices. / Se muest
 - Half-body and portrait framings crop the lower body: shorts, footwear and leg details from OUTFIT or BODY won't show.
 
 **Needs testing / Requiere pruebas**
+- Sunglasses indoors (yoga studio, classroom, office): clear glasses (ACC14, ACC15) usually fit better.
+- Clear glasses at the beach: sunglasses (ACC5) usually fit better.
 - Glasses over an eye mask or visor may look odd; try one or the other.
 - This POSE already places the arms or hands; a HANDS choice may clash with it.
 - HANDS 12 touches the mask, but no MASK is chosen.

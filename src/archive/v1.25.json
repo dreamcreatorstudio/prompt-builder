@@ -1,0 +1,517 @@
+{
+ "blocks": [
+  {
+   "id": "B1",
+   "key": [
+    "PHOTO",
+    "FOTO"
+   ],
+   "zero": false,
+   "texts": [
+    "RAW photo, photorealistic, real photograph, Canon EOS R5, 85mm lens, f/2.0, shallow depth of field, natural film grain, sharp focus, 8k uhd",
+    "high-end fashion editorial photograph, medium format camera, 80mm lens, f/4, crisp detail, magazine quality, photorealistic",
+    "clean commercial catalog photograph, 50mm lens, f/8, everything in sharp focus, even exposure, photorealistic",
+    "high-end photorealistic fashion photography, Canon EOS R5, 85mm lens, Kodak Portra 400 film aesthetic, subtle film grain, visible skin pores, individual eyelashes and hair strands, cinematic composition"
+   ]
+  },
+  {
+   "id": "B2",
+   "key": [
+    "GLOW",
+    "BRI"
+   ],
+   "zero": false,
+   "texts": [
+    "natural matte skin finish, soft diffuse highlights",
+    "healthy dewy skin glow, subtle natural sheen on cheekbones and shoulders",
+    "light post-workout glow, faint natural sheen of perspiration"
+   ]
+  },
+  {
+   "id": "B3",
+   "key": [
+    "AGE",
+    "EDAD"
+   ],
+   "zero": false,
+   "texts": [
+    "a 25-year-old woman, adult facial features",
+    "a 30-year-old woman, adult facial features",
+    "a 35-year-old woman, mature adult features",
+    "a 40-year-old woman, mature adult features",
+    "a 45-year-old woman, graceful mature features",
+    "a 50-year-old woman, graceful mature features, subtle laugh lines"
+   ]
+  },
+  {
+   "id": "B3.5",
+   "key": [
+    "ETHN",
+    "ETN"
+   ],
+   "zero": true,
+   "multi": true,
+   "mix": {
+    "strip": " heritage$",
+    "tpl": "mixed {} heritage"
+   },
+   "texts": [
+    "",
+    "Slavic heritage",
+    "Nordic Scandinavian heritage",
+    "Russian heritage",
+    "Latina heritage",
+    "Mediterranean heritage",
+    "Celtic Irish heritage",
+    "Afro-Caribbean heritage",
+    "African heritage",
+    "Middle Eastern heritage",
+    "South Asian heritage",
+    "East Asian heritage",
+    "Southeast Asian heritage",
+    "mixed heritage",
+    "Greek heritage",
+    "Native American First Nations heritage"
+   ]
+  },
+  {
+   "id": "B3.3",
+   "key": [
+    "EXPR",
+    "EXP"
+   ],
+   "zero": false,
+   "texts": [
+    "confident relaxed expression, soft natural smile",
+    "bright friendly smile",
+    "calm self-assured gaze",
+    "serene warm expression",
+    "playful laughing expression",
+    "sweet gentle expression, calm self-assured gaze, soft smile",
+    "dreamy contemplative expression, soft friendly smile, warm approachable look, calm and self-assured"
+   ]
+  },
+  {
+   "id": "B3.1",
+   "key": [
+    "HAIR",
+    "CAB"
+   ],
+   "zero": false,
+   "multi": true,
+   "mix": {
+    "strip": " (dyed )?hair.*$",
+    "tpl": "multi-tone hair blending {}"
+   },
+   "texts": [
+    "honey-blonde hair",
+    "platinum blonde hair",
+    "copper-red hair",
+    "auburn hair",
+    "chestnut-brown hair",
+    "ash-brown hair",
+    "jet-black hair",
+    "silver-grey hair",
+    "pastel blue dyed hair",
+    "vivid electric-blue dyed hair",
+    "soft pink dyed hair",
+    "lavender purple dyed hair",
+    "mint green dyed hair",
+    "blue to violet ombré dyed hair",
+    "rainbow multicolor dyed hair in pastel streaks",
+    "chestnut-brown hair with copper and caramel highlights"
+   ]
+  },
+  {
+   "id": "B3.4",
+   "key": [
+    "STYLE",
+    "PEI"
+   ],
+   "zero": false,
+   "texts": [
+    "sleek straight hair",
+    "straight hair",
+    "subtle natural waves",
+    "wavy hair",
+    "loose beach waves",
+    "curly hair",
+    "coily hair, afro hair",
+    "high ponytail",
+    "neat hair bun",
+    "loose messy bun with face-framing strands",
+    "pixie cut",
+    "short bob cut",
+    "long loose softly tousled hair with trailing thin vines and tiny white blossoms hanging like strands, small green leaves tucked in",
+    "long straight loose hair with trailing thin vines and tiny white blossoms hanging like strands, small green leaves tucked in",
+    "long flowing windblown hair, individual strands catching the light"
+   ]
+  },
+  {
+   "id": "B3.2",
+   "key": [
+    "EYES",
+    "OJO"
+   ],
+   "zero": false,
+   "texts": [
+    "clear blue eyes",
+    "green eyes",
+    "warm brown eyes",
+    "hazel eyes",
+    "grey eyes",
+    "luminous amber-gold eyes",
+    "glowing vivid emerald-green eyes with a subtle magical light",
+    "luminous vivid sapphire-blue eyes"
+   ]
+  },
+  {
+   "id": "B4",
+   "key": [
+    "SKIN",
+    "PIEL"
+   ],
+   "zero": false,
+   "texts": [
+    "fair porcelain skin with warm pink undertones, natural skin texture, visible pores",
+    "fair skin with light freckles across the nose and cheeks, natural skin texture",
+    "olive skin tone with golden undertones, natural skin texture",
+    "warm tan brown skin, natural skin texture, subtle color variation",
+    "deep brown skin with rich undertones, natural skin texture"
+   ]
+  },
+  {
+   "id": "B5",
+   "key": [
+    "BODY",
+    "CUE"
+   ],
+   "zero": false,
+   "texts": [
+    "fit athletic adult build, toned shoulders and arms, defined core, strong toned legs",
+    "lean slender adult physique with long toned muscles, graceful upright posture",
+    "lean runner's build, defined legs, athletic adult proportions",
+    "healthy natural adult body, soft curves, relaxed posture"
+   ]
+  },
+  {
+   "id": "B6",
+   "key": [
+    "OUTFIT",
+    "VES"
+   ],
+   "zero": false,
+   "texts": [
+    "white ribbed cotton crop top, high-waisted light-wash denim shorts, white canvas sneakers",
+    "black sports crop top, matching high-waisted biker shorts, running shoes",
+    "cream linen button-up crop top, high-waisted linen shorts, leather sandals",
+    "sage green knit crop cardigan, high-waisted white tailored shorts, minimalist sandals",
+    "dusty rose yoga set, fitted long-sleeve crop top and full-length leggings, barefoot",
+    "original superhero costume, full-coverage silver and teal bodysuit with geometric armor plates, short flowing cape, star emblem on the chest, knee-high boots",
+    "original superhero costume, full-coverage navy bodysuit with gold lightning-bolt piping, high collar, fingerless gloves, utility belt, armored boots",
+    "original fantasy warrior costume, bronze breastplate over a long crimson tunic, leather bracers, ornate belt, sandal boots, round shield on her back",
+    "pirate captain costume, white billowy blouse, burgundy brocade vest, tricorn hat, wide leather belt, tall boots, fitted dark trousers",
+    "modern white astronaut suit with orange accents, mission patches, helmet held under one arm",
+    "samurai-inspired costume, dark lacquered armor pieces over an indigo hakama and kimono, red cord details",
+    "traditional red flamenco dress with white polka dots, ruffled sleeves and tiers, flower in the hair, shawl with fringe",
+    "western cowgirl outfit, suede fringe jacket, plaid shirt, high-waisted jeans, cowboy hat and boots",
+    "steampunk explorer outfit, brown leather corset vest over a cream blouse, brass goggles on the hat, long skirt with buckles, gloves",
+    "original forest elf costume, long moss-green layered dress with leaf embroidery, hooded cape, elegant pointed ears, wooden bow",
+    "racing driver suit, red and white fireproof jumpsuit with sponsor-free patches, helmet held at the hip",
+    "Dominican carnival Diablo Cojuelo costume, vibrant full-coverage satin suit covered in mirrors, bells and ribbons, ornate horned mask held in her hand",
+    "traditional Bahian samba-school baiana costume, wide hoop skirt with lace layers, embroidered blouse, colorful head wrap, bead necklaces",
+    "Barranquilla carnival cumbia dancer outfit, long red, yellow and blue pollera skirt with ruffles, off-shoulder ruffled blouse, flower crown",
+    "Oruro carnival morenada dancer costume, embroidered layered pollera skirt, sequined shawl, bowler hat",
+    "Candelaria festival dancer outfit from Puno, multiple bright layered polleras, embroidered jacket, bowler hat, woven shawl",
+    "Venetian carnival gown, brocade bodice with long full skirt, ornate Colombina half-mask, feathered headpiece",
+    "1950s retro soda-shop outfit, mint and cream letterman cardigan, mustard plaid pleated skirt, white ankle socks, penny loafers",
+    "1970s amateur detective outfit, mustard corduroy jacket, teal turtleneck, brown bell-bottom trousers, platform boots, flashlight in hand",
+    "small-town farm outfit, forest green flannel shirt, worn denim jacket, straight jeans, leather work boots",
+    "original superhero costume, full-coverage emerald and silver bodysuit, short silver cape, stylized leaf emblem on the chest, knee-high silver boots",
+    "original superhero costume, full-coverage emerald and silver bodysuit with sleek armored panels, stylized leaf emblem on the chest, silver gauntlets, knee-high silver boots, no cape",
+    "original forest princess outfit, dress made of layered green leaves, vine-laced bodice, puffed leaf sleeves, short ruffled leaf skirt ending above the knee, vine-wrapped heeled sandals, no wings",
+    "original forest princess gown made of layered green leaves, vine-laced bodice, puffed leaf sleeves, flowing full-length leaf skirt with tiny white blossoms, no wings",
+    "original flower princess dress made of layered white star-shaped lily petals with pale green tips, fitted petal bodice with fine golden stamen embroidery, soft chiffon underlayer, tiny crystal dewdrops, thin green vine belt, short petal skirt ending well above the knee, satin heeled sandals, no wings",
+    "original flower princess gown made of cascading white star-shaped lily petals with pale green tips, fitted petal bodice with fine golden stamen embroidery, sheer chiffon sleeves, tiny crystal dewdrops, thin green vine belt, flowing full-length petal skirt with a short train, no wings",
+    "original superhero costume, glossy black finely pebbled textured fabric with subtle iridescent sheen, fine silver moth-wing vein patterns tracing the gloves, forearms and sides, feminine fitted cropped long-sleeve top ending just below the bust, high-waisted fitted trousers, long gloves, large metallic silver moth emblem across the chest, no mask",
+    "original superhero costume, glossy black finely pebbled textured fabric with subtle iridescent sheen, fine silver moth-wing vein patterns tracing the gloves, forearms and sides, sleek two-piece design, cropped long-sleeve top, matching fitted trousers, long gloves, large metallic silver moth emblem across the chest",
+    "original flower princess dress made of layered vivid indigo-blue butterfly pea flower petals with soft white centers and fine darker veins, fitted petal bodice, small green vine leaves at the waist, soft chiffon underlayer, tiny crystal dewdrops, short petal skirt ending well above the knee, satin heeled sandals, no wings",
+    "tailored charcoal blazer over a crisp white silk blouse, high-waisted tailored trousers, pointed-toe pumps, polished professional look",
+    "soft cream cardigan over a pale blue blouse, pleated navy midi skirt, low block heels, warm approachable look"
+   ]
+  },
+  {
+   "id": "B6.1",
+   "key": [
+    "ACC",
+    "ACC"
+   ],
+   "zero": true,
+   "multi": true,
+   "texts": [
+    "",
+    "emerald pendant necklace on a fine gold chain",
+    "small gold hoop earrings",
+    "minimalist sports watch",
+    "beige baseball cap",
+    "oversized tortoiseshell sunglasses",
+    "wide-brim straw hat",
+    "patterned silk scarf",
+    "small pearl stud earrings",
+    "stack of thin gold bracelets",
+    "canvas tote bag on the shoulder",
+    "rolled yoga mat under one arm",
+    "delicate golden-brown henna design on the backs of the hands and fingers, fine floral and vine lines, subtle and elegant",
+    "sleek silver moth-wing shaped eye mask with open eye holes, eyes clearly visible",
+    "delicate thin gold wire-frame eyeglasses with clear transparent lenses",
+    "fine round gold wire-frame eyeglasses with clear transparent lenses"
+   ]
+  },
+  {
+   "id": "B6.2",
+   "key": [
+    "MASK",
+    "MAS"
+   ],
+   "zero": true,
+   "texts": [
+    "",
+    "sleek silver moth-wing shaped eye mask with open eye holes, eyes clearly visible",
+    "delicate black lace eye mask with open eye holes, eyes clearly visible",
+    "ornate gold filigree half-mask covering the upper face, open eye holes, eyes clearly visible",
+    "masquerade eye mask with soft feathers and small crystals, open eye holes, eyes clearly visible",
+    "eye mask made of small white lily petals with pale green tips, open eye holes, eyes clearly visible",
+    "eye mask covered in tiny clear crystals that catch the light, open eye holes, eyes clearly visible",
+    "sheer delicate tulle veil falling over the face from a small headpiece, face softly visible through it",
+    "sheer chiffon veil covering the nose and mouth, held by a thin chain, eyes uncovered",
+    "light linen scarf wrapped over the head and lower face, eyes uncovered",
+    "sleek translucent iridescent visor across the eyes, futuristic design"
+   ]
+  },
+  {
+   "id": "B7",
+   "key": [
+    "CAM",
+    "CAM"
+   ],
+   "zero": false,
+   "texts": [
+    "full body shot, head to toe framing, standing relaxed, three-quarter turn, looking at camera",
+    "medium shot from the waist up, looking at camera",
+    "close-up portrait, head and shoulders",
+    "full body shot, walking toward camera, natural mid-stride motion",
+    "full body shot, sitting casually on a low wooden stool, relaxed posture",
+    "full body shot, standing tall, confident regal posture, shoulders back, chin slightly raised, looking at camera",
+    "full body, reclining on a steel girder high above the city, one arm raised behind her head, relaxed diagonal body line",
+    "full body, sitting on the edge of a steel girder high above the city, one knee drawn up with her forearm resting on it, the other leg hanging over the edge, leaning back on one hand, head tilted, gazing down at the city",
+    "full body, reclining comfortably in a hammock woven only from thin shimmering silver threads, loose cocoon-like strands catching the light, strung between two stone pillars, one arm resting behind her head, one leg gently bent, relaxed and at ease",
+    "full body, suspended mid-air in a sweeping web of thin glowing silver threads stretched between the terrace columns, body in a dynamic diagonal line, one arm raised behind her head, the other hand gripping a silk strand, hair and loose silk threads streaming in the wind, silk strands crossing the foreground",
+    "full body, reclining gracefully on a large taut radial net made only of thin glowing silver threads, the net clearly visible beneath and around her and supporting her weight, body in a relaxed diagonal line, one arm raised behind her head, the other hand resting on the net, one knee slightly bent, hair spilling across the net and lifted by the wind",
+    "full body shot, head to toe framing",
+    "wide full body shot, figure smaller in the frame, surroundings emphasized"
+   ]
+  },
+  {
+   "id": "B7.2",
+   "key": [
+    "POSE",
+    "POS"
+   ],
+   "zero": true,
+   "texts": [
+    "",
+    "standing tall, confident posture, shoulders back",
+    "sitting gracefully, relaxed posture",
+    "reclining gracefully, one arm resting behind her head, one knee gently bent",
+    "kneeling on one knee, upright torso",
+    "walking forward, natural mid-stride",
+    "suspended in a dynamic diagonal line, one hand gripping a strand, hair streaming in the wind",
+    "standing with both arms raised triumphantly toward the sky",
+    "leaning casually with one shoulder against a wall, relaxed",
+    "lying on her side, propped up on one elbow, relaxed",
+    "sitting cross-legged, upright and relaxed",
+    "standing turned away, looking back over her shoulder",
+    "caught mid-twirl, hair and clothing flowing with the motion",
+    "crouching low in a ready stance, one hand touching the ground",
+    "seated in lotus pose, spine tall",
+    "standing in tree pose, balanced on one leg",
+    "in warrior II yoga pose, arms extended, strong stance"
+   ]
+  },
+  {
+   "id": "B7.3",
+   "key": [
+    "PLACE",
+    "LUG"
+   ],
+   "zero": true,
+   "texts": [
+    "",
+    "on a steel girder high above the city",
+    "in a hammock woven only from thin shimmering silver threads, loose cocoon-like strands catching the light, strung between two stone pillars",
+    "on a large taut radial net made only of thin glowing silver threads, the net clearly visible beneath and around her and supporting her weight",
+    "on the very top of a glass pyramid-shaped skyscraper, the entire city spread out around and below her to the horizon",
+    "on the small platform at the very top of a tall tower spire, the entire city spread out around and below her to the horizon",
+    "on the stone ledge of a rooftop terrace, city skyline behind her"
+   ]
+  },
+  {
+   "id": "B7.4",
+   "key": [
+    "HANDS",
+    "MAN"
+   ],
+   "zero": true,
+   "texts": [
+    "",
+    "hands on hips",
+    "arms loosely crossed",
+    "one hand running through her hair",
+    "one hand resting lightly under her chin",
+    "hands gently clasped in front of her",
+    "holding a single white flower in one hand",
+    "one hand reaching softly toward the camera",
+    "hands tucked into her pockets",
+    "palms pressed together at her heart",
+    "a small glowing light floating above her open palm",
+    "one arm raised and resting behind her head",
+    "fingertips lightly touching the edge of her mask",
+    "holding an open book against her chest"
+   ]
+  },
+  {
+   "id": "B7.1",
+   "key": [
+    "ANGLE",
+    "ANG"
+   ],
+   "zero": false,
+   "texts": [
+    "eye-level shot, neutral natural perspective",
+    "low angle shot looking up at the subject, powerful heroic perspective",
+    "high angle shot looking down at the subject",
+    "bird's-eye view, top-down overhead shot",
+    "worm's-eye view from the ground looking straight up, dramatic height",
+    "dutch angle, tilted horizon, dynamic tension",
+    "over-the-shoulder shot, blurred shoulder in the foreground",
+    "side view profile shot",
+    "hip-level shot, camera at waist height",
+    "knee-level shot, camera low near the knees",
+    "aerial drone shot from high above",
+    "first-person point of view shot",
+    "dramatic high three-quarter angle, camera elevated and looking diagonally down at her, slight dynamic camera tilt, deep background with city lights bokeh"
+   ]
+  },
+  {
+   "id": "B8",
+   "key": [
+    "LIGHT",
+    "LUZ"
+   ],
+   "zero": false,
+   "texts": [
+    "soft even studio lighting, large softbox, gentle shadows",
+    "warm golden hour sunlight, soft rim light",
+    "soft natural window light from the side",
+    "bright overcast daylight, soft shadowless light",
+    "dramatic cinematic backlight at dusk, glowing rim light outlining her silhouette and hair, high contrast, warm city lights bokeh"
+   ]
+  },
+  {
+   "id": "B11",
+   "key": [
+    "BG",
+    "FON"
+   ],
+   "zero": false,
+   "texts": [
+    "seamless pure white background, infinite white studio void, soft contact shadow on the floor",
+    "seamless light grey studio backdrop",
+    "Paris cityscape with the Eiffel Tower in the background, creamy bokeh",
+    "tropical beach at sunset, palm trees, soft ocean bokeh",
+    "bright yoga studio, light wooden floor, large windows, green plants",
+    "sunny city street, modern storefronts, soft background blur",
+    "sunlit marble palace conservatory, white columns and arches, climbing roses, polished marble floor, scattered softly glowing blue petals",
+    "ivy-covered stone arcade on a palace terrace above the clouds, bright sky",
+    "dramatic overhead view of a busy city street far below, yellow taxis, traffic, skyscrapers, shallow depth of field",
+    "dizzying aerial view of a city at night far below, neon lights blurred into haze, streams of yellow taxis, towering skyscrapers on both sides",
+    "elegant rooftop terrace with a stone balustrade and potted plants, wide city skyline across the background at dusk, warm city lights, shallow depth of field",
+    "rooftop terrace at dusk with a giant radial net made only of thin glowing silver threads, like a luminous web, anchored between stone columns, evenly woven geometric mesh pattern, strands crossing the foreground, city skyline and warm lights in the background",
+    "clear blue sky, bright daylight, distant horizon",
+    "bright modern classroom, wooden desks, chalkboard with neat writing, large windows with soft daylight, shallow depth of field",
+    "modern office with glass walls, minimalist desk, city view through the windows, soft daylight, shallow depth of field"
+   ]
+  }
+ ],
+ "defaults": {
+  "B1": 0,
+  "B2": 0,
+  "B3": 0,
+  "B3.5": [
+   1
+  ],
+  "B3.3": 1,
+  "B3.1": [
+   0
+  ],
+  "B3.4": 8,
+  "B3.2": 1,
+  "B4": 2,
+  "B5": 1,
+  "B6": 21,
+  "B6.1": [],
+  "B6.2": 0,
+  "B7": 0,
+  "B7.2": 0,
+  "B7.3": 0,
+  "B7.4": 0,
+  "B7.1": 0,
+  "B8": 0,
+  "B11": 5
+ },
+ "default_platform": "perchance",
+ "platforms": {
+  "venice": {
+   "label": "Venice AI",
+   "sep": "nl"
+  },
+  "seaart": {
+   "label": "SeaArt",
+   "sep": "nl",
+   "weights": [
+    "B6",
+    "B11"
+   ]
+  },
+  "perchance": {
+   "label": "Perchance AI",
+   "sep": "one",
+   "drop": [
+    "8k uhd",
+    "RAW photo",
+    "real photograph",
+    "natural film grain",
+    "magazine quality"
+   ]
+  },
+  "gen": {
+   "label": "Generic",
+   "sep": "nl"
+  }
+ },
+ "separators": {
+  "nl": {
+   "joiner": ",\n"
+  },
+  "one": {
+   "joiner": ", "
+  },
+  "tag": {
+   "joiner": ",\n",
+   "prefix": true
+  },
+  "break": {
+   "joiner": ",\nBREAK\n"
+  }
+ }
+}

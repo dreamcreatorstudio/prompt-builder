@@ -1,12 +1,12 @@
 # Block Library / Biblioteca de bloques
 
-Library version **v1.25** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
+Library version **v1.26** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
 Each block has a short key and numbered options. A **recipe** records the library version, one option per block, the platform and the separator:
 
-`v1.25 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 MASK0 CAM1 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT1 BG6 | perchance | one`
+`v1.26 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 MASK0 CAM1 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT1 BG6 | perchance | one`
 
-Spanish keys work too: `v1.25 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 MAS0 CAM1 POS0 LUG0 MAN0 ANG1 LUZ1 FON6 | perchance | one`
+Spanish keys work too: `v1.26 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 MAS0 CAM1 POS0 LUG0 MAN0 ANG1 LUZ1 FON6 | perchance | one`
 
 New options are always added at the end of a block and existing numbers never change, so old recipes keep working.
 
@@ -104,6 +104,8 @@ New options are always added at the end of a block and existing numbers never ch
 | 13 | Vine-strand waves | Ondas con enredaderas | long loose softly tousled hair with trailing thin vines and tiny white blossoms hanging like strands, small green leaves tucked in |
 | 14 | Straight vine strands | Lisa con enredaderas | long straight loose hair with trailing thin vines and tiny white blossoms hanging like strands, small green leaves tucked in |
 | 15 | Long windblown | Larga al viento | long flowing windblown hair, individual strands catching the light |
+| 16 | 70s feathered | Años 70 con capas | 1970s feathered layered hairstyle with soft volume |
+| 17 | 60s bouffant | Años 60 bouffant | 1960s bouffant hairstyle with a smooth crown and flipped ends |
 
 ## B3.2 · EYES / OJO — Eyes / Ojos
 | # | EN | ES | Prompt text |
@@ -173,6 +175,11 @@ New options are always added at the end of a block and existing numbers never ch
 | 34 | Butterfly pea princess (short) | Princesa flor de guisante (corto) | original flower princess dress made of layered vivid indigo-blue butterfly pea flower petals with soft white centers and fine darker veins, fitted petal bodice, small green vine leaves at the waist, soft chiffon underlayer, tiny crystal dewdrops, short petal skirt ending well above the knee, satin heeled sandals, no wings |
 | 35 | Office professional | Profesional de oficina | tailored charcoal blazer over a crisp white silk blouse, high-waisted tailored trousers, pointed-toe pumps, polished professional look |
 | 36 | Teacher | Profesora | soft cream cardigan over a pale blue blouse, pleated navy midi skirt, low block heels, warm approachable look |
+| 37 | 70s rock band | Banda de rock años 70 | 1970s girl rock band outfit, suede fringe vest over a fitted ribbed turtleneck, high-waisted flared bell-bottom jeans, platform boots, groovy retro style |
+| 38 | Mystic genie | Genio místico | original mystic genie costume, flowing turquoise chiffon wide-leg trousers, gold-embroidered cropped vest over a sheer long-sleeve blouse, wide gold cuffs, delicate gold jewelry |
+| 39 | 60s mod go-go | Mod años 60 | 1960s mod mini dress with bold black and white geometric color blocks, white go-go boots, retro style |
+| 40 | 70s disco | Disco años 70 | 1970s disco outfit, shimmering gold sequin halter jumpsuit with wide flared legs, platform heels |
+| 41 | Flower child | Hippie años 70 | 1970s flower child look, flowing embroidered peasant blouse, long floral maxi skirt, daisy chain in the hair, suede sandals |
 
 ## B6.1 · ACC / ACC — Accessories / Accesorios (choose several: `ACC1+3`; `ACC0` = none)
 | # | EN | ES | Prompt text |
@@ -275,6 +282,8 @@ New options are always added at the end of a block and existing numbers never ch
 | 11 | Arm behind head | Brazo detrás de la cabeza | one arm raised and resting behind her head |
 | 12 | Touching the mask | Tocando la máscara | fingertips lightly touching the edge of her mask |
 | 13 | Holding a book | Sosteniendo un libro | holding an open book against her chest |
+| 14 | Holding a brass lamp | Sosteniendo una lámpara | holding an ornate polished brass oil lamp in both hands |
+| 15 | Playing guitar | Tocando guitarra | playing an electric guitar slung over her shoulder |
 
 ## B7.1 · ANGLE / ANG — Camera angle / Ángulo de cámara
 | # | EN | ES | Prompt text |
@@ -320,6 +329,9 @@ New options are always added at the end of a block and existing numbers never ch
 | 13 | Open sky | Cielo abierto | clear blue sky, bright daylight, distant horizon |
 | 14 | Classroom | Salón de clases | bright modern classroom, wooden desks, chalkboard with neat writing, large windows with soft daylight, shallow depth of field |
 | 15 | Modern office | Oficina moderna | modern office with glass walls, minimalist desk, city view through the windows, soft daylight, shallow depth of field |
+| 16 | 70s concert stage | Escenario de concierto 70s | 1970s concert stage with warm colored spotlights, vintage amplifiers, haze and lens flare |
+| 17 | Desert palace | Palacio del desierto | ornate desert palace courtyard with arches, silk cushions, lanterns and golden evening light |
+| 18 | Disco floor | Pista de disco | 1970s disco dance floor with lit-up colored tiles and a mirror ball scattering light |
 
 ## B0 · NEG — Negative prompt
 ```

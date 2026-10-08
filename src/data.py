@@ -75,7 +75,9 @@ BLOCKS = [
   ("Short bob","Bob corto","short bob cut"),
   ("Vine-strand waves", "Ondas con enredaderas", "long loose softly tousled hair with trailing thin vines and tiny white blossoms hanging like strands, small green leaves tucked in"),
   ("Straight vine strands", "Lisa con enredaderas", "long straight loose hair with trailing thin vines and tiny white blossoms hanging like strands, small green leaves tucked in"),
-  ("Long windblown", "Larga al viento", "long flowing windblown hair, individual strands catching the light")]),
+  ("Long windblown", "Larga al viento", "long flowing windblown hair, individual strands catching the light"),
+  ("70s feathered", "Años 70 con capas", "1970s feathered layered hairstyle with soft volume"),
+  ("60s bouffant", "Años 60 bouffant", "1960s bouffant hairstyle with a smooth crown and flipped ends")]),
  dict(id="B3.2", key=("EYES","OJO"), name=("Eyes","Ojos"), hue="--h3", opts=[
   ("Blue","Azules","clear blue eyes"),("Green","Verdes","green eyes"),("Brown","Marrones","warm brown eyes"),("Hazel","Avellana","hazel eyes"),("Grey","Grises","grey eyes"),
   ("Amber gold", "Ámbar dorado", "luminous amber-gold eyes"),
@@ -128,7 +130,12 @@ BLOCKS = [
   ("Midnight moth (crop)", "Polilla nocturna (top corto)", "original superhero costume, glossy black finely pebbled textured fabric with subtle iridescent sheen, fine silver moth-wing vein patterns tracing the gloves, forearms and sides, sleek two-piece design, cropped long-sleeve top, matching fitted trousers, long gloves, large metallic silver moth emblem across the chest"),
   ("Butterfly pea princess (short)", "Princesa flor de guisante (corto)", "original flower princess dress made of layered vivid indigo-blue butterfly pea flower petals with soft white centers and fine darker veins, fitted petal bodice, small green vine leaves at the waist, soft chiffon underlayer, tiny crystal dewdrops, short petal skirt ending well above the knee, satin heeled sandals, no wings"),
   ("Office professional", "Profesional de oficina", "tailored charcoal blazer over a crisp white silk blouse, high-waisted tailored trousers, pointed-toe pumps, polished professional look"),
-  ("Teacher", "Profesora", "soft cream cardigan over a pale blue blouse, pleated navy midi skirt, low block heels, warm approachable look")]),
+  ("Teacher", "Profesora", "soft cream cardigan over a pale blue blouse, pleated navy midi skirt, low block heels, warm approachable look"),
+  ("70s rock band", "Banda de rock años 70", "1970s girl rock band outfit, suede fringe vest over a fitted ribbed turtleneck, high-waisted flared bell-bottom jeans, platform boots, groovy retro style"),
+  ("Mystic genie", "Genio místico", "original mystic genie costume, flowing turquoise chiffon wide-leg trousers, gold-embroidered cropped vest over a sheer long-sleeve blouse, wide gold cuffs, delicate gold jewelry"),
+  ("60s mod go-go", "Mod años 60", "1960s mod mini dress with bold black and white geometric color blocks, white go-go boots, retro style"),
+  ("70s disco", "Disco años 70", "1970s disco outfit, shimmering gold sequin halter jumpsuit with wide flared legs, platform heels"),
+  ("Flower child", "Hippie años 70", "1970s flower child look, flowing embroidered peasant blouse, long floral maxi skirt, daisy chain in the hair, suede sandals")]),
  dict(id="B6.1", key=("ACC","ACC"), name=("Accessories","Accesorios"), hue="--h6", zero=True, multi=True, opts=[
   ("None","Ninguno",""),("Emerald necklace","Collar esmeralda","emerald pendant necklace on a fine gold chain"),("Gold hoops","Aros dorados","small gold hoop earrings"),("Sports watch","Reloj deportivo","minimalist sports watch"),("Cap","Gorra","beige baseball cap"),
   ("Sunglasses","Gafas de sol","oversized tortoiseshell sunglasses"),
@@ -208,7 +215,9 @@ BLOCKS = [
   ("Light in palm","Luz en la palma","a small glowing light floating above her open palm"),
   ("Arm behind head","Brazo detrás de la cabeza","one arm raised and resting behind her head"),
   ("Touching the mask","Tocando la máscara","fingertips lightly touching the edge of her mask"),
-  ("Holding a book", "Sosteniendo un libro", "holding an open book against her chest")]),
+  ("Holding a book", "Sosteniendo un libro", "holding an open book against her chest"),
+  ("Holding a brass lamp", "Sosteniendo una lámpara", "holding an ornate polished brass oil lamp in both hands"),
+  ("Playing guitar", "Tocando guitarra", "playing an electric guitar slung over her shoulder")]),
  dict(id="B7.1", key=("ANGLE","ANG"), name=("Camera angle","Ángulo de cámara"), hue="--h7", opts=[
   ("Eye-level","A la altura de los ojos","eye-level shot, neutral natural perspective"),
   ("Low angle","Contrapicado","low angle shot looking up at the subject, powerful heroic perspective"),
@@ -244,7 +253,10 @@ BLOCKS = [
   ("Terrace silk net", "Terraza con red de seda", "rooftop terrace at dusk with a giant radial net made only of thin glowing silver threads, like a luminous web, anchored between stone columns, evenly woven geometric mesh pattern, strands crossing the foreground, city skyline and warm lights in the background"),
   ("Open sky", "Cielo abierto", "clear blue sky, bright daylight, distant horizon"),
   ("Classroom", "Salón de clases", "bright modern classroom, wooden desks, chalkboard with neat writing, large windows with soft daylight, shallow depth of field"),
-  ("Modern office", "Oficina moderna", "modern office with glass walls, minimalist desk, city view through the windows, soft daylight, shallow depth of field")]),
+  ("Modern office", "Oficina moderna", "modern office with glass walls, minimalist desk, city view through the windows, soft daylight, shallow depth of field"),
+  ("70s concert stage", "Escenario de concierto 70s", "1970s concert stage with warm colored spotlights, vintage amplifiers, haze and lens flare"),
+  ("Desert palace", "Palacio del desierto", "ornate desert palace courtyard with arches, silk cushions, lanterns and golden evening light"),
+  ("Disco floor", "Pista de disco", "1970s disco dance floor with lit-up colored tiles and a mirror ball scattering light")]),
 ]
 NEG = "cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features"
 DEFAULT = {"B1":0,"B2":0,"B3":0,"B3.5":[1],"B3.3":1,"B3.1":[0],"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":21,"B6.1":[],"B6.2":0,"B7":0,"B7.2":0,"B7.3":0,"B7.4":0,"B7.1":0,"B8":0,"B11":5}  # Venice carnival in the city (chosen by Alex)
@@ -266,11 +278,13 @@ PRESETS = [
  ("Top of the city", "En la cima de la ciudad", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR1 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT33 ACC0 MASK1 CAM13 POSE7 PLACE5 HANDS0 ANGLE1 LIGHT2 BG13 | venice | nl"),
  ("Professor", "Profesora", "PHOTO2 GLOW1 AGE1 ETHN1 EXPR1 HAIR5 STYLE9 EYES4 SKIN1 BODY4 OUTFIT36 ACC8+14 MASK0 CAM12 POSE1 PLACE0 HANDS13 ANGLE1 LIGHT3 BG14 | perchance | one"),
  ("Executive", "Ejecutiva", "PHOTO2 GLOW1 AGE1 ETHN1 EXPR3 HAIR7 STYLE1 EYES2 SKIN1 BODY2 OUTFIT35 ACC2+15 MASK0 CAM12 POSE1 PLACE0 HANDS2 ANGLE1 LIGHT3 BG15 | perchance | one"),
+ ("70s rock band", "Banda de rock 70s", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR5 HAIR4 STYLE16 EYES2 SKIN2 BODY2 OUTFIT37 ACC2 MASK0 CAM12 POSE1 PLACE0 HANDS15 ANGLE2 LIGHT5 BG16 | perchance | one"),
+ ("Mystic genie", "Genio místico", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR6 HAIR1 STYLE15 EYES6 SKIN1 BODY2 OUTFIT38 ACC0 MASK8 CAM12 POSE2 PLACE0 HANDS14 ANGLE1 LIGHT2 BG17 | perchance | one"),
  ("Studio portrait", "Retrato de estudio", "PHOTO1 GLOW1 AGE1 ETHN1 EXPR4 HAIR3 STYLE4 EYES2 SKIN2 BODY4 OUTFIT3 ACC8 MASK0 CAM3 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT3 BG2 | perchance | one"),
 ]
 
 # Library version: bump when any prompt text changes, so recipes record which texts they used.
-LIB_VERSION = "1.25"  # 1.25: office and teacher outfits, classroom and office backgrounds, holding a book; 1.24: clear gold-frame glasses (ACC14, ACC15); 1.23: butterfly pea princess dress (OUTFIT34); 1.22: 9 more poses (incl. yoga) and a Hands block; 1.21: Face covering block (MASK), moth mask with visible eyes; 1.20: silk nets/hammock described as glowing threads (Venice drew satin fabric); 1.19: POSE and PLACE blocks, framing-only CAM 12–13, open sky; 1.18: clearer two-piece moth suit and reclining net pose, high 3/4 tilt angle; 1.17: lying-on-silk-net pose, terrace silk-net background; 1.16: moth crop suit, moth-wing mask, suspended-in-silk pose, dramatic rim light; 1.15: silk hammock pose, rooftop terrace skyline; 1.14: shorter short dresses, textured moth suit, dreamy expression, edge pose, night city; 1.13: cinematic photo, windblown hair, midnight moth heroine, girder pose, city from above; 1.12: delicate henna accessory (ACC12); 1.11: lily princess outfits 30–31; 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
+LIB_VERSION = "1.26"  # 1.26: 60s–70s set (outfits 37–41, hairstyles, lamp/guitar hands, stage/palace/disco backgrounds); 1.25: office and teacher outfits, classroom and office backgrounds, holding a book; 1.24: clear gold-frame glasses (ACC14, ACC15); 1.23: butterfly pea princess dress (OUTFIT34); 1.22: 9 more poses (incl. yoga) and a Hands block; 1.21: Face covering block (MASK), moth mask with visible eyes; 1.20: silk nets/hammock described as glowing threads (Venice drew satin fabric); 1.19: POSE and PLACE blocks, framing-only CAM 12–13, open sky; 1.18: clearer two-piece moth suit and reclining net pose, high 3/4 tilt angle; 1.17: lying-on-silk-net pose, terrace silk-net background; 1.16: moth crop suit, moth-wing mask, suspended-in-silk pose, dramatic rim light; 1.15: silk hammock pose, rooftop terrace skyline; 1.14: shorter short dresses, textured moth suit, dreamy expression, edge pose, night city; 1.13: cinematic photo, windblown hair, midnight moth heroine, girder pose, city from above; 1.12: delicate henna accessory (ACC12); 1.11: lily princess outfits 30–31; 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
 
 PLATFORMS = {  # separator default + transforms applied to the prompt text
     "venice":    {"label": "Venice AI",    "sep": "nl"},

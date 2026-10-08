@@ -1,12 +1,12 @@
 # Block Library / Biblioteca de bloques
 
-Library version **v1.23** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
+Library version **v1.24** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
 Each block has a short key and numbered options. A **recipe** records the library version, one option per block, the platform and the separator:
 
-`v1.23 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 MASK0 CAM1 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT1 BG6 | perchance | one`
+`v1.24 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 MASK0 CAM1 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT1 BG6 | perchance | one`
 
-Spanish keys work too: `v1.23 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 MAS0 CAM1 POS0 LUG0 MAN0 ANG1 LUZ1 FON6 | perchance | one`
+Spanish keys work too: `v1.24 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 MAS0 CAM1 POS0 LUG0 MAN0 ANG1 LUZ1 FON6 | perchance | one`
 
 New options are always added at the end of a block and existing numbers never change, so old recipes keep working.
 
@@ -189,6 +189,8 @@ New options are always added at the end of a block and existing numbers never ch
 | 11 | Yoga mat | Esterilla de yoga | rolled yoga mat under one arm |
 | 12 | Delicate henna | Henna delicada | delicate golden-brown henna design on the backs of the hands and fingers, fine floral and vine lines, subtle and elegant |
 | 13 | Moth-wing mask | Antifaz ala de polilla | sleek silver moth-wing shaped eye mask with open eye holes, eyes clearly visible |
+| 14 | Gold-frame glasses | Lentes marco dorado | delicate thin gold wire-frame eyeglasses with clear transparent lenses |
+| 15 | Round gold glasses | Lentes redondos dorados | fine round gold wire-frame eyeglasses with clear transparent lenses |
 
 ## B6.2 · MASK / MAS — Face covering / Máscara
 | # | EN | ES | Prompt text |
@@ -323,6 +325,7 @@ cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra finge
 Shown as notes, grouped by kind; the tool never changes your choices. / Se muestran como notas por tipo; la herramienta nunca cambia tu elección.
 
 **Incompatible**
+- Clear glasses and sunglasses at the same time: keep only one.
 - Two masks: the moth-wing mask in ACC and a face covering in MASK. Keep only one.
 - Cap and straw hat together: pick one headwear.
 - This outfit already includes headwear (tricorn, cowboy hat, bowler hat or feathered headpiece); a cap or straw hat will clash.
@@ -332,6 +335,7 @@ Shown as notes, grouped by kind; the tool never changes your choices. / Se muest
 - Half-body and portrait framings crop the lower body: shorts, footwear and leg details from OUTFIT or BODY won't show.
 
 **Needs testing / Requiere pruebas**
+- Glasses over an eye mask or visor may look odd; try one or the other.
 - This POSE already places the arms or hands; a HANDS choice may clash with it.
 - HANDS 12 touches the mask, but no MASK is chosen.
 - The Venice carnival outfit already includes a mask; a second one may clash.

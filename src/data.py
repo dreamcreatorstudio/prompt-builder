@@ -137,7 +137,9 @@ BLOCKS = [
   ("Tote bag","Bolso tote","canvas tote bag on the shoulder"),
   ("Yoga mat","Esterilla de yoga","rolled yoga mat under one arm"),
   ("Delicate henna","Henna delicada","delicate golden-brown henna design on the backs of the hands and fingers, fine floral and vine lines, subtle and elegant"),
-  ("Moth-wing mask", "Antifaz ala de polilla", "sleek silver moth-wing shaped eye mask with open eye holes, eyes clearly visible")]),
+  ("Moth-wing mask", "Antifaz ala de polilla", "sleek silver moth-wing shaped eye mask with open eye holes, eyes clearly visible"),
+  ("Gold-frame glasses", "Lentes marco dorado", "delicate thin gold wire-frame eyeglasses with clear transparent lenses"),
+  ("Round gold glasses", "Lentes redondos dorados", "fine round gold wire-frame eyeglasses with clear transparent lenses")]),
  dict(id="B6.2", key=("MASK","MAS"), name=("Face covering","Máscara"), hue="--h6", zero=True, opts=[
   ("None","Ninguna",""),
   ("Moth-wing eye mask","Antifaz ala de polilla","sleek silver moth-wing shaped eye mask with open eye holes, eyes clearly visible"),
@@ -261,7 +263,7 @@ PRESETS = [
 ]
 
 # Library version: bump when any prompt text changes, so recipes record which texts they used.
-LIB_VERSION = "1.23"  # 1.23: butterfly pea princess dress (OUTFIT34); 1.22: 9 more poses (incl. yoga) and a Hands block; 1.21: Face covering block (MASK), moth mask with visible eyes; 1.20: silk nets/hammock described as glowing threads (Venice drew satin fabric); 1.19: POSE and PLACE blocks, framing-only CAM 12–13, open sky; 1.18: clearer two-piece moth suit and reclining net pose, high 3/4 tilt angle; 1.17: lying-on-silk-net pose, terrace silk-net background; 1.16: moth crop suit, moth-wing mask, suspended-in-silk pose, dramatic rim light; 1.15: silk hammock pose, rooftop terrace skyline; 1.14: shorter short dresses, textured moth suit, dreamy expression, edge pose, night city; 1.13: cinematic photo, windblown hair, midnight moth heroine, girder pose, city from above; 1.12: delicate henna accessory (ACC12); 1.11: lily princess outfits 30–31; 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
+LIB_VERSION = "1.24"  # 1.24: clear gold-frame glasses (ACC14, ACC15); 1.23: butterfly pea princess dress (OUTFIT34); 1.22: 9 more poses (incl. yoga) and a Hands block; 1.21: Face covering block (MASK), moth mask with visible eyes; 1.20: silk nets/hammock described as glowing threads (Venice drew satin fabric); 1.19: POSE and PLACE blocks, framing-only CAM 12–13, open sky; 1.18: clearer two-piece moth suit and reclining net pose, high 3/4 tilt angle; 1.17: lying-on-silk-net pose, terrace silk-net background; 1.16: moth crop suit, moth-wing mask, suspended-in-silk pose, dramatic rim light; 1.15: silk hammock pose, rooftop terrace skyline; 1.14: shorter short dresses, textured moth suit, dreamy expression, edge pose, night city; 1.13: cinematic photo, windblown hair, midnight moth heroine, girder pose, city from above; 1.12: delicate henna accessory (ACC12); 1.11: lily princess outfits 30–31; 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
 
 PLATFORMS = {  # separator default + transforms applied to the prompt text
     "venice":    {"label": "Venice AI",    "sep": "nl"},
@@ -284,6 +286,12 @@ SEPARATORS = {
 #   test         : may work, but depends on the model — try it with a fixed seed
 # A rule matches when block a is one of a_opts and (if given) block b is one of b_opts. Indexes are 0-based.
 CONFLICTS = [
+    dict(kind="incompatible", a="B6.1", a_opts=[14, 15], b="B6.1", b_opts=[5],
+         en="Clear glasses and sunglasses at the same time: keep only one.",
+         es="Lentes transparentes y gafas de sol a la vez: deja solo uno."),
+    dict(kind="test", a="B6.1", a_opts=[14, 15], b="B6.2", b_opts=[1, 2, 3, 4, 5, 6, 10],
+         en="Glasses over an eye mask or visor may look odd; try one or the other.",
+         es="Lentes sobre un antifaz o visor pueden verse raros; prueba uno u otro."),
     dict(kind="test", a="B7.4", a_opts=list(range(1, 13)), b="B7.2", b_opts=[3, 6, 7, 13, 16],
          en="This POSE already places the arms or hands; a HANDS choice may clash with it.",
          es="Esta POSTURA ya define brazos o manos; una opción de MANOS puede chocar."),

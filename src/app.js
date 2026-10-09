@@ -111,8 +111,8 @@ function parts(sel, plat, v = ver()) {
   }).filter(p => p.text).reduce((out, p, _, all) => {
     // a color block is written in front of its garment ("emerald green fitted cropped top"), not as its own part
     if (p.attach && all.some(q => q.id === p.attach)) return out;
-    const col = all.find(q => q.attach === p.id);
-    out.push(col ? { ...p, text: col.text + " " + p.text } : p);
+    const pre = all.filter(q => q.attach === p.id).map(q => q.text);   // e.g. color, then length
+    out.push(pre.length ? { ...p, text: pre.join(" ") + " " + p.text } : p);
     return out;
   }, []);
 }

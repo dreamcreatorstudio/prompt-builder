@@ -1,12 +1,12 @@
 # Block Library / Biblioteca de bloques
 
-Library version **v1.27** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
+Library version **v1.28** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
 Each block has a short key and numbered options. A **recipe** records the library version, one option per block, the platform and the separator:
 
-`v1.27 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES0 ACC0 MASK0 CAM1 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT1 BG6 | perchance | one`
+`v1.28 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 LENGTH0 SHOES0 ACC0 MASK0 CAM1 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT1 BG6 | perchance | one`
 
-Spanish keys work too: `v1.27 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ARR0 COLARR0 ABA0 COLABA0 CAL0 ACC0 MAS0 CAM1 POS0 LUG0 MAN0 ANG1 LUZ1 FON6 | perchance | one`
+Spanish keys work too: `v1.28 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ARR0 COLARR0 ABA0 COLABA0 LARGO0 CAL0 ACC0 MAS0 CAM1 POS0 LUG0 MAN0 ANG1 LUZ1 FON6 | perchance | one`
 
 New options are always added at the end of a block and existing numbers never change, so old recipes keep working.
 
@@ -248,6 +248,13 @@ New options are always added at the end of a block and existing numbers never ch
 | 9 | Cargo pants | Pantalón cargo | relaxed cargo pants |
 | 10 | Biker shorts | Shorts de ciclista | biker shorts |
 | 11 | Pencil skirt | Falda lápiz | knee-length pencil skirt |
+| 12 | A-line skirt | Falda línea A | A-line skirt |
+| 13 | Pleated skirt | Falda plisada | softly pleated skirt |
+| 14 | Circle skirt | Falda de vuelo | full circle skirt |
+| 15 | Wrap skirt | Falda cruzada | wrap skirt with a side tie |
+| 16 | Tiered skirt | Falda de volantes | tiered ruffled skirt |
+| 17 | Tulip skirt | Falda tulipán | draped tulip skirt |
+| 18 | Box-pleat skirt | Falda de tablas | box-pleat skirt |
 
 ## B6.6 · BOTCOLOR / COLABA — Bottom color / Color de abajo
 | # | EN | ES | Prompt text |
@@ -273,6 +280,17 @@ New options are always added at the end of a block and existing numbers never ch
 | 18 | Polka dots | Lunares | polka dot |
 | 19 | Plaid | Cuadros | plaid |
 | 20 | Leopard | Leopardo | leopard print |
+
+## B6.8 · LENGTH / LARGO — Skirt length / Largo de falda
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 0 | Not specified | Sin especificar | (none) |
+| 1 | Mini | Mini | mini-length |
+| 2 | Above the knee | Sobre la rodilla | above-the-knee |
+| 3 | Knee | A la rodilla | knee-length |
+| 4 | Midi | Midi | midi-length |
+| 5 | Tea-length | Media pantorrilla (años 50) | tea-length |
+| 6 | Maxi | Maxi | floor-length maxi |
 
 ## B6.7 · SHOES / CAL — Footwear / Calzado
 | # | EN | ES | Prompt text |
@@ -479,6 +497,7 @@ Shown as notes, grouped by kind; the tool never changes your choices. / Se muest
 - Half-body and portrait framings crop the lower body: shorts, footwear and leg details from OUTFIT or BODY won't show.
 
 **Needs testing / Requiere pruebas**
+- SKIRT LENGTH works with the skirt styles in BOTTOM 12–18; the other bottoms already set their own length.
 - TOP COLOR is set but there is no TOP.
 - BOTTOM COLOR is set but there is no BOTTOM.
 - This full look already includes footwear; FOOTWEAR may clash with it.

@@ -194,7 +194,14 @@ BLOCKS = [
   ("Wide trousers", "Pantalón ancho", "wide-leg tailored trousers"),
   ("Cargo pants", "Pantalón cargo", "relaxed cargo pants"),
   ("Biker shorts", "Shorts de ciclista", "biker shorts"),
-  ("Pencil skirt", "Falda lápiz", "knee-length pencil skirt")]),
+  ("Pencil skirt", "Falda lápiz", "knee-length pencil skirt"),
+  ("A-line skirt", "Falda línea A", "A-line skirt"),
+  ("Pleated skirt", "Falda plisada", "softly pleated skirt"),
+  ("Circle skirt", "Falda de vuelo", "full circle skirt"),
+  ("Wrap skirt", "Falda cruzada", "wrap skirt with a side tie"),
+  ("Tiered skirt", "Falda de volantes", "tiered ruffled skirt"),
+  ("Tulip skirt", "Falda tulipán", "draped tulip skirt"),
+  ("Box-pleat skirt", "Falda de tablas", "box-pleat skirt")]),
  dict(id="B6.6", key=('BOTCOLOR', 'COLABA'), name=('Bottom color', 'Color de abajo'), hue="--h6", zero=True, attach="B6.5", opts=[
   ("Not specified", "Sin especificar", ""),
   ("White", "Blanco", "white"),
@@ -217,6 +224,14 @@ BLOCKS = [
   ("Polka dots", "Lunares", "polka dot"),
   ("Plaid", "Cuadros", "plaid"),
   ("Leopard", "Leopardo", "leopard print")]),
+ dict(id="B6.8", key=("LENGTH","LARGO"), name=("Skirt length","Largo de falda"), hue="--h6", zero=True, attach="B6.5", opts=[
+  ("Not specified","Sin especificar",""),
+  ("Mini","Mini","mini-length"),
+  ("Above the knee","Sobre la rodilla","above-the-knee"),
+  ("Knee","A la rodilla","knee-length"),
+  ("Midi","Midi","midi-length"),
+  ("Tea-length","Media pantorrilla (años 50)","tea-length"),
+  ("Maxi","Maxi","floor-length maxi")]),
  dict(id="B6.7", key=('SHOES', 'CAL'), name=('Footwear', 'Calzado'), hue="--h6", zero=True, opts=[
   ("Not specified", "Sin especificar", ""),
   ("Barefoot", "Descalza", "barefoot"),
@@ -368,36 +383,36 @@ BLOCKS = [
   ("Skate park", "Skate park", "sunny outdoor skate park with concrete ramps and graffiti walls")]),
 ]
 NEG = "cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra fingers, distorted anatomy, blurry, watermark, text, logo, cropped feet, teenager, childlike features"
-DEFAULT = {"B1":0,"B2":0,"B3":0,"B3.5":[1],"B3.3":1,"B3.1":[0],"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":22,"B6.3":0,"B6.4":0,"B6.5":0,"B6.6":0,"B6.7":0,"B6.1":[],"B6.2":0,"B7":0,"B7.2":0,"B7.3":0,"B7.4":0,"B7.1":0,"B8":0,"B11":5}  # Venice carnival in the city (chosen by Alex)
+DEFAULT = {"B1":0,"B2":0,"B3":0,"B3.5":[1],"B3.3":1,"B3.1":[0],"B3.4":8,"B3.2":1,"B4":2,"B5":1,"B6":22,"B6.3":0,"B6.4":0,"B6.5":0,"B6.6":0,"B6.8":0,"B6.7":0,"B6.1":[],"B6.2":0,"B7":0,"B7.2":0,"B7.3":0,"B7.4":0,"B7.1":0,"B8":0,"B11":5}  # Venice carnival in the city (chosen by Alex)
 
 # Presets: ready-made combinations (all 25-year-old, Slavic). Not part of the prompt library, so no version bump.
 PRESETS = [
- ("Forest princess", "Princesa del bosque", "PHOTO1 GLOW2 AGE1 ETHN1 EXPR6 HAIR16 STYLE13 EYES7 SKIN2 BODY2 OUTFIT28 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES0 ACC0 MASK0 CAM6 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT2 BG7 | perchance | one"),
- ("Lily princess", "Princesa lirio", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR6 HAIR1 STYLE14 EYES8 SKIN1 BODY2 OUTFIT31 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES0 ACC12 MASK0 CAM6 POSE0 PLACE0 HANDS0 ANGLE2 LIGHT2 BG8 | perchance | one"),
- ("Yoga catalog", "Catálogo de yoga", "PHOTO3 GLOW1 AGE1 ETHN1 EXPR4 HAIR6 STYLE9 EYES2 SKIN1 BODY2 OUTFIT5 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES0 ACC0 MASK0 CAM1 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT1 BG1 | perchance | one"),
- ("Beach sunset", "Playa al atardecer", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR2 HAIR1 STYLE5 EYES1 SKIN2 BODY1 OUTFIT3 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES0 ACC6 MASK0 CAM4 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT2 BG4 | perchance | one"),
- ("Paris street style", "Estilo urbano en París", "PHOTO2 GLOW1 AGE1 ETHN1 EXPR3 HAIR5 STYLE3 EYES4 SKIN1 BODY2 OUTFIT4 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES0 ACC7+8 MASK0 CAM4 POSE0 PLACE0 HANDS0 ANGLE9 LIGHT4 BG3 | perchance | one"),
- ("Urban fitness", "Fitness urbano", "PHOTO1 GLOW3 AGE1 ETHN1 EXPR1 HAIR2 STYLE8 EYES1 SKIN1 BODY1 OUTFIT2 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES0 ACC3 MASK0 CAM4 POSE0 PLACE0 HANDS0 ANGLE2 LIGHT2 BG6 | perchance | one"),
- ("Emerald heroine", "Heroína esmeralda", "PHOTO1 GLOW2 AGE1 ETHN1 EXPR1 HAIR7 STYLE8 EYES2 SKIN1 BODY1 OUTFIT27 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES0 ACC0 MASK0 CAM6 POSE0 PLACE0 HANDS0 ANGLE2 LIGHT2 BG6 | perchance | one"),
- ("Flamenco night", "Noche flamenca", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR3 HAIR7 STYLE9 EYES3 SKIN3 BODY4 OUTFIT12 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES0 ACC2 MASK0 CAM1 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT2 BG6 | perchance | one"),
- ("Pastel dream", "Sueño pastel", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR5 HAIR9+12 STYLE4 EYES8 SKIN1 BODY2 OUTFIT23 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES0 ACC0 MASK0 CAM1 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT1 BG2 | perchance | one"),
- ("Midnight moth", "Polilla nocturna", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR4 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT32 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES0 ACC0 MASK0 CAM7 POSE0 PLACE0 HANDS0 ANGLE3 LIGHT4 BG9 | venice | nl"),
- ("The Silver Weaver", "La Tejedora de Plata", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR7 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT32 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES0 ACC0 MASK0 CAM8 POSE0 PLACE0 HANDS0 ANGLE3 LIGHT4 BG10 | venice | nl"),
- ("Moth silk terrace", "Terraza de seda", "PHOTO4 GLOW2 AGE1 ETHN1 EXPR7 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT33 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES0 ACC0 MASK1 CAM12 POSE3 PLACE3 HANDS0 ANGLE13 LIGHT5 BG12 | venice | nl"),
- ("Top of the city", "En la cima de la ciudad", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR1 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT33 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES0 ACC0 MASK1 CAM13 POSE7 PLACE5 HANDS0 ANGLE1 LIGHT2 BG13 | venice | nl"),
- ("Professor", "Profesora", "PHOTO2 GLOW1 AGE1 ETHN1 EXPR1 HAIR5 STYLE9 EYES4 SKIN1 BODY4 OUTFIT36 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES0 ACC8+14 MASK0 CAM12 POSE1 PLACE0 HANDS13 ANGLE1 LIGHT3 BG14 | perchance | one"),
- ("Executive", "Ejecutiva", "PHOTO2 GLOW1 AGE1 ETHN1 EXPR3 HAIR7 STYLE1 EYES2 SKIN1 BODY2 OUTFIT35 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES0 ACC2+15 MASK0 CAM12 POSE1 PLACE0 HANDS2 ANGLE1 LIGHT3 BG15 | perchance | one"),
- ("70s rock band", "Banda de rock 70s", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR5 HAIR4 STYLE16 EYES2 SKIN2 BODY2 OUTFIT37 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES0 ACC2 MASK0 CAM12 POSE1 PLACE0 HANDS15 ANGLE2 LIGHT5 BG16 | perchance | one"),
- ("Mystic genie", "Genio místico", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR6 HAIR1 STYLE15 EYES6 SKIN1 BODY2 OUTFIT38 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES0 ACC0 MASK8 CAM12 POSE2 PLACE0 HANDS14 ANGLE1 LIGHT2 BG17 | perchance | one"),
- ("Dancing in the rain", "Bailando bajo la lluvia", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR2 HAIR4 STYLE17 EYES2 SKIN2 BODY2 OUTFIT51 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES13 ACC21 MASK0 CAM12 POSE17 PLACE0 HANDS0 ANGLE1 LIGHT6 BG19 | perchance | one"),
- ("Tennis day", "Día de tenis", "PHOTO2 GLOW3 AGE1 ETHN1 EXPR2 HAIR1 STYLE8 EYES1 SKIN2 BODY1 OUTFIT43 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES0 ACC16 MASK0 CAM12 POSE1 PLACE0 HANDS0 ANGLE2 LIGHT2 BG20 | perchance | one"),
- ("Ice princess", "Princesa del hielo", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR6 HAIR2 STYLE9 EYES8 SKIN1 BODY2 OUTFIT44 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES0 ACC8 MASK0 CAM12 POSE12 PLACE0 HANDS0 ANGLE1 LIGHT1 BG21 | perchance | one"),
- ("Mix & match: summer", "Combinación: verano", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR2 HAIR1 STYLE5 EYES1 SKIN2 BODY2 OUTFIT0 TOP1 TOPCOLOR10 BOTTOM5 BOTCOLOR1 SHOES5 ACC2+6 MASK0 CAM12 POSE5 PLACE0 HANDS0 ANGLE1 LIGHT2 BG4 | perchance | one"),
- ("Studio portrait", "Retrato de estudio", "PHOTO1 GLOW1 AGE1 ETHN1 EXPR4 HAIR3 STYLE4 EYES2 SKIN2 BODY4 OUTFIT3 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES0 ACC8 MASK0 CAM3 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT3 BG2 | perchance | one"),
+ ("Forest princess", "Princesa del bosque", "PHOTO1 GLOW2 AGE1 ETHN1 EXPR6 HAIR16 STYLE13 EYES7 SKIN2 BODY2 OUTFIT28 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 LENGTH0 SHOES0 ACC0 MASK0 CAM6 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT2 BG7 | perchance | one"),
+ ("Lily princess", "Princesa lirio", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR6 HAIR1 STYLE14 EYES8 SKIN1 BODY2 OUTFIT31 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 LENGTH0 SHOES0 ACC12 MASK0 CAM6 POSE0 PLACE0 HANDS0 ANGLE2 LIGHT2 BG8 | perchance | one"),
+ ("Yoga catalog", "Catálogo de yoga", "PHOTO3 GLOW1 AGE1 ETHN1 EXPR4 HAIR6 STYLE9 EYES2 SKIN1 BODY2 OUTFIT5 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 LENGTH0 SHOES0 ACC0 MASK0 CAM1 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT1 BG1 | perchance | one"),
+ ("Beach sunset", "Playa al atardecer", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR2 HAIR1 STYLE5 EYES1 SKIN2 BODY1 OUTFIT3 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 LENGTH0 SHOES0 ACC6 MASK0 CAM4 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT2 BG4 | perchance | one"),
+ ("Paris street style", "Estilo urbano en París", "PHOTO2 GLOW1 AGE1 ETHN1 EXPR3 HAIR5 STYLE3 EYES4 SKIN1 BODY2 OUTFIT4 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 LENGTH0 SHOES0 ACC7+8 MASK0 CAM4 POSE0 PLACE0 HANDS0 ANGLE9 LIGHT4 BG3 | perchance | one"),
+ ("Urban fitness", "Fitness urbano", "PHOTO1 GLOW3 AGE1 ETHN1 EXPR1 HAIR2 STYLE8 EYES1 SKIN1 BODY1 OUTFIT2 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 LENGTH0 SHOES0 ACC3 MASK0 CAM4 POSE0 PLACE0 HANDS0 ANGLE2 LIGHT2 BG6 | perchance | one"),
+ ("Emerald heroine", "Heroína esmeralda", "PHOTO1 GLOW2 AGE1 ETHN1 EXPR1 HAIR7 STYLE8 EYES2 SKIN1 BODY1 OUTFIT27 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 LENGTH0 SHOES0 ACC0 MASK0 CAM6 POSE0 PLACE0 HANDS0 ANGLE2 LIGHT2 BG6 | perchance | one"),
+ ("Flamenco night", "Noche flamenca", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR3 HAIR7 STYLE9 EYES3 SKIN3 BODY4 OUTFIT12 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 LENGTH0 SHOES0 ACC2 MASK0 CAM1 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT2 BG6 | perchance | one"),
+ ("Pastel dream", "Sueño pastel", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR5 HAIR9+12 STYLE4 EYES8 SKIN1 BODY2 OUTFIT23 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 LENGTH0 SHOES0 ACC0 MASK0 CAM1 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT1 BG2 | perchance | one"),
+ ("Midnight moth", "Polilla nocturna", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR4 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT32 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 LENGTH0 SHOES0 ACC0 MASK0 CAM7 POSE0 PLACE0 HANDS0 ANGLE3 LIGHT4 BG9 | venice | nl"),
+ ("The Silver Weaver", "La Tejedora de Plata", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR7 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT32 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 LENGTH0 SHOES0 ACC0 MASK0 CAM8 POSE0 PLACE0 HANDS0 ANGLE3 LIGHT4 BG10 | venice | nl"),
+ ("Moth silk terrace", "Terraza de seda", "PHOTO4 GLOW2 AGE1 ETHN1 EXPR7 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT33 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 LENGTH0 SHOES0 ACC0 MASK1 CAM12 POSE3 PLACE3 HANDS0 ANGLE13 LIGHT5 BG12 | venice | nl"),
+ ("Top of the city", "En la cima de la ciudad", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR1 HAIR2 STYLE15 EYES5 SKIN1 BODY2 OUTFIT33 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 LENGTH0 SHOES0 ACC0 MASK1 CAM13 POSE7 PLACE5 HANDS0 ANGLE1 LIGHT2 BG13 | venice | nl"),
+ ("Professor", "Profesora", "PHOTO2 GLOW1 AGE1 ETHN1 EXPR1 HAIR5 STYLE9 EYES4 SKIN1 BODY4 OUTFIT36 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 LENGTH0 SHOES0 ACC8+14 MASK0 CAM12 POSE1 PLACE0 HANDS13 ANGLE1 LIGHT3 BG14 | perchance | one"),
+ ("Executive", "Ejecutiva", "PHOTO2 GLOW1 AGE1 ETHN1 EXPR3 HAIR7 STYLE1 EYES2 SKIN1 BODY2 OUTFIT35 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 LENGTH0 SHOES0 ACC2+15 MASK0 CAM12 POSE1 PLACE0 HANDS2 ANGLE1 LIGHT3 BG15 | perchance | one"),
+ ("70s rock band", "Banda de rock 70s", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR5 HAIR4 STYLE16 EYES2 SKIN2 BODY2 OUTFIT37 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 LENGTH0 SHOES0 ACC2 MASK0 CAM12 POSE1 PLACE0 HANDS15 ANGLE2 LIGHT5 BG16 | perchance | one"),
+ ("Mystic genie", "Genio místico", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR6 HAIR1 STYLE15 EYES6 SKIN1 BODY2 OUTFIT38 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 LENGTH0 SHOES0 ACC0 MASK8 CAM12 POSE2 PLACE0 HANDS14 ANGLE1 LIGHT2 BG17 | perchance | one"),
+ ("Dancing in the rain", "Bailando bajo la lluvia", "PHOTO4 GLOW1 AGE1 ETHN1 EXPR2 HAIR4 STYLE17 EYES2 SKIN2 BODY2 OUTFIT51 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 LENGTH0 SHOES13 ACC21 MASK0 CAM12 POSE17 PLACE0 HANDS0 ANGLE1 LIGHT6 BG19 | perchance | one"),
+ ("Tennis day", "Día de tenis", "PHOTO2 GLOW3 AGE1 ETHN1 EXPR2 HAIR1 STYLE8 EYES1 SKIN2 BODY1 OUTFIT43 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 LENGTH0 SHOES0 ACC16 MASK0 CAM12 POSE1 PLACE0 HANDS0 ANGLE2 LIGHT2 BG20 | perchance | one"),
+ ("Ice princess", "Princesa del hielo", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR6 HAIR2 STYLE9 EYES8 SKIN1 BODY2 OUTFIT44 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 LENGTH0 SHOES0 ACC8 MASK0 CAM12 POSE12 PLACE0 HANDS0 ANGLE1 LIGHT1 BG21 | perchance | one"),
+ ("Mix & match: summer", "Combinación: verano", "PHOTO2 GLOW2 AGE1 ETHN1 EXPR2 HAIR1 STYLE5 EYES1 SKIN2 BODY2 OUTFIT0 TOP1 TOPCOLOR10 BOTTOM5 BOTCOLOR1 LENGTH0 SHOES5 ACC2+6 MASK0 CAM12 POSE5 PLACE0 HANDS0 ANGLE1 LIGHT2 BG4 | perchance | one"),
+ ("Studio portrait", "Retrato de estudio", "PHOTO1 GLOW1 AGE1 ETHN1 EXPR4 HAIR3 STYLE4 EYES2 SKIN2 BODY4 OUTFIT3 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 LENGTH0 SHOES0 ACC8 MASK0 CAM3 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT3 BG2 | perchance | one"),
 ]
 
 # Library version: bump when any prompt text changes, so recipes record which texts they used.
-LIB_VERSION = "1.27"  # 1.27: LOOK gets 0 = mix; TOP/BOTTOM + colors, FOOTWEAR blocks; sport looks; props; rain set; 1.26: 60s–70s set (outfits 37–41, hairstyles, lamp/guitar hands, stage/palace/disco backgrounds); 1.25: office and teacher outfits, classroom and office backgrounds, holding a book; 1.24: clear gold-frame glasses (ACC14, ACC15); 1.23: butterfly pea princess dress (OUTFIT34); 1.22: 9 more poses (incl. yoga) and a Hands block; 1.21: Face covering block (MASK), moth mask with visible eyes; 1.20: silk nets/hammock described as glowing threads (Venice drew satin fabric); 1.19: POSE and PLACE blocks, framing-only CAM 12–13, open sky; 1.18: clearer two-piece moth suit and reclining net pose, high 3/4 tilt angle; 1.17: lying-on-silk-net pose, terrace silk-net background; 1.16: moth crop suit, moth-wing mask, suspended-in-silk pose, dramatic rim light; 1.15: silk hammock pose, rooftop terrace skyline; 1.14: shorter short dresses, textured moth suit, dreamy expression, edge pose, night city; 1.13: cinematic photo, windblown hair, midnight moth heroine, girder pose, city from above; 1.12: delicate henna accessory (ACC12); 1.11: lily princess outfits 30–31; 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
+LIB_VERSION = "1.28"  # 1.28: skirt styles (BOTTOM 12–18) and SKIRT LENGTH block; 1.27: LOOK gets 0 = mix; TOP/BOTTOM + colors, FOOTWEAR blocks; sport looks; props; rain set; 1.26: 60s–70s set (outfits 37–41, hairstyles, lamp/guitar hands, stage/palace/disco backgrounds); 1.25: office and teacher outfits, classroom and office backgrounds, holding a book; 1.24: clear gold-frame glasses (ACC14, ACC15); 1.23: butterfly pea princess dress (OUTFIT34); 1.22: 9 more poses (incl. yoga) and a Hands block; 1.21: Face covering block (MASK), moth mask with visible eyes; 1.20: silk nets/hammock described as glowing threads (Venice drew satin fabric); 1.19: POSE and PLACE blocks, framing-only CAM 12–13, open sky; 1.18: clearer two-piece moth suit and reclining net pose, high 3/4 tilt angle; 1.17: lying-on-silk-net pose, terrace silk-net background; 1.16: moth crop suit, moth-wing mask, suspended-in-silk pose, dramatic rim light; 1.15: silk hammock pose, rooftop terrace skyline; 1.14: shorter short dresses, textured moth suit, dreamy expression, edge pose, night city; 1.13: cinematic photo, windblown hair, midnight moth heroine, girder pose, city from above; 1.12: delicate henna accessory (ACC12); 1.11: lily princess outfits 30–31; 1.10: mix heritages (ETHN4+14) and hair colors (HAIR3+10); 1.9: Forest princess set (vine hair, eyes, outfits 28–29, confident stance, palace backgrounds); 1.8: 7 dyed hair colors, outfits 23–27, heritage Greek and Native American; 1.7: new HERITAGE block (ETHN), Slavic by default; 1.6: accessories allow several (ACC1+3) and 7 new ones; 1.5: new default base; 1.4: outfits 18–22; 1.3: yoga catalog base
 
 PLATFORMS = {  # separator default + transforms applied to the prompt text
     "venice":    {"label": "Venice AI",    "sep": "nl"},
@@ -420,6 +435,9 @@ SEPARATORS = {
 #   test         : may work, but depends on the model — try it with a fixed seed
 # A rule matches when block a is one of a_opts and (if given) block b is one of b_opts. Indexes are 0-based.
 CONFLICTS = [
+    dict(kind="test", a="B6.8", a_opts=[1, 2, 3, 4, 5, 6], b="B6.5", b_opts=list(range(0, 12)),
+         en="SKIRT LENGTH works with the skirt styles in BOTTOM 12–18; the other bottoms already set their own length.",
+         es="LARGO DE FALDA funciona con los cortes de falda de ABAJO 12–18; las otras prendas ya traen su propio largo."),
     dict(kind="incompatible", a="B6", a_opts=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51], b="B6.3", b_opts=list(range(1, 12)),
          en="A full look and a separate top at the same time: set LOOK to 0 to mix top and bottom.",
          es="Un look completo y una parte de arriba a la vez: pon el LOOK en 0 para combinar arriba y abajo."),

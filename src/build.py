@@ -22,7 +22,7 @@ ARCHIVE_DIR = SRC / "archive"
 def snapshot():
     """Everything that decides the prompt text for a recipe: block texts, defaults used to complete
     partial recipes, platform formatting rules and separators."""
-    return {"blocks": [{"id": b["id"], "key": list(b["key"]), "zero": bool(b.get("zero")), **({"multi": True} if b.get("multi") else {}), **({"mix": b["mix"]} if b.get("mix") else {}), "texts": [o[2] for o in b["opts"]]} for b in BLOCKS],
+    return {"blocks": [{"id": b["id"], "key": list(b["key"]), "zero": bool(b.get("zero")), **({"multi": True} if b.get("multi") else {}), **({"mix": b["mix"]} if b.get("mix") else {}), **({"attach": b["attach"]} if b.get("attach") else {}), "texts": [o[2] for o in b["opts"]]} for b in BLOCKS],
             "defaults": DEFAULT, "default_platform": DEFAULT_PLATFORM, "platforms": PLATFORMS, "separators": SEPARATORS}
 
 def load_archive():

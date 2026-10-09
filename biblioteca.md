@@ -1,12 +1,12 @@
 # Block Library / Biblioteca de bloques
 
-Library version **v1.26** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
+Library version **v1.27** · Live tool: https://dreamcreatorstudio.github.io/prompt-builder
 
 Each block has a short key and numbered options. A **recipe** records the library version, one option per block, the platform and the separator:
 
-`v1.26 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 ACC0 MASK0 CAM1 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT1 BG6 | perchance | one`
+`v1.27 | PHOTO1 GLOW1 AGE1 ETHN1 EXPR2 HAIR1 STYLE9 EYES2 SKIN3 BODY2 OUTFIT22 TOP0 TOPCOLOR0 BOTTOM0 BOTCOLOR0 SHOES0 ACC0 MASK0 CAM1 POSE0 PLACE0 HANDS0 ANGLE1 LIGHT1 BG6 | perchance | one`
 
-Spanish keys work too: `v1.26 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ACC0 MAS0 CAM1 POS0 LUG0 MAN0 ANG1 LUZ1 FON6 | perchance | one`
+Spanish keys work too: `v1.27 | FOTO1 BRI1 EDAD1 ETN1 EXP2 CAB1 PEI9 OJO2 PIEL3 CUE2 VES22 ARR0 COLARR0 ABA0 COLABA0 CAL0 ACC0 MAS0 CAM1 POS0 LUG0 MAN0 ANG1 LUZ1 FON6 | perchance | one`
 
 New options are always added at the end of a block and existing numbers never change, so old recipes keep working.
 
@@ -136,9 +136,10 @@ New options are always added at the end of a block and existing numbers never ch
 | 3 | Runner | Corredora | lean runner's build, defined legs, athletic adult proportions |
 | 4 | Natural | Natural | healthy natural adult body, soft curves, relaxed posture |
 
-## B6 · OUTFIT / VES — Outfit / Vestuario
+## B6 · OUTFIT / VES — Full look / costume / Look completo / disfraz
 | # | EN | ES | Prompt text |
 |---|---|---|---|
+| 0 | None — mix top & bottom | Ninguno — combinar arriba y abajo | (none) |
 | 1 | Denim + white crop | Denim + crop blanco | white ribbed cotton crop top, high-waisted light-wash denim shorts, white canvas sneakers |
 | 2 | Black athletic | Deportivo negro | black sports crop top, matching high-waisted biker shorts, running shoes |
 | 3 | Summer linen | Lino verano | cream linen button-up crop top, high-waisted linen shorts, leather sandals |
@@ -180,6 +181,116 @@ New options are always added at the end of a block and existing numbers never ch
 | 39 | 60s mod go-go | Mod años 60 | 1960s mod mini dress with bold black and white geometric color blocks, white go-go boots, retro style |
 | 40 | 70s disco | Disco años 70 | 1970s disco outfit, shimmering gold sequin halter jumpsuit with wide flared legs, platform heels |
 | 41 | Flower child | Hippie años 70 | 1970s flower child look, flowing embroidered peasant blouse, long floral maxi skirt, daisy chain in the hair, suede sandals |
+| 42 | Swimmer | Nadadora | competitive swimmer look, sleek full-coverage one-piece racing swimsuit, swim cap, goggles pushed up on the forehead |
+| 43 | Tennis player | Tenista | tennis player outfit, white fitted polo top, pleated white tennis skirt, wristbands, white court shoes |
+| 44 | Figure skater | Patinadora artística | figure skating dress with long sleeves and a short flared skirt, sparkling crystal details, skin-tone tights, white ice skates |
+| 45 | Roller skater | Patinadora retro | retro roller skater look, striped crop t-shirt, high-waisted shorts, knee socks, vintage quad roller skates |
+| 46 | Ballerina | Bailarina de ballet | classical ballerina costume, fitted bodice with a soft tulle tutu, satin pointe shoes |
+| 47 | Surfer | Surfista | surfer look, full-coverage long-sleeve wetsuit with bright color panels |
+| 48 | Cyclist | Ciclista | road cyclist outfit, fitted cycling jersey, padded cycling shorts, cycling shoes, helmet |
+| 49 | Golfer | Golfista | golfer outfit, fitted polo shirt, pleated golf skort, visor, golf shoes |
+| 50 | Equestrian | Jinete | equestrian riding outfit, fitted riding jacket, white breeches, tall black riding boots |
+| 51 | 1950s rainy day | Día de lluvia años 50 | 1950s tea-length swing dress with a belted waist under an open classic trench coat |
+
+## B6.3 · TOP / ARR — Top / Parte de arriba
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 0 | None | Ninguna | (none) |
+| 1 | Crop top | Crop top | fitted cropped top |
+| 2 | T-shirt | Camiseta | relaxed cotton t-shirt |
+| 3 | Blouse | Blusa | flowing silk blouse |
+| 4 | Tank top | Top de tirantes | ribbed tank top |
+| 5 | Knit sweater | Suéter de punto | soft knit sweater |
+| 6 | Blazer | Blazer | tailored blazer over a simple camisole |
+| 7 | Sports top | Top deportivo | athletic sports crop top |
+| 8 | Knotted shirt | Camisa anudada | button-up shirt knotted at the waist |
+| 9 | Off-shoulder top | Top hombros descubiertos | off-the-shoulder ruffled top |
+| 10 | Turtleneck | Cuello alto | fitted turtleneck |
+| 11 | Corset top | Top corsé | structured corset-style top |
+
+## B6.4 · TOPCOLOR / COLARR — Top color / Color de arriba
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 0 | Not specified | Sin especificar | (none) |
+| 1 | White | Blanco | white |
+| 2 | Black | Negro | black |
+| 3 | Red | Rojo | red |
+| 4 | Navy | Azul marino | navy blue |
+| 5 | Royal blue | Azul rey | royal blue |
+| 6 | Sky blue | Celeste | sky blue |
+| 7 | Pastel pink | Rosa pastel | pastel pink |
+| 8 | Hot pink | Fucsia | hot pink |
+| 9 | Lavender | Lavanda | lavender |
+| 10 | Emerald | Esmeralda | emerald green |
+| 11 | Sage | Verde salvia | sage green |
+| 12 | Mustard | Mostaza | mustard yellow |
+| 13 | Beige | Beige | beige |
+| 14 | Gold | Dorado | metallic gold |
+| 15 | Silver | Plateado | metallic silver |
+| 16 | Stripes | Rayas | striped |
+| 17 | Floral | Floral | floral print |
+| 18 | Polka dots | Lunares | polka dot |
+| 19 | Plaid | Cuadros | plaid |
+| 20 | Leopard | Leopardo | leopard print |
+
+## B6.5 · BOTTOM / ABA — Bottom / Parte de abajo
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 0 | None | Ninguna | (none) |
+| 1 | Denim shorts | Shorts de jean | high-waisted denim shorts |
+| 2 | Jeans | Jeans | high-waisted straight jeans |
+| 3 | Leggings | Leggings | full-length leggings |
+| 4 | Mini skirt | Falda mini | A-line mini skirt |
+| 5 | Midi skirt | Falda midi | flowing midi skirt |
+| 6 | Maxi skirt | Falda larga | long maxi skirt |
+| 7 | Tennis skirt | Falda de tenis | pleated tennis skirt |
+| 8 | Wide trousers | Pantalón ancho | wide-leg tailored trousers |
+| 9 | Cargo pants | Pantalón cargo | relaxed cargo pants |
+| 10 | Biker shorts | Shorts de ciclista | biker shorts |
+| 11 | Pencil skirt | Falda lápiz | knee-length pencil skirt |
+
+## B6.6 · BOTCOLOR / COLABA — Bottom color / Color de abajo
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 0 | Not specified | Sin especificar | (none) |
+| 1 | White | Blanco | white |
+| 2 | Black | Negro | black |
+| 3 | Red | Rojo | red |
+| 4 | Navy | Azul marino | navy blue |
+| 5 | Royal blue | Azul rey | royal blue |
+| 6 | Sky blue | Celeste | sky blue |
+| 7 | Pastel pink | Rosa pastel | pastel pink |
+| 8 | Hot pink | Fucsia | hot pink |
+| 9 | Lavender | Lavanda | lavender |
+| 10 | Emerald | Esmeralda | emerald green |
+| 11 | Sage | Verde salvia | sage green |
+| 12 | Mustard | Mostaza | mustard yellow |
+| 13 | Beige | Beige | beige |
+| 14 | Gold | Dorado | metallic gold |
+| 15 | Silver | Plateado | metallic silver |
+| 16 | Stripes | Rayas | striped |
+| 17 | Floral | Floral | floral print |
+| 18 | Polka dots | Lunares | polka dot |
+| 19 | Plaid | Cuadros | plaid |
+| 20 | Leopard | Leopardo | leopard print |
+
+## B6.7 · SHOES / CAL — Footwear / Calzado
+| # | EN | ES | Prompt text |
+|---|---|---|---|
+| 0 | Not specified | Sin especificar | (none) |
+| 1 | Barefoot | Descalza | barefoot |
+| 2 | White sneakers | Tenis blancos | white sneakers |
+| 3 | Tennis shoes | Zapatillas de tenis | white court tennis shoes |
+| 4 | High heels | Tacones altos | elegant high heels |
+| 5 | Strappy sandals | Sandalias de tiras | strappy sandals |
+| 6 | Ankle boots | Botines | ankle boots |
+| 7 | Knee-high boots | Botas altas | knee-high boots |
+| 8 | Roller skates | Patines de ruedas | retro quad roller skates |
+| 9 | Ice skates | Patines de hielo | white figure ice skates |
+| 10 | Ballet flats | Bailarinas | ballet flats |
+| 11 | Pointe shoes | Zapatillas de punta | satin ballet pointe shoes |
+| 12 | Rain boots | Botas de lluvia | glossy rain boots |
+| 13 | T-strap dance shoes | Zapatos de baile | vintage T-strap dance shoes |
 
 ## B6.1 · ACC / ACC — Accessories / Accesorios (choose several: `ACC1+3`; `ACC0` = none)
 | # | EN | ES | Prompt text |
@@ -200,6 +311,12 @@ New options are always added at the end of a block and existing numbers never ch
 | 13 | Moth-wing mask | Antifaz ala de polilla | sleek silver moth-wing shaped eye mask with open eye holes, eyes clearly visible |
 | 14 | Gold-frame glasses | Lentes marco dorado | delicate thin gold wire-frame eyeglasses with clear transparent lenses |
 | 15 | Round gold glasses | Lentes redondos dorados | fine round gold wire-frame eyeglasses with clear transparent lenses |
+| 16 | Tennis racket | Raqueta de tenis | holding a tennis racket |
+| 17 | Skateboard | Monopatín | skateboard tucked under one arm |
+| 18 | Surfboard | Tabla de surf | surfboard held at her side |
+| 19 | Beach towel | Toalla de playa | striped beach towel over one shoulder |
+| 20 | Clutch bag | Bolso de mano | small elegant clutch bag |
+| 21 | Umbrella | Paraguas | classic black umbrella |
 
 ## B6.2 · MASK / MAS — Face covering / Máscara
 | # | EN | ES | Prompt text |
@@ -253,6 +370,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 14 | Yoga lotus | Yoga: loto | seated in lotus pose, spine tall |
 | 15 | Yoga tree | Yoga: árbol | standing in tree pose, balanced on one leg |
 | 16 | Yoga warrior II | Yoga: guerrero II | in warrior II yoga pose, arms extended, strong stance |
+| 17 | Lamppost swing | Columpio en el farol | joyfully swinging out from a vintage street lamp post with one arm, the other arm flung wide holding an open umbrella, one foot on the lamp base |
 
 ## B7.3 · PLACE / LUG — Place / Lugar
 | # | EN | ES | Prompt text |
@@ -310,6 +428,7 @@ New options are always added at the end of a block and existing numbers never ch
 | 3 | Window | Ventana | soft natural window light from the side |
 | 4 | Overcast | Nublado | bright overcast daylight, soft shadowless light |
 | 5 | Dramatic rim light | Contraluz dramático | dramatic cinematic backlight at dusk, glowing rim light outlining her silhouette and hair, high contrast, warm city lights bokeh |
+| 6 | Street lamps in the rain | Faroles bajo la lluvia | warm glow of street lamps in the rain, glistening raindrops and reflections, cinematic night light |
 
 ## B11 · BG / FON — Background / Fondo
 | # | EN | ES | Prompt text |
@@ -332,6 +451,11 @@ New options are always added at the end of a block and existing numbers never ch
 | 16 | 70s concert stage | Escenario de concierto 70s | 1970s concert stage with warm colored spotlights, vintage amplifiers, haze and lens flare |
 | 17 | Desert palace | Palacio del desierto | ornate desert palace courtyard with arches, silk cushions, lanterns and golden evening light |
 | 18 | Disco floor | Pista de disco | 1970s disco dance floor with lit-up colored tiles and a mirror ball scattering light |
+| 19 | Rainy night street | Calle lluviosa de noche | 1950s city street at night in pouring rain, vintage street lamps, wet cobblestones reflecting light, puddles |
+| 20 | Tennis court | Cancha de tenis | outdoor clay tennis court in bright sunlight, net and white lines, shallow depth of field |
+| 21 | Ice rink | Pista de hielo | indoor ice rink with glossy ice and soft arena lights |
+| 22 | Swimming pool | Piscina olímpica | olympic swimming pool with lane ropes and clear blue water |
+| 23 | Skate park | Skate park | sunny outdoor skate park with concrete ramps and graffiti walls |
 
 ## B0 · NEG — Negative prompt
 ```
@@ -342,6 +466,9 @@ cartoon, anime, 3d render, plastic skin, airbrushed, deformed hands, extra finge
 Shown as notes, grouped by kind; the tool never changes your choices. / Se muestran como notas por tipo; la herramienta nunca cambia tu elección.
 
 **Incompatible**
+- A full look and a separate top at the same time: set LOOK to 0 to mix top and bottom.
+- A full look and a separate bottom at the same time: set LOOK to 0 to mix top and bottom.
+- No clothing chosen: pick a full LOOK, or a TOP and a BOTTOM.
 - Clear glasses and sunglasses at the same time: keep only one.
 - Two masks: the moth-wing mask in ACC and a face covering in MASK. Keep only one.
 - Cap and straw hat together: pick one headwear.
@@ -352,6 +479,9 @@ Shown as notes, grouped by kind; the tool never changes your choices. / Se muest
 - Half-body and portrait framings crop the lower body: shorts, footwear and leg details from OUTFIT or BODY won't show.
 
 **Needs testing / Requiere pruebas**
+- TOP COLOR is set but there is no TOP.
+- BOTTOM COLOR is set but there is no BOTTOM.
+- This full look already includes footwear; FOOTWEAR may clash with it.
 - Sunglasses indoors (yoga studio, classroom, office): clear glasses (ACC14, ACC15) usually fit better.
 - Clear glasses at the beach: sunglasses (ACC5) usually fit better.
 - Glasses over an eye mask or visor may look odd; try one or the other.

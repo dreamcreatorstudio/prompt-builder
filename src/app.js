@@ -11,6 +11,19 @@ const vals = x => Array.isArray(x) ? x : [x];                 // multi-select bl
 const clone = o => JSON.parse(JSON.stringify(o));
 const same = (x, y) => JSON.stringify(x) === JSON.stringify(y);
 // Express a selection in the shape a version expects (older versions stored ACC as one number; 0 = none).
+// Selections are stored as list positions. When a block gains or loses its "0 = none" slot between
+// versions, positions shift by one while the numbers people see stay the same: convert via that number.
+function shiftIdx(src, sel) {
+  const out = { ...sel };
+  for (const id in sel) {
+    const ob = ARCHIVE[src].blocks.find(b => b.id === id), nb = ARCHIVE[LIB_VERSION].blocks.find(b => b.id === id);
+    if (!ob || !nb || !!ob.zero === !!nb.zero) continue;
+    const d = nb.zero ? 1 : -1, x = sel[id];
+    out[id] = Array.isArray(x) ? x.map(i => i + d) : x + d;
+  }
+  return out;
+}
+const toCur = (src, sel) => normFor(LIB_VERSION, shiftIdx(src, sel));
 function normFor(v, sel) {
   const out = {};
   for (const b of ARCHIVE[v].blocks) {
@@ -56,7 +69,7 @@ function restore() {
   } else if (ARCHIVE[s.v]) {                        // older known version
     const full = { ...ARCHIVE[s.v].defaults, ...validSel(s.v, s.sel) };
     if (sameAsCurrent(s.v, full)) {                 // identical prompt today: keep working normally
-      S.sel = { ...S.sel, ...fillNew(normFor(LIB_VERSION, full)) };
+      S.sel = { ...S.sel, ...fillNew(toCur(s.v, full)) };
       for (const id in (s.locked || {})) if (BY_ID[id] && s.locked[id]) S.locked[id] = true;
     } else { S.pin = s.v; S.pinSel = full; S.notice = { key: "sessionOld", v: s.v }; }   // reproduce exactly, ask before migrating
   } else {                                          // unknown version: don't reinterpret its numbers
@@ -71,7 +84,7 @@ function fillNew(sel) {
 }
 // An older-version selection can be used as-is when every option still exists and the prompt text is identical.
 function sameAsCurrent(v, sel) {
-  const cur = normFor(LIB_VERSION, sel);
+  const cur = toCur(v, sel);
   for (const id in sel) if (!BY_ID[id] || !(id in cur) || !okIn(ARCHIVE[LIB_VERSION].blocks.find(b => b.id === id), cur[id])) return false;
   const now = { ...S.sel, ...fillNew(cur) };
   return Object.keys(sel).length === ARCHIVE[v].blocks.length &&
@@ -94,8 +107,14 @@ function parts(sel, plat, v = ver()) {
       : picks.join(", ");
     if (t && P.drop) t = t.split(", ").filter(x => !P.drop.includes(x)).join(", ");
     if (t && P.weights && P.weights.includes(b.id)) t = `(${t}:1.2)`;
-    return { id: b.id, hue: (BY_ID[b.id] || {}).hue || "--muted", text: t };
-  }).filter(p => p.text);
+    return { id: b.id, hue: (BY_ID[b.id] || {}).hue || "--muted", text: t, attach: b.attach };
+  }).filter(p => p.text).reduce((out, p, _, all) => {
+    // a color block is written in front of its garment ("emerald green fitted cropped top"), not as its own part
+    if (p.attach && all.some(q => q.id === p.attach)) return out;
+    const col = all.find(q => q.attach === p.id);
+    out.push(col ? { ...p, text: col.text + " " + p.text } : p);
+    return out;
+  }, []);
 }
 function join(ps, sep, html, v = ver()) {
   const SP = ARCHIVE[v].separators[sep] || SEPARATORS[sep];
@@ -181,7 +200,7 @@ function loadRecipe(text = $("#recipeIn").value, okMsg = null) {
   if (r.v !== LIB_VERSION) {
     // Older version: complete with THAT version's defaults; use it as current only if the text is identical.
     const full = { ...ARCHIVE[r.v].defaults, ...r.sel };
-    const asNow = fillNew(normFor(LIB_VERSION, full));
+    const asNow = fillNew(toCur(r.v, full));
     const lockClash = Object.keys(asNow).some(id => S.locked[id] && !same(asNow[id], S.sel[id]));
     if (!lockClash && sameAsCurrent(r.v, full)) { S.pin = null; S.pinSel = null; S.sel = { ...S.sel, ...asNow }; changed(); return toast(L().loaded); }
     S.pin = r.v; S.pinSel = full; S.notice = { key: "pinBanner", v: r.v };
@@ -195,7 +214,7 @@ function loadRecipe(text = $("#recipeIn").value, okMsg = null) {
 }
 function migrate() {                                // same option numbers, current texts — may change the prompt
   const from = S.pin, missing = [];
-  const asNow = fillNew(normFor(LIB_VERSION, S.pinSel));
+  const asNow = fillNew(toCur(S.pin, S.pinSel));
   for (const id of new Set([...Object.keys(S.pinSel), ...Object.keys(asNow)])) {
     const b = ARCHIVE[LIB_VERSION].blocks.find(x => x.id === id);
     if (!b || !(id in asNow) || !okIn(b, asNow[id])) { missing.push(id); continue; }
@@ -241,7 +260,7 @@ function renderBlocks() {
     sec.innerHTML = `<div class="bhead"><span class="bid">${b.id} · ${b.key[li]}</span><span class="bname">${esc(b.name[li])}</span>
       <span class="tools"><button class="btn" data-reset="${b.id}" ${off || isDefault ? "disabled" : ""} title="${L().reset1Title}">${L().reset1}</button>
       <button class="btn" data-lock="${b.id}" aria-pressed="${lk}" ${frozen ? "disabled" : ""} title="${L().lockTitle}">${lk ? L().locked : L().lock}</button>
-      <button class="btn" data-var="${b.id}" ${off || b.multi ? "disabled" : ""} title="${b.multi ? L().noVarMulti : lk ? L().lockedNoVar : L().varTitle}">${L().variants}${b.multi ? "" : ` (${b.opts.length - 1})`}</button>
+      <button class="btn" data-var="${b.id}" ${off || b.multi ? "disabled" : ""} title="${b.multi ? L().noVarMulti : lk ? L().lockedNoVar : L().varTitle}">${L().variants}${b.multi ? "" : ` (${b.opts.filter((o, i) => o[2] && i !== S.sel[b.id]).length})`}</button>
       <button class="btn" data-opts="${b.id}">${L().copyOptions}</button></span></div>
       ${b.multi ? `<p class="small" style="margin:0">${esc(b.mix ? L().mixNote + (b.zero ? " " + L().mixNone : "") : L().multiNote)}</p>` : ""}
       <div class="opts" role="${b.multi ? "group" : "radiogroup"}" aria-label="${esc(b.name[li])}">${b.opts.map((o, i) => `<span class="opt"><input type="${b.multi ? "checkbox" : "radio"}" name="${gid}" id="${gid}-${i}" value="${i}" ${picked(i) && !frozen ? "checked" : ""} ${off ? "disabled" : ""}><label for="${gid}-${i}"><b>${num(b, i)}</b>${esc(o[li])}</label></span>`).join("")}</div>`;
@@ -289,7 +308,7 @@ function renderPlat() {
 function activeNotes() {
   if (S.pin) return [];
   const has = (id, opts) => vals(S.sel[id]).some(i => opts.includes(i));
-  return CONFLICTS.filter(c => has(c.a, c.a_opts) && (!c.b || has(c.b, c.b_opts)));
+  return CONFLICTS.filter(c => has(c.a, c.a_opts) && (!c.b || has(c.b, c.b_opts)) && (!c.c || has(c.c, c.c_opts)));
 }
 function renderOut() {
   $("#prompt").innerHTML = join(parts(curSel(), S.plat), S.sep, true);
@@ -310,7 +329,7 @@ function closeVariants() { VAR = null; $("#varPanel").hidden = true; }
 function renderVariants() {
   if (!VAR) return closeVariants();
   const b = BY_ID[VAR.id], li = LI(), cur = S.sel[b.id];
-  const alts = b.opts.map((_, i) => i).filter(i => i !== cur);
+  const alts = b.opts.map((_, i) => i).filter(i => i !== cur && b.opts[i][2]);   // "none" slots are not shown as variants
   const page = alts.slice(VAR.offset, VAR.offset + VAR_PAGE);
   $("#varTitle").textContent = fmt(L().variantsOf, { id: b.id, name: b.name[li], a: VAR.offset + 1, b: VAR.offset + page.length, n: alts.length });
   const box = $("#variants"); box.innerHTML = "";

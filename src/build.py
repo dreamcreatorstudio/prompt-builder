@@ -192,6 +192,21 @@ def page(head_close, archive):
       </div>
     </aside>
   </div>
+  <section class="panel links" aria-labelledby="linksTitle">
+    <h2 id="linksTitle" data-i="linksTitle">{en["linksTitle"]}</h2>
+    <a class="lk-project" href="{REPO}" target="_blank" rel="noopener"><b data-i="linkProject">{en["linkProject"]}</b><span class="small" data-i="linkProjectNote">{en["linkProjectNote"]}</span><span class="small url">github.com/dreamcreatorstudio/prompt-builder</span></a>
+    <div class="lk-groups">
+      <div><h3 data-i="groupGen">{en["groupGen"]}</h3><ul>
+        <li><a href="https://perchance.org/image-generator-professional" target="_blank" rel="noopener"><b>Perchance</b> · <span data-i="lkPro">{en["lkPro"]}</span></a></li>
+        <li><a href="https://perchance.org/ai-character-generator" target="_blank" rel="noopener"><b>Perchance</b> · <span data-i="lkCharacter">{en["lkCharacter"]}</span></a></li>
+        <li><a href="https://venice.ai/studio/image" target="_blank" rel="noopener"><b>Venice AI</b> · <span data-i="lkVenice">{en["lkVenice"]}</span></a></li>
+        <li><a href="https://www.seaart.ai/create/" target="_blank" rel="noopener"><b>SeaArt</b> · <span data-i="lkSeaart">{en["lkSeaart"]}</span></a></li>
+      </ul></div>
+      <div><h3 data-i="groupTools">{en["groupTools"]}</h3><ul>
+        <li><a href="https://perchance.org/image-prompt-optimizer" target="_blank" rel="noopener"><b>Perchance</b> · <span data-i="lkOptimizer">{en["lkOptimizer"]}</span></a></li>
+      </ul></div>
+    </div>
+  </section>
   <footer><span data-i="footer" data-html>{en["footer"]}</span> · Library v{LIB_VERSION}</footer>
 </div>
 
